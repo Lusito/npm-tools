@@ -1,0 +1,50 @@
+@use "@fontsource/source-sans-pro/scss/mixins" as Sans;
+@use "@fontsource/source-code-pro/scss/mixins" as Monospace;
+@import "../style/colors";
+@import "../style/breakpoints";
+@import "../style/reset";
+@import "../style/sizes";
+@import "../style/fonts";
+
+@include Sans.fontFace;
+@include Sans.fontFace($style: italic);
+@include Sans.fontFace($weight: 600);
+@include Sans.fontFace($weight: 600, $style: italic);
+@include Monospace.fontFace;
+@include Monospace.fontFace($style: italic);
+@include Monospace.fontFace($weight: 600);
+@include Monospace.fontFace($weight: 600, $style: italic);
+
+@include reset;
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: var(--color-main);
+    color: var(--color-main-contrast);
+    font-family: $font-sans-serif;
+    font-size: 1.125rem;
+}
+
+a {
+    text-decoration: underline;
+    color: var(--color-main-link);
+
+    &:visited {
+        color: var(--color-main-link-visited);
+    }
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+input,
+select,
+a {
+    &:focus {
+        box-shadow: 0 0 0 3px var(--color-focus);
+        outline: 1px solid var(--color-focus-contrast);
+    }
+}

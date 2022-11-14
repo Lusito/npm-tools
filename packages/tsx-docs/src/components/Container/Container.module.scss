@@ -1,0 +1,17 @@
+@import "../../style/sizes";
+@import "../../style/breakpoints";
+
+.container {
+    margin: 2rem auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+
+    > * {
+        flex-grow: 1;
+    }
+
+    @include from("small") {
+        padding: 0 2rem;
+        max-width: $content-width;
+    }
+}

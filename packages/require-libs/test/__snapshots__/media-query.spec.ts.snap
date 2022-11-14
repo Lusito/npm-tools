@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`media-query (scoped) produces the correct css 1`] = `
+".foo_2oTg70 {
+  color: red;
+}
+
+@media (max-width: 480px) {
+  .foo_2oTg70 {
+    color: blue;
+  }
+}"
+`;
+
+exports[`media-query (scoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`media-query (scoped) produces the correct tokens 1`] = `
+{
+  "foo": "foo_2oTg70",
+}
+`;
+
+exports[`media-query (unscoped) produces the correct css 1`] = `
+".foo {
+  color: red;
+}
+
+@media (max-width: 480px) {
+  .foo {
+    color: blue;
+  }
+}"
+`;
+
+exports[`media-query (unscoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`media-query (unscoped) produces the correct tokens 1`] = `{}`;

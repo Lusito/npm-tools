@@ -1,0 +1,51 @@
+{
+  "name": "tsx-docs",
+  "version": "0.8.0",
+  "license": "MIT",
+  "author": "Santo Pfingsten",
+  "bin": {
+    "tsx-docs": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rimraf dist && tsc --project tsconfig.build.json && npm run build:assets && npm run build:custom-elements && chmod +x dist/cli.js",
+    "build:assets": "cpy \"src/**/*.{scss,webp,png}\" dist && cpy src/assets/**/* dist/assets",
+    "build:custom-elements": "esbuild --platform=browser src/custom-elements/index.ts --bundle --minify --outfile=dist/assets/custom-elements.js",
+    "build:demo": "npm run build:custom-elements && rimraf demo-src/dist && node -r ./esbuild-register.js src/cli.ts demo-src/ demo-src/dist",
+    "start": "nodemon --ignore \"demo-src/dist\" --ignore node_modules --ignore dist -e ts,tsx,md,scss,png,webp --exec \"npm run start:internal\"",
+    "start:internal": "npm run build:demo -- serve"
+  },
+  "dependencies": {
+    "@fastify/static": "^6.5.0",
+    "@fontsource/source-code-pro": "^4.5.12",
+    "@fontsource/source-sans-pro": "^4.5.11",
+    "@lusito/require-libs": "0.8.0",
+    "classnames": "^2.3.2",
+    "cross-env": "^7.0.3",
+    "dom-helmet": "^0.8.0",
+    "fastify": "^4.9.2",
+    "front-matter": "^4.0.2",
+    "happy-dom": "^6.0.4",
+    "highlight.js": "^11.6.0",
+    "image-size": "^1.0.2",
+    "markdown-it": "^13.0.1",
+    "pirates": "^4.0.5",
+    "rimraf": "^3.0.2",
+    "slug": "^8.0.0",
+    "tsx-dom-ssr": "^0.8.0",
+    "tsx-dom-types": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^12.2.3",
+    "@types/node": "18.7.14",
+    "@types/slug": "^5.0.3",
+    "cpy-cli": "^4.2.0",
+    "esbuild": "^0.15.13",
+    "esbuild-register": "^3.3.3",
+    "nodemon": "^2.0.20",
+    "scatman": "^0.9.0",
+    "typescript": "~4.8.2"
+  }
+}

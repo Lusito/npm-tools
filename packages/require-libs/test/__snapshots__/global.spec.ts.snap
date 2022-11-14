@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`global (scoped) produces the correct css 1`] = `
+".foo {
+  content: "simple class";
+}
+
+.foo .bar {
+  content: "selector with multiple classes";
+}
+
+.foo,
+.bar {
+  content: "multiple class selectors";
+}
+
+.foo_gvLfL,
+.bar {
+  content: "local and global selectors";
+}
+
+.bar,
+.foo_gvLfL {
+  content: "local and global selectors 2";
+}
+
+.foo_gvLfL .foo .bar {
+  content: "local and global combined nested";
+}
+
+.foo_gvLfL .foo:not(.bar) {
+  content: "local and global (with :not selector) combined nested";
+}
+
+.foo_gvLfL.foo.bar {
+  content: "local and global combined";
+}
+
+.foo_gvLfL .a_value .bar_gvLfL {
+  content: "local, global and local combined nested";
+}
+
+.foo_gvLfL.a_value.bar_gvLfL {
+  content: "local, global and local combined";
+}
+
+@webkit-keyframes bar-anim {
+  from {
+    content: "webkit keyframes from";
+  }
+  to {
+    content: "webkit keyframes to";
+  }
+}
+@keyframes foo-anim {
+  from {
+    content: "keyframes from";
+  }
+  to {
+    content: "keyframes to";
+  }
+}
+.foo_gvLfL {
+  animation: bar-anim 1s ease;
+}
+
+.bar_gvLfL {
+  animation: foo-anim 1s ease;
+}
+
+.foo.bar_gvLfL,
+[type=radio] ~ .label_gvLfL,
+:not(.foo_gvLfL),
+#bar {
+  content: "complex selector";
+}"
+`;
+
+exports[`global (scoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`global (scoped) produces the correct tokens 1`] = `
+{
+  "bar": "bar_gvLfL",
+  "foo": "foo_gvLfL",
+  "label": "label_gvLfL",
+}
+`;
+
+exports[`global (unscoped) produces the correct css 1`] = `
+".foo {
+  content: "simple class";
+}
+
+.foo .bar {
+  content: "selector with multiple classes";
+}
+
+.foo,
+.bar {
+  content: "multiple class selectors";
+}
+
+.foo,
+.bar {
+  content: "local and global selectors";
+}
+
+.bar,
+.foo {
+  content: "local and global selectors 2";
+}
+
+.foo .foo .bar {
+  content: "local and global combined nested";
+}
+
+.foo .foo:not(.bar) {
+  content: "local and global (with :not selector) combined nested";
+}
+
+.foo.foo.bar {
+  content: "local and global combined";
+}
+
+.foo .a_value .bar {
+  content: "local, global and local combined nested";
+}
+
+.foo.a_value.bar {
+  content: "local, global and local combined";
+}
+
+@-global-webkit-keyframes bar-anim {
+  from {
+    content: "webkit keyframes from";
+  }
+  to {
+    content: "webkit keyframes to";
+  }
+}
+@-global-keyframes foo-anim {
+  from {
+    content: "keyframes from";
+  }
+  to {
+    content: "keyframes to";
+  }
+}
+.foo {
+  animation: bar-anim 1s ease;
+}
+
+.bar {
+  animation: foo-anim 1s ease;
+}
+
+.foo.bar,
+[type=radio] ~ .label,
+:not(.foo),
+#bar {
+  content: "complex selector";
+}"
+`;
+
+exports[`global (unscoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`global (unscoped) produces the correct tokens 1`] = `{}`;

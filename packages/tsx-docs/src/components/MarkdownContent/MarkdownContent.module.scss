@@ -1,0 +1,107 @@
+@import "../../style/fonts";
+@import "../../style/breakpoints";
+
+.markdown-content {
+    word-break: break-word;
+
+    h2 {
+        border-bottom: 1px solid var(--color-main-contrast);
+    }
+
+    figure {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    img.large-image {
+        width: calc(100% + 2rem);
+        height: auto;
+        margin: 0 -1rem;
+
+        @include from("small") {
+            width: auto;
+            max-width: 100%;
+            margin: 0;
+        }
+    }
+
+    p code,
+    ul code,
+    ol code {
+        font-family: $font-monospace;
+        background: #dcdcdc;
+        color: #1e1e1e;
+        border-radius: 0.25rem;
+        padding: 0 0.25em;
+    }
+
+    pre {
+        position: relative;
+
+        > code {
+            border-radius: 0;
+            margin: 1rem -1rem;
+            font-family: $font-monospace;
+
+            @include from("small") {
+                border-radius: 0.5rem;
+                margin: 1rem 0;
+            }
+        }
+
+        code-copy-button:not(.enhanced-copy-button) {
+            display: none;
+        }
+
+        code-copy-button.enhanced-copy-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 2rem;
+            height: 2rem;
+            background: var(--color-dark-contrast);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+
+            &:active {
+                filter: brightness(0.75);
+            }
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 3px var(--color-dark-link);
+            }
+
+            &::before,
+            &::after {
+                content: "";
+                background: var(--color-dark-contrast);
+                border: 1px solid var(--color-dark);
+                box-shadow: 0 0 1px 2px var(--color-dark-contrast);
+                width: 35%;
+                height: 35%;
+                border-radius: 20%;
+                position: absolute;
+            }
+
+            &::before {
+                bottom: 20%;
+                left: 20%;
+            }
+
+            &::after {
+                top: 20%;
+                right: 20%;
+            }
+        }
+
+        &:hover,
+        &:focus-within {
+            code-copy-button {
+                opacity: 1;
+            }
+        }
+    }
+}

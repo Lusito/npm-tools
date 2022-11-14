@@ -1,0 +1,26 @@
+@import "../../style/breakpoints";
+
+.footer {
+    background: var(--color-dark);
+    color: var(--color-dark-contrast);
+    text-align: center;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+
+    a {
+        color: var(--color-dark-link);
+
+        &:visited {
+            color: var(--color-dark-link-visited);
+        }
+    }
+
+    @include from("small") {
+        display: block;
+
+        > * + *::before {
+            content: " - ";
+        }
+    }
+}

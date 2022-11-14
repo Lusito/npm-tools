@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dot-in-values (scoped) produces the correct css 1`] = `
+".foo_2jh2n6 {
+  font-size: 1.3em;
+}
+
+.bar_2jh2n6 {
+  font-size: 12.5px;
+}
+
+.baz_2jh2n6 {
+  width: 33.3%;
+}"
+`;
+
+exports[`dot-in-values (scoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`dot-in-values (scoped) produces the correct tokens 1`] = `
+{
+  "bar": "bar_2jh2n6",
+  "baz": "baz_2jh2n6",
+  "foo": "foo_2jh2n6",
+}
+`;
+
+exports[`dot-in-values (unscoped) produces the correct css 1`] = `
+".foo {
+  font-size: 1.3em;
+}
+
+.bar {
+  font-size: 12.5px;
+}
+
+.baz {
+  width: 33.3%;
+}"
+`;
+
+exports[`dot-in-values (unscoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`dot-in-values (unscoped) produces the correct tokens 1`] = `{}`;

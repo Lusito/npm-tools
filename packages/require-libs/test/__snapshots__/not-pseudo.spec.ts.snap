@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`not-pseudo (scoped) produces the correct css 1`] = `
+"@media screen and (min-width: 769px) {
+  .foo_aWZYJ:not(.bar_aWZYJ) {
+    display: flex;
+  }
+}"
+`;
+
+exports[`not-pseudo (scoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`not-pseudo (scoped) produces the correct tokens 1`] = `
+{
+  "bar": "bar_aWZYJ",
+  "foo": "foo_aWZYJ",
+}
+`;
+
+exports[`not-pseudo (unscoped) produces the correct css 1`] = `
+"@media screen and (min-width: 769px) {
+  .foo:not(.bar) {
+    display: flex;
+  }
+}"
+`;
+
+exports[`not-pseudo (unscoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`not-pseudo (unscoped) produces the correct tokens 1`] = `{}`;

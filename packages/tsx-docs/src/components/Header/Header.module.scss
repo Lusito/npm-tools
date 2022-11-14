@@ -1,0 +1,53 @@
+@import "../../style/breakpoints";
+@import "../../style/sizes";
+@import "../../style/fonts";
+
+.header {
+    font-family: $font-sans-serif;
+    font-weight: bold;
+    background: var(--color-dark);
+    padding: 0 0.5rem 0 #{$menu-grip-width + 0.5rem};
+    line-height: $header-height;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    transition: all 0.5s ease;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    justify-content: space-between;
+
+    .left > a,
+    .links > a {
+        color: var(--color-dark-contrast);
+        text-decoration: none;
+    }
+
+    .left {
+        font-size: 1.5rem;
+        margin-left: 0.5rem;
+    }
+
+    .right {
+        display: flex;
+        flex-direction: row;
+        font-size: 1rem;
+        margin-right: 0.5rem;
+
+        > .links {
+            display: none;
+
+            > * + *::before {
+                content: " - ";
+            }
+
+            @include from("large") {
+                display: block;
+            }
+        }
+    }
+
+    @include from("large") {
+        padding-left: 0.5rem;
+    }
+}

@@ -1,0 +1,28 @@
+@import "../style/breakpoints";
+@import "../style/sizes";
+
+.mainwrapper {
+    position: absolute;
+    top: $header-height;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: all 0.5s ease;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    > main {
+        flex-grow: 1;
+    }
+
+    @include from("large") {
+        left: $menu-width;
+
+        header + & {
+            left: 0;
+        }
+    }
+}

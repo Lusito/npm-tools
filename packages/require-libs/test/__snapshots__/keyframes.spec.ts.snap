@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`keyframes (scoped) produces the correct css 1`] = `
+"@keyframes yolo_2zjqRb {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.foo_2zjqRb {
+  animation: yolo_2zjqRb 5s infinite;
+}
+
+@keyframes yoloYolo_2zjqRb {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes yoloYolo_2zjqRb {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.bar_2zjqRb {
+  animation: yoloYolo_2zjqRb 5s infinite;
+}"
+`;
+
+exports[`keyframes (scoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`keyframes (scoped) produces the correct tokens 1`] = `
+{
+  "bar": "bar_2zjqRb",
+  "foo": "foo_2zjqRb",
+  "yolo": "yolo_2zjqRb",
+  "yoloYolo": "yoloYolo_2zjqRb",
+}
+`;
+
+exports[`keyframes (unscoped) produces the correct css 1`] = `
+"@keyframes yolo {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.foo {
+  animation: yolo 5s infinite;
+}
+
+@keyframes yoloYolo {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes yoloYolo {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.bar {
+  animation: yoloYolo 5s infinite;
+}"
+`;
+
+exports[`keyframes (unscoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`keyframes (unscoped) produces the correct tokens 1`] = `{}`;

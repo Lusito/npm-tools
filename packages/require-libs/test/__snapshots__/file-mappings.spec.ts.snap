@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`file-mappings (scoped) produces the correct css 1`] = `
+".foo_346mKQ {
+  background: url("./assets/asset-1-0193864a.png");
+}
+
+.bar_346mKQ {
+  background: url("./assets/asset-2-c169f7ed.png");
+}
+
+.baz_346mKQ {
+  background: url("./assets/asset-3-2e214ec0.png");
+}"
+`;
+
+exports[`file-mappings (scoped) produces the correct file mappings 1`] = `
+[
+  {
+    "destination": "./assets/asset-1-0193864a.png",
+    "source": "test/asset-1.png",
+  },
+  {
+    "destination": "./assets/asset-2-c169f7ed.png",
+    "source": "test/asset-2.png",
+  },
+  {
+    "destination": "./assets/asset-3-2e214ec0.png",
+    "source": "test/subFolder/asset-3.png",
+  },
+]
+`;
+
+exports[`file-mappings (scoped) produces the correct tokens 1`] = `
+{
+  "bar": "bar_346mKQ",
+  "baz": "baz_346mKQ",
+  "foo": "foo_346mKQ",
+}
+`;
+
+exports[`file-mappings (unscoped) produces the correct css 1`] = `
+".foo {
+  background: url("./assets/asset-1-0193864a.png");
+}
+
+.bar {
+  background: url("./assets/asset-2-c169f7ed.png");
+}
+
+.baz {
+  background: url("./assets/asset-3-2e214ec0.png");
+}"
+`;
+
+exports[`file-mappings (unscoped) produces the correct file mappings 1`] = `
+[
+  {
+    "destination": "./assets/asset-1-0193864a.png",
+    "source": "test/asset-1.png",
+  },
+  {
+    "destination": "./assets/asset-2-c169f7ed.png",
+    "source": "test/asset-2.png",
+  },
+  {
+    "destination": "./assets/asset-3-2e214ec0.png",
+    "source": "test/subFolder/asset-3.png",
+  },
+]
+`;
+
+exports[`file-mappings (unscoped) produces the correct tokens 1`] = `{}`;

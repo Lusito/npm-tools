@@ -1,0 +1,68 @@
+@import "../../style/breakpoints";
+@import "../../style/sizes";
+@import "../../style/fonts";
+
+.side-bar-menu,
+.side-bar-menu ul {
+    font-family: $font-sans-serif;
+    width: 100%;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.side-bar-menu {
+    padding: 1rem 0;
+
+    li {
+        display: list-item;
+        font-size: 1.25rem;
+
+        &:not(.nested) {
+            font-weight: bold;
+        }
+
+        > a {
+            display: block;
+            padding: 0.75rem;
+            text-decoration: none;
+            border-left: 0.25em solid transparent;
+        }
+
+        > a:not(:hover, :focus) {
+            color: var(--color-main-contrast);
+        }
+
+        > a:hover,
+        > a:focus {
+            display: block;
+            background: var(--color-highlight);
+            color: var(--color-highlight-contrast);
+            outline: none;
+            box-shadow: none;
+            text-decoration: none;
+        }
+    }
+
+    li.project-selector {
+        padding: 0.5rem 0.75rem;
+        border-left: 0.25em solid transparent;
+
+        > select {
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    li.selected > a {
+        border-color: var(--color-highlight);
+    }
+
+    li.nested > a {
+        padding: 0.25rem 0.5rem;
+        padding-left: 1.5rem;
+        font-size: 1rem;
+    }
+}

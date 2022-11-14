@@ -1,0 +1,106 @@
+@use "sass:math";
+@import "../../style/breakpoints";
+@import "../../style/sizes";
+
+$transition-time: 0.5s;
+
+.side-bar-overlay {
+    background: transparent;
+    transition: right 0s $transition-time linear, background-color $transition-time ease-in-out;
+    position: fixed;
+    top: 0;
+    right: 100vw;
+    bottom: 0;
+    left: 0;
+    z-index: 199;
+}
+
+.side-bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -$menu-width;
+    width: $menu-width;
+    z-index: 200;
+    transition: all $transition-time ease;
+    background: var(--color-main);
+    box-sizing: border-box;
+    border-right: 0.25rem solid var(--color-dark);
+
+    .trigger {
+        position: absolute;
+        top: 0;
+        right: #{-$menu-grip-width - 0.5rem};
+        width: $menu-grip-width;
+        height: $header-height;
+        background: var(--color-dark);
+        transition: all $transition-time ease;
+        padding: 0.25rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+        > div {
+            height: 0.25rem;
+            background: var(--color-dark-contrast);
+            box-sizing: border-box;
+        }
+    }
+
+    &:hover,
+    &:focus-within {
+        left: 0;
+
+        + .side-bar-overlay {
+            background: var(--color-overlay);
+            right: 0;
+            transition: right 0s linear, background-color $transition-time ease-in-out;
+        }
+    }
+
+    @include from("large") {
+        top: $header-height;
+        left: 0;
+
+        &:hover,
+        &:focus-within {
+            + .side-bar-overlay {
+                background: transparent;
+                right: 100vw;
+                transition: right 0s $transition-time linear, background-color $transition-time ease-in-out;
+            }
+        }
+
+        .trigger {
+            display: none;
+        }
+    }
+}
+
+.content {
+    overflow-y: auto;
+
+    > .links {
+        border-bottom: 1px solid black;
+
+        > a {
+            padding: 0.5rem 0.75rem 0.5rem 1rem;
+            display: block;
+
+            &:hover,
+            &:focus {
+                display: block;
+                background: var(--color-highlight);
+                color: var(--color-highlight-contrast);
+                outline: none;
+                box-shadow: none;
+                text-decoration: none;
+            }
+        }
+
+        @include from("large") {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic (scoped) produces the correct css 1`] = `
+".foo_3KYXWZ {
+  color: red;
+}
+
+.foo-bar_3KYXWZ {
+  color: green;
+}
+
+.fooBar2k_3KYXWZ {
+  color: blue;
+}"
+`;
+
+exports[`basic (scoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`basic (scoped) produces the correct tokens 1`] = `
+{
+  "foo": "foo_3KYXWZ",
+  "foo-bar": "foo-bar_3KYXWZ",
+  "fooBar": "foo-bar_3KYXWZ",
+  "fooBar2k": "fooBar2k_3KYXWZ",
+}
+`;
+
+exports[`basic (unscoped) produces the correct css 1`] = `
+".foo {
+  color: red;
+}
+
+.foo-bar {
+  color: green;
+}
+
+.fooBar2k {
+  color: blue;
+}"
+`;
+
+exports[`basic (unscoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`basic (unscoped) produces the correct tokens 1`] = `{}`;

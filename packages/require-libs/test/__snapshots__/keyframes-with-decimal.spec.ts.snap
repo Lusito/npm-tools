@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`keyframes-with-decimal (scoped) produces the correct css 1`] = `
+"@keyframes woot_3IFo4y {
+  0% {
+    opacity: 0;
+  }
+  33.3% {
+    opacity: 0.333;
+  }
+  100% {
+    opacity: 1;
+  }
+}"
+`;
+
+exports[`keyframes-with-decimal (scoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`keyframes-with-decimal (scoped) produces the correct tokens 1`] = `
+{
+  "woot": "woot_3IFo4y",
+}
+`;
+
+exports[`keyframes-with-decimal (unscoped) produces the correct css 1`] = `
+"@keyframes woot {
+  0% {
+    opacity: 0;
+  }
+  33.3% {
+    opacity: 0.333;
+  }
+  100% {
+    opacity: 1;
+  }
+}"
+`;
+
+exports[`keyframes-with-decimal (unscoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`keyframes-with-decimal (unscoped) produces the correct tokens 1`] = `{}`;

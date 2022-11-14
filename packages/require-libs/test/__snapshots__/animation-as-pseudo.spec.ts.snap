@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`animation-as-pseudo (scoped) produces the correct css 1`] = `
+"@keyframes hover_Zll8S {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+@media (max-width: 480px) {
+  .animation_Zll8S:hover {
+    background: green;
+  }
+}"
+`;
+
+exports[`animation-as-pseudo (scoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`animation-as-pseudo (scoped) produces the correct tokens 1`] = `
+{
+  "animation": "animation_Zll8S",
+  "hover": "hover_Zll8S",
+}
+`;
+
+exports[`animation-as-pseudo (unscoped) produces the correct css 1`] = `
+"@keyframes hover {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+@media (max-width: 480px) {
+  .animation:hover {
+    background: green;
+  }
+}"
+`;
+
+exports[`animation-as-pseudo (unscoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`animation-as-pseudo (unscoped) produces the correct tokens 1`] = `{}`;

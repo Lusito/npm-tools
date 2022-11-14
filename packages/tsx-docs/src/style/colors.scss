@@ -1,0 +1,44 @@
+@use "sass:color";
+
+$color-gray-900: black;
+$color-gray-500: color.adjust(black, $lightness: 16%);
+$color-gray-400: color.adjust(black, $lightness: 33%);
+$color-gray-200: color.adjust(black, $lightness: 71%);
+$color-gray-100: color.adjust(black, $lightness: 96%);
+$color-accent-base: #063e66;
+$color-accent-900: color.adjust($color-accent-base, $lightness: -15%);
+$color-accent-700: $color-accent-base;
+$color-accent-600: color.adjust($color-accent-base, $lightness: 5%);
+$color-accent-500: color.adjust($color-accent-base, $lightness: 15%);
+$color-accent-100: color.adjust($color-accent-base, $lightness: 50%);
+
+:root {
+    --color-dark: #{$color-gray-900};
+    --color-dark-contrast: #{$color-gray-100};
+    --color-dark-link: #{$color-accent-100};
+    --color-dark-link-visited: #{$color-gray-200};
+    --color-button-link: #{$color-accent-500};
+    --color-button-link-visited: #{$color-gray-200};
+    --color-main: #{$color-gray-100};
+    --color-main-contrast: #{$color-gray-900};
+    --color-main-link: #{$color-accent-700};
+    --color-main-link-visited: #{$color-gray-400};
+    --color-highlight: #{$color-accent-700};
+    --color-highlight-contrast: #{$color-gray-100};
+    --color-focus: #{fade-out($color-accent-700, 0.4)};
+    --color-focus-contrast: #{$color-gray-100};
+    --color-disabled: #{$color-gray-400};
+    --color-disabled-contrast: #{$color-gray-100};
+    --color-overlay: #{fade-out($color-gray-900, 0.5)};
+    --color-synopsis-border: #{$color-accent-700};
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-main: #{$color-gray-500};
+        --color-main-contrast: #{$color-gray-100};
+        --color-main-link: #{$color-accent-100};
+        --color-main-link-visited: #{$color-gray-200};
+        --color-synopsis-border: #{$color-accent-600};
+    }
+}

@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`comments (scoped) produces the correct css 1`] = `
+"/* Here's a comment */
+/*squishedcomment*/
+/********crazycomment********/
+/* A comment with a period at the end. */
+/* A comment with a period followed by numbers v1.2.3 */
+/* A comment with a .className */
+/*
+ * Here's a comment
+ * A comment with a period at the end.
+ * A comment with a period followed by numbers v1.2.3
+ * A comment with a .className
+ */
+/* .inlineCss { color: red; } */
+/*
+.commentedOutCss {
+  color: blue;
+}
+*/
+.foo_4pZ4n5 {
+  color: red; /* comment on a line */
+  animation-name: wow_4pZ4n5;
+}
+
+@keyframes wow_4pZ4n5 {}
+/*
+@keyframes bam {}
+ */
+/* .woot {
+  animation-name: bam;
+} */
+/* .hmm {
+  animation-name: wow;
+} */"
+`;
+
+exports[`comments (scoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`comments (scoped) produces the correct tokens 1`] = `
+{
+  "foo": "foo_4pZ4n5",
+  "wow": "wow_4pZ4n5",
+}
+`;
+
+exports[`comments (unscoped) produces the correct css 1`] = `
+"/* Here's a comment */
+/*squishedcomment*/
+/********crazycomment********/
+/* A comment with a period at the end. */
+/* A comment with a period followed by numbers v1.2.3 */
+/* A comment with a .className */
+/*
+ * Here's a comment
+ * A comment with a period at the end.
+ * A comment with a period followed by numbers v1.2.3
+ * A comment with a .className
+ */
+/* .inlineCss { color: red; } */
+/*
+.commentedOutCss {
+  color: blue;
+}
+*/
+.foo {
+  color: red; /* comment on a line */
+  animation-name: wow;
+}
+
+@keyframes wow {}
+/*
+@keyframes bam {}
+ */
+/* .woot {
+  animation-name: bam;
+} */
+/* .hmm {
+  animation-name: wow;
+} */"
+`;
+
+exports[`comments (unscoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`comments (unscoped) produces the correct tokens 1`] = `{}`;

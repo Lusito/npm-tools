@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`non-class (scoped) produces the correct css 1`] = `
+"#foo {
+  color: red;
+}"
+`;
+
+exports[`non-class (scoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`non-class (scoped) produces the correct tokens 1`] = `{}`;
+
+exports[`non-class (unscoped) produces the correct css 1`] = `
+"#foo {
+  color: red;
+}"
+`;
+
+exports[`non-class (unscoped) produces the correct file mappings 1`] = `[]`;
+
+exports[`non-class (unscoped) produces the correct tokens 1`] = `{}`;
