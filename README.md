@@ -1,3 +1,3 @@
 # Monorepo
 
-Some packages I use for personal stuff, nothing to be released for public use.
+Some packages I use for personal stuff. Not meant for public use, just for my personal projects.

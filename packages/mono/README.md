@@ -1,6 +1,6 @@
 # @lusito/mono
 
-Some cli tools for my monorepos. Not meant for general use, just for my personal projects.
+Some cli tools for my monorepos. Not meant for public use, just for my personal projects.
 
 ## License
 
