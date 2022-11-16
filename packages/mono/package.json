@@ -4,6 +4,7 @@
   "license": "MIT",
   "author": "Santo Pfingsten",
   "bin": {
+    "mono-lint": "dist/mono-lint.js",
     "mono-release": "dist/mono-release.js"
   },
   "files": [
