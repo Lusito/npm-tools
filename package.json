@@ -18,12 +18,17 @@
     "lint:style": "yarn lint:style:base --check",
     "lint:style:base": "prettier \"packages/*/src/**/*.{ts,tsx,js,json,scss}\" \"packages/*/*.{ts,tsx,js,json,scss}\"",
     "lint:style:fix": "yarn lint:style:base --write",
+    "release": "ts-node tools/release.ts",
     "start": "yarn workspace tsx-docs start"
   },
   "devDependencies": {
     "@lusito/eslint-config-react": "^2.0.3",
     "@lusito/prettier-config": "^2.0.0",
     "@lusito/stylelint-config": "^2.0.2",
-    "sort-package-json": "^1.57.0"
+    "@types/prompts": "^2.4.1",
+    "prompts": "^2.4.2",
+    "sort-package-json": "^1.57.0",
+    "ts-node": "^10.9.1",
+    "type-fest": "^3.2.0"
   }
 }
