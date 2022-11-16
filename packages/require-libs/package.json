@@ -20,6 +20,9 @@
   "author": "Santo Pfingsten",
   "main": "dist/index.js",
   "typings": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "test": "jest --watch",
