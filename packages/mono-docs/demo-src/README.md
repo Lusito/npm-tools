@@ -28,19 +28,19 @@ Tiny, powerful and type-safe React libraries. All released under a liberal licen
 
 ## Libraries
 
-- [@react-nano/redux](packages/redux/docs/README.md)\
+- [@react-nano/redux](packages/redux/README.md)\
 Lightweight alternative to react-redux.
-- [@react-nano/redux-dynamic-modules](packages/redux-dynamic-modules/docs/README.md)\
+- [@react-nano/redux-dynamic-modules](packages/redux-dynamic-modules/README.md)\
 Making redux-dynamic-modules more lightweight by using @react-nano/redux instead of react-redux.
-- [@react-nano/router](packages/router/docs/README.md)\
+- [@react-nano/router](packages/router/README.md)\
 Lightweight alternative to react-router.
-- [@react-nano/tsrux](packages/tsrux/docs/README.md)\
+- [@react-nano/tsrux](packages/tsrux/README.md)\
 Lightweight alternative to redux-actions, deox, etc.
-- [@react-nano/use-event-source](packages/use-event-source/docs/README.md)\
-Hook for using [Server-Sent-Events](https://developer.mozilla.org/en-US/packages/Web/docs/API/Server-sent_events).
-- [@react-nano/use-fetch](packages/use-fetch/docs/README.md)\
+- [@react-nano/use-event-source](packages/use-event-source/README.md)\
+Hook for using [Server-Sent-Events](https://developer.mozilla.org/en-US/packages/Web/API/Server-sent_events).
+- [@react-nano/use-fetch](packages/use-fetch/README.md)\
 Hook for using `fetch()` to GET, POST, etc. requests.
-- [@react-nano/use-graphql](packages/use-graphql/docs/README.md)\
+- [@react-nano/use-graphql](packages/use-graphql/README.md)\
 Hook for using GraphQL queries and mutations.
 
 ## Report Issues

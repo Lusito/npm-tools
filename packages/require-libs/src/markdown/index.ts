@@ -22,6 +22,8 @@ export type MarkdownCompilerOptions = {
     setup?(md: MarkdownIt): void;
 };
 
+const protocolPattern = /^https?:\/\//;
+
 export function createMarkdownCompiler({ copyAsset, createElement, postProcess, setup }: MarkdownCompilerOptions) {
     const md: MarkdownIt = new MarkdownIt({
         linkify: true,
@@ -48,7 +50,9 @@ export function createMarkdownCompiler({ copyAsset, createElement, postProcess, 
 
         dom.innerHTML = md.render(result.body);
         dom.querySelectorAll("img").forEach((img) => {
-            img.src = copyAsset(join(dir, img.src));
+            if (!protocolPattern.test(img.src)) {
+                img.src = copyAsset(join(dir, img.src));
+            }
         });
 
         postProcess({
