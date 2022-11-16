@@ -64,10 +64,10 @@ async function main() {
     lint("eslint", `"${src}/*.{js,ts,tsx}" --ext ".js,.ts,.tsx" --ignore-path .prettierignore ${fix ? "--fix" : ""}`);
     lint(
         "prettier",
-        `"${src}/*.{ts,tsx,js,json,css,scss}" "packages/*/*.{ts,tsx,js,json,css,scss}" ${fix ? "--write" : "--check"}`
+        `"${src}/*.{ts,tsx,js,json,css,scss}" "${pkg}/*.{ts,tsx,js,json,css,scss}" ${fix ? "--write" : "--check"}`
     );
     lint("stylelint", `--ignore-path .prettierignore "${src}/*.{css,scss}" ${fix ? "--fix" : ""}`);
-    lint("sort-package-json", `package.json "${pkg}/package.json" ${fix ? "" : "--check"}`);
+    lint("sort-package-json", `package.json ${pkg === "." ? "" : `"${pkg}/package.json"`} ${fix ? "" : "--check"}`);
 
     if (!runs.length) die("No linter has run");
     else if (failed) die("Please fix the above issues");
