@@ -33,7 +33,7 @@ async function main() {
 
     const project = await loadPackage(join(process.cwd(), "./package.json"));
 
-    const dependencies = Object.keys(project.dependencies ?? {});
+    const dependencies = Object.keys(project.dependencies ?? {}).concat(Object.keys(project.devDependencies ?? {}));
     const runs: string[] = [];
     let failed = false;
 
