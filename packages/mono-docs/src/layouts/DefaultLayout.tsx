@@ -9,6 +9,7 @@ import { SideBar } from "../components/SideBar/SideBar";
 import { MetaTags } from "../components/MetaTags/MetaTags";
 
 export const DefaultLayout = withCss(classes, function DefaultLayout({ children }: BaseProps) {
+    const { siteUrl } = this;
     const { siteName, title, sidebar } = this.currentPage.frontMatter;
 
     return (
@@ -16,10 +17,10 @@ export const DefaultLayout = withCss(classes, function DefaultLayout({ children 
             <head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
-                <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
-                <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
-                <link rel="shortcut icon" href="/assets/favicon.ico" />
+                <link rel="apple-touch-icon" sizes="180x180" href={`${siteUrl}/assets/apple-touch-icon.png`} />
+                <link rel="icon" type="image/png" sizes="32x32" href={`${siteUrl}/assets/favicon-32x32.png`} />
+                <link rel="icon" type="image/png" sizes="16x16" href={`${siteUrl}/assets/favicon-16x16.png`} />
+                <link rel="shortcut icon" href={`${siteUrl}/assets/favicon.ico`} />
                 <base href="/" />
                 <title>{title ? `${title} - ${siteName}` : siteName}</title>
                 <MetaTags />
