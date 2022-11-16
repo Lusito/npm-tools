@@ -78,7 +78,7 @@ async function promptProject(packages: PublicPackageJson[]) {
 
 function buildProject(project: PublicPackageJson) {
     console.log("Starting build");
-    run(`yarn workspace ${project.name} run build`);
+    run(`npm run build -w ${project.name}`);
     console.log("Build done");
 }
 

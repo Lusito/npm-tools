@@ -5,21 +5,21 @@
     "packages/tsx-docs"
   ],
   "scripts": {
-    "build": "yarn workspaces run build",
-    "build:tsx-docs-demo": "yarn workspace tsx-docs build:demo",
-    "lint": "yarn lint:es && yarn lint:scss && yarn lint:package && yarn lint:style",
+    "build": "npm run build --workspaces",
+    "build:tsx-docs-demo": "npm run build:demo -w tsx-docs",
+    "lint": "npm run lint:es && npm run lint:scss && npm run lint:package && npm run lint:style",
     "lint:es": "eslint \"packages/*/src/**/*.{ts,tsx}\" --ext \".ts,.tsx\" --ignore-path .prettierignore",
-    "lint:es:fix": "yarn lint:es --fix",
-    "lint:fix": "yarn lint:es:fix && yarn lint:scss:fix && yarn lint:package:fix && yarn lint:style:fix",
-    "lint:package": "yarn lint:package:fix --check",
+    "lint:es:fix": "npm run lint:es --fix",
+    "lint:fix": "npm run lint:es:fix && npm run lint:scss:fix && npm run lint:package:fix && npm run lint:style:fix",
+    "lint:package": "npm run lint:package:fix --check",
     "lint:package:fix": "sort-package-json package.json \"packages/*/package.json\"",
     "lint:scss": "stylelint --ignore-path .prettierignore \"packages/*/src/**/*.scss\"",
-    "lint:scss:fix": "yarn lint:scss --fix",
-    "lint:style": "yarn lint:style:base --check",
+    "lint:scss:fix": "npm run lint:scss --fix",
+    "lint:style": "npm run lint:style:base --check",
     "lint:style:base": "prettier \"packages/*/src/**/*.{ts,tsx,js,json,scss}\" \"packages/*/*.{ts,tsx,js,json,scss}\"",
-    "lint:style:fix": "yarn lint:style:base --write",
+    "lint:style:fix": "npm run lint:style:base --write",
     "release": "ts-node tools/release.ts",
-    "start": "yarn workspace tsx-docs start"
+    "start": "npm run start -w tsx-docs"
   },
   "devDependencies": {
     "@lusito/eslint-config-react": "^2.0.3",
