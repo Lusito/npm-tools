@@ -7,11 +7,11 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces",
-    "build:mono-docs-demo": "npm run build:demo -w mono-docs",
+    "build:mono-docs-demo": "npm run build:demo -w packages/mono-docs",
     "lint": "node packages/mono/dist/mono-lint.js",
     "lint:fix": "node packages/mono/dist/mono-lint.js --fix",
     "release": "node packages/mono/dist/mono-release.js",
-    "start": "npm run start -w mono-docs"
+    "start": "npm run start -w packages/mono-docs"
   },
   "dependencies": {
     "@lusito/eslint-config-react": "^2.0.3",
