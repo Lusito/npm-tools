@@ -1,19 +1,8 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "sourceMap": true,
-    "declaration": true,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es2019",
     "module": "CommonJS",
-    "outDir": "./dist",
-    "lib": ["ESNext"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "esModuleInterop": true
+    "outDir": "dist"
   },
   "exclude": ["node_modules"]
 }

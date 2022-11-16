@@ -1,21 +1,11 @@
 {
-  "compileOnSave": false,
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "sourceMap": true,
-    "declaration": true,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es2019",
     "module": "Node16",
     "lib": ["ESNext", "dom"],
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "strict": true,
-    "noImplicitOverride": true,
     "jsx": "react-jsx",
     "jsxImportSource": "tsx-dom-ssr",
-    "esModuleInterop": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
