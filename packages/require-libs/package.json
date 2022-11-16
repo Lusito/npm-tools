@@ -8,14 +8,6 @@
     "require",
     "hook"
   ],
-  "homepage": "https://github.com/Lusito/require-libs",
-  "bugs": {
-    "url": "https://github.com/Lusito/require-libs/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Lusito/require-libs.git"
-  },
   "license": "MIT",
   "author": "Santo Pfingsten",
   "main": "dist/index.js",

@@ -38,7 +38,6 @@ export function createMarkdownCompiler({ copyAsset, createElement, postProcess, 
 
             return `<pre><code class="hljs">${code ?? md.utils.escapeHtml(str)}</code></pre>`;
         },
-        // eslint-disable-next-line @typescript-eslint/no-shadow
     });
     setup?.(md);
 

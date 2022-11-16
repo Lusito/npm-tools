@@ -1,4 +1,4 @@
-# tsx-docs
+# @lusito/mono-docs
 
 A static documentation generator targeted at normal and monorepo code repositories.
 
@@ -12,5 +12,5 @@ If you feel like this might be something for your projects, give me a heads up.
 
 ## License
 
-tsx-docs has been released under the [MIT](https://github.com/Lusito/tsx-docs/blob/master/LICENSE) license, meaning you
+@lusito/mono-docs has been released under the [MIT](./LICENSE) license, meaning you
 can use it free of charge, without strings attached in commercial and non-commercial projects. Credits are appreciated but not mandatory.

@@ -58,7 +58,6 @@ export type RenderContext = {
 
 // Extend ComponentThis
 declare module "tsx-dom-ssr" {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
     export interface ComponentThis extends RenderContext {
         readonly cssModules: CssModule[];
     }

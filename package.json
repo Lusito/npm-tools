@@ -2,16 +2,16 @@
   "private": true,
   "workspaces": [
     "packages/mono",
-    "packages/require-libs",
-    "packages/tsx-docs"
+    "packages/mono-docs",
+    "packages/require-libs"
   ],
   "scripts": {
     "build": "npm run build --workspaces",
-    "build:tsx-docs-demo": "npm run build:demo -w tsx-docs",
+    "build:mono-docs-demo": "npm run build:demo -w mono-docs",
     "lint": "node packages/mono/dist/mono-lint.js",
     "lint:fix": "node packages/mono/dist/mono-lint.js --fix",
     "release": "node packages/mono/dist/mono-release.js",
-    "start": "npm run start -w tsx-docs"
+    "start": "npm run start -w mono-docs"
   },
   "dependencies": {
     "@lusito/eslint-config-react": "^2.0.3",

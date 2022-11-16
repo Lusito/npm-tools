@@ -10,7 +10,7 @@ const [_node, _script, src, dest, mode] = process.argv;
 
 async function start() {
     if (!src || !dest || (mode && mode !== "serve")) {
-        console.log("usage: tsx-docs <source> <destination> [serve]");
+        console.log("usage: mono-docs <source> <destination> [serve]");
         return;
     }
     const serve = mode === "serve";

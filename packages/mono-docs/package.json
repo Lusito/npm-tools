@@ -1,10 +1,10 @@
 {
-  "name": "tsx-docs",
+  "name": "@lusito/mono-docs",
   "version": "0.8.0",
   "license": "MIT",
   "author": "Santo Pfingsten",
   "bin": {
-    "tsx-docs": "dist/cli.js"
+    "mono-docs": "dist/cli.js"
   },
   "files": [
     "dist"
