@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+#!/usr/bin/env node
 import prompts from "prompts";
 import type { PackageJson } from "type-fest";
 import { readFile } from "fs/promises";
