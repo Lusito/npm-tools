@@ -1,29 +1,12 @@
 #!/usr/bin/env node
-import prompts from "prompts";
-import type { PackageJson } from "type-fest";
-import { readFile } from "fs/promises";
-import { join, dirname } from "path";
-import { execSync } from "child_process";
+import { dirname } from "path";
 
-type PublicPackageJson = PackageJson & {
-    path: string;
-    name: string;
-    version: string;
-    private: false;
-};
+import { loadPackages, prompt, PublicPackageJson, run } from "./utils";
 
 async function main() {
-    let { workspaces } = await loadPackage(join(process.cwd(), "./package.json"));
+    const { workspaces } = await loadPackages();
 
-    workspaces = Array.isArray(workspaces) ? workspaces : workspaces?.packages;
-
-    if (!workspaces) throw new Error("No workspaces found");
-
-    const workspacePackages = await Promise.all(
-        workspaces.map((workspace) => loadPackage(join(process.cwd(), workspace, "package.json")))
-    );
-
-    const publicPackages = workspacePackages.filter((p) => !p.private && p.name && p.version) as PublicPackageJson[];
+    const publicPackages = workspaces.filter((p) => !p.private && p.name && p.version) as PublicPackageJson[];
 
     const project = await promptProject(publicPackages);
     await bumpVersion(project, publicPackages);
@@ -31,31 +14,6 @@ async function main() {
     const publishMethod = await promptPublishMethod();
     releaseProject(project, publishMethod === "dry-run");
 }
-
-async function loadPackage(path: string) {
-    const data = await readFile(path);
-
-    return Object.assign(JSON.parse(data.toString()), { path }) as PackageJson;
-}
-
-async function prompt<T = string>(question: Omit<prompts.PromptObject<"value">, "name">): Promise<T> {
-    const result = await prompts(
-        {
-            name: "value",
-            ...question,
-        },
-        {
-            onCancel() {
-                console.error("Aborting");
-                process.exit(-1);
-            },
-        }
-    );
-
-    return result.value;
-}
-
-const run = (command: string) => execSync(command, { stdio: [0, 1, 2] });
 
 async function promptPublishMethod() {
     return prompt<"normal" | "dry-run">({

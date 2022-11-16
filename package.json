@@ -1,31 +1,23 @@
 {
   "private": true,
   "workspaces": [
-    "packages/monopub",
+    "packages/mono",
     "packages/require-libs",
     "packages/tsx-docs"
   ],
   "scripts": {
     "build": "npm run build --workspaces",
     "build:tsx-docs-demo": "npm run build:demo -w tsx-docs",
-    "lint": "npm run lint:es && npm run lint:scss && npm run lint:package && npm run lint:style",
-    "lint:es": "eslint \"packages/*/src/**/*.{ts,tsx}\" --ext \".ts,.tsx\" --ignore-path .prettierignore",
-    "lint:es:fix": "npm run lint:es -- --fix",
-    "lint:fix": "npm run lint:es:fix && npm run lint:scss:fix && npm run lint:package:fix && npm run lint:style:fix",
-    "lint:package": "npm run lint:package:fix -- --check",
-    "lint:package:fix": "sort-package-json package.json \"packages/*/package.json\"",
-    "lint:scss": "stylelint --ignore-path .prettierignore \"packages/*/src/**/*.scss\"",
-    "lint:scss:fix": "npm run lint:scss -- --fix",
-    "lint:style": "npm run lint:style:base -- --check",
-    "lint:style:base": "prettier \"packages/*/src/**/*.{ts,tsx,js,json,scss}\" \"packages/*/*.{ts,tsx,js,json,scss}\"",
-    "lint:style:fix": "npm run lint:style:base -- --write",
-    "monopub": "node packages/monopub/dist/monopub.js",
+    "lint": "node packages/mono/dist/mono-lint.js",
+    "lint:fix": "node packages/mono/dist/mono-lint.js --fix",
+    "release": "node packages/mono/dist/mono-release.js",
     "start": "npm run start -w tsx-docs"
   },
-  "devDependencies": {
+  "dependencies": {
     "@lusito/eslint-config-react": "^2.0.3",
     "@lusito/prettier-config": "^2.0.0",
     "@lusito/stylelint-config": "^2.0.2",
-    "sort-package-json": "^1.57.0"
+    "sort-package-json": "^1.57.0",
+    "typescript": "~4.8.2"
   }
 }
