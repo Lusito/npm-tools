@@ -6,24 +6,28 @@ import fastifyStatic from "@fastify/static";
 import { setupPirates } from "./pirates";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const [_node, _script, src, dest, mode] = process.argv;
+const [_node, _script, src, dest, siteUrlOrServe] = process.argv;
+
+const protocolPattern = /^https?:\/\//;
 
 async function start() {
-    if (!src || !dest || (mode && mode !== "serve")) {
-        console.log("usage: mono-docs <source> <destination> [serve]");
+    if (!src || !dest || (!protocolPattern.test(siteUrlOrServe) && siteUrlOrServe !== "serve")) {
+        console.log("usage: mono-docs <source> <destination> [serve|siteUrl]");
         return;
     }
-    const serve = mode === "serve";
+    const serve = siteUrlOrServe === "serve";
     const port = 3000;
     const devUrl = `http://localhost:${port}`;
 
     const fullSrc = resolve(process.cwd(), src);
     const fullDest = resolve(process.cwd(), dest);
 
-    await setupPirates(resolve(dest, "assets"), serve);
+    const siteUrl = serve ? devUrl : siteUrlOrServe;
+
+    await setupPirates(resolve(dest, "assets"), siteUrl, serve);
 
     const { createFiles } = await import("./generate");
-    await createFiles({ src: fullSrc, dest: fullDest, devUrl, devMode: serve });
+    await createFiles({ src: fullSrc, dest: fullDest, siteUrl, devMode: serve });
 
     // The stuff below is purely for the dev-server
     if (serve) {

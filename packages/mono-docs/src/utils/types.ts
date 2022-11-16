@@ -15,7 +15,6 @@ export type FrontMatter = {
 
 export type RootPageFrontMatter = FrontMatter & {
     siteName?: string;
-    siteUrl?: string;
     projects?: string[];
 };
 
@@ -54,6 +53,7 @@ export type RenderContext = {
     readonly devMode: boolean;
     readonly currentPage: PageInfo;
     readonly pages: PageInfo[];
+    readonly siteUrl: string;
 };
 
 // Extend ComponentThis

@@ -8,7 +8,7 @@ export const Search = withCss(classes, function Search() {
             <search-container
                 class={classes.searchOverlay}
                 searchField="search-field"
-                searchData={`${this.currentPage.frontMatter.siteUrl}/search-data.json`}
+                searchData={`${this.siteUrl}/search-data.json`}
                 searchItems={classes.searchItems}
                 overlayVisible={classes.searchOverlayVisible}
             >

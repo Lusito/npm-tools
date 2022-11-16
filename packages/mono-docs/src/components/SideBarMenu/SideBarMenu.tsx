@@ -13,7 +13,7 @@ type NavItemProps = {
 };
 
 function NavItem(this: ComponentThis, { label, ariaLabel, path, nested }: NavItemProps) {
-    const { siteUrl } = this.currentPage.frontMatter;
+    const { siteUrl } = this;
     const isCurrent = path === this.currentPage.path;
     return (
         <li class={classnames({ [classes.selected]: isCurrent, [classes.nested]: nested })}>
@@ -32,8 +32,8 @@ function NavItem(this: ComponentThis, { label, ariaLabel, path, nested }: NavIte
 
 export const SideBarMenu = withCss(classes, function SideBarMenu() {
     const { projectIndex, frontMatter } = this.currentPage;
-    const { sidebar, projects, siteUrl } = frontMatter;
-    const { pages } = this;
+    const { sidebar, projects } = frontMatter;
+    const { pages, siteUrl } = this;
 
     const findPage = (file: string) => pages.find((p) => p.file === file);
 

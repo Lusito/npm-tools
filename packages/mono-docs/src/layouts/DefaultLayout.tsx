@@ -24,7 +24,7 @@ export const DefaultLayout = withCss(classes, function DefaultLayout({ children 
                 <title>{title ? `${title} - ${siteName}` : siteName}</title>
                 <MetaTags />
                 <ReloadScript />
-                <script src="/assets/custom-elements.js" defer />
+                <script src={`${this.siteUrl}/assets/custom-elements.js`} defer />
             </head>
             <body>
                 <Header />

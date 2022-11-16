@@ -7,8 +7,8 @@ import { FrontMatter } from "./utils/types";
 import { createElement } from "./utils/fakeDocument";
 import { isTruthy } from "./utils/filterUtils";
 
-export async function setupPirates(assetDir: string, devMode: boolean) {
-    const copyAsset = createCopyAsset(assetDir, "/assets/");
+export async function setupPirates(assetDir: string, siteUrl: string, devMode: boolean) {
+    const copyAsset = createCopyAsset(assetDir, `${siteUrl}/assets/`);
 
     // Images
     const imageHandler = createImageHandler({ copyAsset });

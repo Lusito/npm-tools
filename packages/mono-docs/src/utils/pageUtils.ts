@@ -84,7 +84,6 @@ export async function getProjectPages(rootPath: string, project: string, rootFro
 const defaultFrontMatter: CombinedFrontMatter = {
     siteName: "Unnamed Documentation",
     description: "",
-    siteUrl: "",
     footer: [],
     keywords: [],
     links: [],

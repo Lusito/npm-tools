@@ -15,7 +15,7 @@ type GenerateConfig = {
     src: string;
     dest: string;
     devMode: boolean;
-    devUrl: string;
+    siteUrl: string;
 };
 
 async function writeSitemap(config: SiteMapConfig, dest: string) {
@@ -23,15 +23,15 @@ async function writeSitemap(config: SiteMapConfig, dest: string) {
     await fs.promises.writeFile(`${dest}/sitemap.xml`, xml);
 }
 
-async function writeSearchData(pages: PageInfo[], dest: string) {
+async function writeSearchData(pages: PageInfo[], dest: string, siteUrl: string) {
     const data: SearchEntry[] = pages.map((p) => ({
-        url: `${p.frontMatter.siteUrl}${p.path.replace(/\/index\.html$/, "/")}`,
+        url: `${siteUrl}${p.path.replace(/\/index\.html$/, "/")}`,
         content: p.frontMatter.textContent,
         title: p.frontMatter.title || p.frontMatter.siteName,
         projectIndex: p.projectIndex
             ? {
                   title: p.projectIndex.frontMatter.title || p.projectIndex.frontMatter.siteName,
-                  url: `${p.projectIndex.frontMatter.siteUrl}${p.projectIndex.path.replace(/\/index\.html$/, "/")}`,
+                  url: `${siteUrl}${p.projectIndex.path.replace(/\/index\.html$/, "/")}`,
               }
             : undefined,
     }));
@@ -90,18 +90,11 @@ function buildPageInfo(slug: string, title: string, description: string, indexPa
 export async function createFiles(config: GenerateConfig) {
     const pages = await getPages(config.src);
     const indexPage = pages[0];
-    if (config.devMode && config.devUrl) {
-        for (const page of pages) {
-            page.frontMatter.siteUrl = config.devUrl;
-        }
-    }
-
-    const { siteUrl } = indexPage.frontMatter;
-    if (!siteUrl) throw new Error("Could not detect siteUrl");
 
     const partialContext: Omit<RenderContext, "currentPage"> = {
         pages,
         devMode: config.devMode,
+        siteUrl: config.siteUrl,
     };
 
     const notFoundPage = buildPageInfo("404", "404", "File Not Found", indexPage);
@@ -112,8 +105,8 @@ export async function createFiles(config: GenerateConfig) {
         writeHTML({ ...partialContext, currentPage: notFoundPage }, <NotFoundPage />, config.dest),
         writeHTML({ ...partialContext, currentPage: allPagesPage }, <ListAllPage />, config.dest),
         ...pages.map((currentPage) => writeHTML({ ...partialContext, currentPage }, <MarkdownPage />, config.dest)),
-        writeSitemap({ pages, siteUrl }, config.dest),
-        writeSearchData(pages, config.dest),
+        writeSitemap({ pages, siteUrl: config.siteUrl }, config.dest),
+        writeSearchData(pages, config.dest, config.siteUrl),
     ]);
 
     console.log("Done");

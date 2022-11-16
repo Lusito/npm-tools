@@ -13,9 +13,10 @@
     "build": "rimraf dist && tsc --project tsconfig.build.json && npm run build:assets && npm run build:custom-elements && chmod +x dist/cli.js",
     "build:assets": "cpy \"src/**/*.{scss,webp,png}\" dist && cpy src/assets/**/* dist/assets",
     "build:custom-elements": "esbuild --platform=browser src/custom-elements/index.ts --bundle --minify --outfile=dist/assets/custom-elements.js",
-    "build:demo": "npm run build:custom-elements && rimraf demo-src/dist && node -r ./esbuild-register.js src/cli.ts demo-src/ demo-src/dist",
+    "build:demo": "npm run build:demo:base -- \"https://lusito.github.io/react-nano\"",
+    "build:demo:base": "npm run build:custom-elements && rimraf demo-src/dist && node -r ./esbuild-register.js src/cli.ts demo-src/ demo-src/dist",
     "start": "nodemon --ignore \"demo-src/dist\" --ignore node_modules --ignore dist -e ts,tsx,md,scss,png,webp --exec \"npm run start:internal\"",
-    "start:internal": "npm run build:demo -- serve"
+    "start:internal": "npm run build:demo:base -- serve"
   },
   "dependencies": {
     "@fastify/static": "^6.5.0",

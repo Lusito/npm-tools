@@ -2,7 +2,7 @@ import { ComponentThis } from "tsx-dom-ssr";
 
 export function MetaTags(this: ComponentThis) {
     const { frontMatter, path } = this.currentPage;
-    const { siteName, keywords, description, siteUrl, title } = frontMatter;
+    const { siteName, keywords, description, title } = frontMatter;
 
     return (
         <>
@@ -12,7 +12,7 @@ export function MetaTags(this: ComponentThis) {
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
             <meta property="og:locale" content="en_US" />
-            <meta property="og:url" content={`${siteUrl}${path}`} />
+            <meta property="og:url" content={`${this.siteUrl}${path}`} />
         </>
     );
 }
