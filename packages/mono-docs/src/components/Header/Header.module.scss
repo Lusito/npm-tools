@@ -6,7 +6,7 @@
     font-family: $font-sans-serif;
     font-weight: bold;
     background: var(--color-dark);
-    padding: 0 0.5rem 0 #{$menu-grip-width + 0.5rem};
+    padding: 0 0.5rem;
     line-height: $header-height;
     flex-shrink: 0;
     position: relative;
@@ -16,6 +16,14 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     justify-content: space-between;
+
+    &.with-side-bar {
+        padding-left: #{$menu-grip-width + 0.5rem};
+
+        @include from("large") {
+            padding-left: 0.5rem;
+        }
+    }
 
     .left > a,
     .links > a {
@@ -45,9 +53,5 @@
                 display: block;
             }
         }
-    }
-
-    @include from("large") {
-        padding-left: 0.5rem;
     }
 }

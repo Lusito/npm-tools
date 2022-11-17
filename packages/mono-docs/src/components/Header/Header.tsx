@@ -1,14 +1,18 @@
-import { ComponentThis } from "tsx-dom-ssr";
+import classnames from "classnames";
 
 import { withCss } from "../../utils/withCss";
 import { Search } from "../Search/Search";
 import classes from "./Header.module.scss";
 
-export const Header = withCss(classes, function Header(this: ComponentThis) {
+type HeaderProps = {
+    withSideBar: boolean;
+};
+
+export const Header = withCss(classes, function Header({ withSideBar }: HeaderProps) {
     const { siteUrl } = this;
 
     return (
-        <header class={classes.header}>
+        <header class={classnames({ [classes.header]: true, [classes.withSideBar]: withSideBar })}>
             <div class={classes.left}>
                 <a href={`${siteUrl}${this.pages[0].path}`}>{this.currentPage.frontMatter.siteName}</a>
             </div>

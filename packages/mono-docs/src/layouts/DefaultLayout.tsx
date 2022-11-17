@@ -28,7 +28,7 @@ export const DefaultLayout = withCss(classes, function DefaultLayout({ children 
                 <script src={`${this.siteUrl}/assets/custom-elements.js`} defer />
             </head>
             <body>
-                <Header />
+                <Header withSideBar={sidebar.length > 0} />
                 {sidebar.length > 0 && <SideBar />}
                 <div class={`${classes.mainwrapper} scatman-container scatman-scroll-area`}>
                     <main>{children}</main>

@@ -18,6 +18,7 @@ projects:
   - packages/router
   - packages/tsrux
   - packages/use-event-source
+  - packages/use-fetch
   - packages/use-graphql
 ---
 

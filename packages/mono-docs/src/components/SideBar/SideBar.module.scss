@@ -79,6 +79,7 @@ $transition-time: 0.5s;
 }
 
 .content {
+    max-height: 100%;
     overflow-y: auto;
 
     > .links {
