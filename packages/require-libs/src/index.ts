@@ -28,6 +28,11 @@ declare global {
         export = content;
     }
     // @ts-expect-error It becomes valid in the final .d.ts file
+    module "*.svg" {
+        const content: string;
+        export = content;
+    }
+    // @ts-expect-error It becomes valid in the final .d.ts file
     module "*.md" {
         const content: import("./markdown").MarkdownModule;
         export = content;

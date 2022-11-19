@@ -3,18 +3,24 @@ import classes from "./Search.module.scss";
 
 export const Search = withCss(classes, function Search() {
     return (
-        <>
-            <input class={classes.search} type="search" placeholder="Search..." id="search-field" />
-            <search-container
-                class={classes.searchOverlay}
-                searchField="search-field"
-                searchData={`${this.siteUrl}/search-data.json`}
-                searchItems={classes.searchItems}
-                overlayVisible={classes.searchOverlayVisible}
-            >
+        <search-container
+            class={classes.searchContainer}
+            searchButton={classes.searchButton}
+            searchField={classes.searchField}
+            searchData={`${this.siteUrl}/search-data.json`}
+            searchItems={classes.searchItems}
+            overlay={classes.searchOverlay}
+            overlayVisible={classes.searchOverlayVisible}
+        >
+            <button class={classes.searchButton} title="Search" aria-label="Search" />
+            <div class={classes.searchOverlay}>
+                <label class={classes.searchFieldWrapper}>
+                    <span>Search: </span>
+                    <input type="search" autoFocus class={classes.searchField} />
+                </label>
                 <h2>Search results:</h2>
                 <ul class={classes.searchItems}></ul>
-            </search-container>
-        </>
+            </div>
+        </search-container>
     );
 });

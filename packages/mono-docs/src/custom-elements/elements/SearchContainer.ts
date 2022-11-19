@@ -17,43 +17,54 @@ function createLink(url: string, text: string) {
 }
 
 class SearchContainer extends HTMLElement {
-    searchField?: HTMLInputElement;
-
-    searchItems?: HTMLElement | null;
-
-    overlayVisibleClass?: string;
-
     data?: SearchEntry[];
 
+    private getAttributeChecked(key: keyof SearchContainerProps) {
+        const value = this.getAttribute(key);
+        if (value === null) throw new Error(`Missing attribute ${key} on SearchContainer`);
+
+        return value;
+    }
+
+    private getElementByAttribute(key: keyof SearchContainerProps) {
+        const clazz = this.getAttributeChecked(key);
+        const element = this.querySelector(`.${clazz}`);
+        if (element === null) throw new Error(`Element .${clazz} not found within SearchContainer`);
+        return element;
+    }
+
     connectedCallback() {
-        const searchItemsClass = this.getAttribute("searchItems");
-        this.searchItems = this.querySelector(searchItemsClass ? `.${searchItemsClass}` : "ul");
-        const searchDataUrl = this.getAttribute("searchData") ?? "";
-        const searchFieldId = this.getAttribute("searchField") ?? "";
-        this.overlayVisibleClass = this.getAttribute("overlayVisible") ?? "";
-        const searchField = document.querySelector(`#${searchFieldId}`);
-        if (this.searchItems && searchDataUrl && searchField instanceof HTMLInputElement) {
-            this.searchField = searchField;
-            searchField.addEventListener("input", this.onInput);
-            this.searchField.value = "";
+        const searchField = this.getElementByAttribute("searchField") as HTMLInputElement;
+        searchField.addEventListener("input", this.onInput);
 
-            searchField.addEventListener("focus", () => {
-                if (!this.data) {
-                    this.fetchData(searchDataUrl);
-                }
-            });
-        }
+        const searchButton = this.getElementByAttribute("searchButton");
+        const overlay = this.getElementByAttribute("overlay");
+        const overlayVisibleClass = this.getAttributeChecked("overlayVisible");
+        const searchItems = this.getElementByAttribute("searchItems");
+        searchButton.addEventListener("click", () => {
+            searchField.value = "";
+            searchItems.innerHTML = "";
+            overlay.classList.toggle(overlayVisibleClass);
+            if (overlay.classList.contains(overlayVisibleClass)) {
+                searchField.focus();
+            }
+            if (!this.data) {
+                this.fetchData();
+            }
+        });
 
-        document.addEventListener("click", this.onClick);
+        document.addEventListener("click", this.onDocumentClick);
     }
 
     disconnectedCallback() {
-        this.searchField?.removeEventListener("input", this.onInput);
-        document.removeEventListener("click", this.onClick);
+        const searchField = this.getElementByAttribute("searchField") as HTMLInputElement;
+        searchField.removeEventListener("input", this.onInput);
+        document.removeEventListener("click", this.onDocumentClick);
     }
 
-    private async fetchData(url: string) {
+    private async fetchData() {
         try {
+            const url = this.getAttributeChecked("searchData");
             const req = await fetch(url);
             if (!req.ok) {
                 throw new Error("Failed getting search data");
@@ -66,19 +77,19 @@ class SearchContainer extends HTMLElement {
     }
 
     private updateSearchResult() {
-        if (this.searchItems && this.searchField && this.data && this.overlayVisibleClass) {
-            const terms = this.searchField.value
+        if (this.data) {
+            const searchField = this.getElementByAttribute("searchField") as HTMLInputElement;
+            const searchItems = this.getElementByAttribute("searchItems");
+            const terms = searchField.value
                 .toLocaleLowerCase()
                 .split(" ")
                 .filter((v) => v.trim());
 
-            this.searchItems.innerHTML = "";
+            searchItems.innerHTML = "";
             if (!terms.length) {
-                this.classList.remove(this.overlayVisibleClass);
                 return;
             }
 
-            this.classList.add(this.overlayVisibleClass);
             for (const entry of this.data) {
                 const title = entry.title.toLowerCase();
                 const text = entry.content.toLowerCase();
@@ -87,7 +98,7 @@ class SearchContainer extends HTMLElement {
                     (title && terms.every((term) => title.includes(term)))
                 ) {
                     const li = document.createElement("li");
-                    this.searchItems.appendChild(li);
+                    searchItems.appendChild(li);
 
                     if (entry.projectIndex && entry.projectIndex.url !== entry.url) {
                         li.appendChild(createLink(entry.projectIndex.url, entry.projectIndex.title));
@@ -102,13 +113,11 @@ class SearchContainer extends HTMLElement {
 
     private onInput = debounce(() => this.updateSearchResult());
 
-    private onClick = ({ target }: MouseEvent) => {
-        if (this.searchField && target instanceof Element) {
-            // Hide if clicked on a link or if clicked outside of searchfield and overlay
-            if (target.closest("a") || !target.closest(`#${this.searchField?.id},.${this.overlayVisibleClass}`)) {
-                this.searchField.value = "";
-                this.updateSearchResult();
-            }
+    private onDocumentClick = ({ target }: MouseEvent) => {
+        const overlayVisibleClass = this.getAttributeChecked("overlayVisible");
+        // Hide if clicked on a link or if clicked outside of search-container
+        if (target instanceof Element && (target.closest("a") || !target.closest("search-container"))) {
+            this.getElementByAttribute("overlay").classList.toggle(overlayVisibleClass, false);
         }
     };
 }
@@ -116,8 +125,10 @@ class SearchContainer extends HTMLElement {
 customElements.define("search-container", SearchContainer);
 
 export type SearchContainerProps = {
+    searchButton: string;
     searchField: string;
     searchData: string;
     searchItems: string;
+    overlay: string;
     overlayVisible: string;
 };

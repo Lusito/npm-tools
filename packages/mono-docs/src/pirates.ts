@@ -13,7 +13,7 @@ export async function setupPirates(assetDir: string, siteUrl: string, devMode: b
     // Images
     const imageHandler = createImageHandler({ copyAsset });
     addHook((_, filename) => imageHandler(filename), {
-        exts: [".png", ".webp", ".jpg", ".jpeg", ".gif"],
+        exts: [".png", ".webp", ".jpg", ".jpeg", ".gif", ".svg"],
         ignoreNodeModules: false,
     });
 
