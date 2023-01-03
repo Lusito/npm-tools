@@ -1,6 +1,6 @@
 {
   "name": "@lusito/require-libs",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Some libraries to setup require hooks",
   "keywords": [
     "css-modules",
