@@ -1,11 +1,11 @@
 import path, { relative } from "path";
-import fs from "fs";
+import { readFileSync } from "fs";
 import crypto from "crypto";
 
 import { createScssCompiler } from "../src/scss-modules/createCompiler";
 
 function hashFile(filename: string) {
-    const fileBuffer = fs.readFileSync(filename);
+    const fileBuffer = readFileSync(filename);
     const hashSum = crypto.createHash("sha256");
     hashSum.update(fileBuffer);
     return hashSum.digest("hex").substring(0, 8);

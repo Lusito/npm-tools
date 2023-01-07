@@ -31,8 +31,8 @@ function NavItem(this: ComponentThis, { label, ariaLabel, path, nested }: NavIte
 }
 
 export const SideBarMenu = withCss(classes, function SideBarMenu() {
-    const { projectIndex, frontMatter } = this.currentPage;
-    const { sidebar, projects } = frontMatter;
+    const { projectIndex, docsConfig } = this.currentPage;
+    const { sidebar, projects } = docsConfig;
     const { pages, siteUrl } = this;
 
     const findPage = (file: string) => pages.find((p) => p.file === file);
@@ -40,18 +40,23 @@ export const SideBarMenu = withCss(classes, function SideBarMenu() {
     return (
         <nav role="navigation" aria-label="Main Menu">
             <ul class={classes.sideBarMenu}>
-                <li class={classes.projectSelector}>
-                    <link-select tsxTag="select" autoComplete="off">
-                        {projects
-                            .map(findPage)
-                            .filter(isTruthy)
-                            .map((page) => (
-                                <option value={`${siteUrl}${page.path}`} selected={page.projectIndex === projectIndex}>
-                                    Project: {page.frontMatter.title}
-                                </option>
-                            ))}
-                    </link-select>
-                </li>
+                {projects.length > 0 && (
+                    <li class={classes.projectSelector}>
+                        <link-select tsxTag="select" autoComplete="off">
+                            {projects
+                                .map(findPage)
+                                .filter(isTruthy)
+                                .map((page) => (
+                                    <option
+                                        value={`${siteUrl}${page.path}`}
+                                        selected={page.projectIndex === projectIndex}
+                                    >
+                                        Project: {page.docsConfig.title}
+                                    </option>
+                                ))}
+                        </link-select>
+                    </li>
+                )}
                 {sidebar
                     .map(findPage)
                     .filter(isTruthy)
@@ -59,10 +64,10 @@ export const SideBarMenu = withCss(classes, function SideBarMenu() {
                         <>
                             <NavItem
                                 path={page.path}
-                                label={page.file.endsWith("README.md") ? "Readme" : page.frontMatter.title}
+                                label={page.file.endsWith("README.md") ? "Readme" : page.meta.title}
                             />
                             {!page.file.endsWith("README.md") &&
-                                page.frontMatter.subHeadings.map(({ id, text }) => (
+                                page.meta.subHeadings.map(({ id, text }) => (
                                     <NavItem path={`${page.path}#${id}`} label={text} nested />
                                 ))}
                         </>

@@ -31,6 +31,7 @@
     "happy-dom": "^8.1.1",
     "highlight.js": "^11.7.0",
     "image-size": "^1.0.2",
+    "js-yaml": "^4.1.0",
     "markdown-it": "^13.0.1",
     "pirates": "^4.0.5",
     "rimraf": "^3.0.2",
@@ -39,6 +40,7 @@
     "tsx-dom-types": "^1.0.0"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.5",
     "@types/markdown-it": "^12.2.3",
     "@types/node": "18.11.18",
     "@types/slug": "^5.0.3",

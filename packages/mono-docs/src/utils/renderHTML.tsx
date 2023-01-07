@@ -78,8 +78,8 @@ export async function renderHTML(renderContext: RenderContext, children: Compone
     }
 
     const { siteUrl, currentPage } = renderContext;
-    const { dir } = currentPage;
-    const { adjustPaths } = currentPage.frontMatter;
+    const { dir, docsConfig } = currentPage;
+    const { adjustPaths } = docsConfig;
     wrapper.querySelectorAll("a").forEach((link) => {
         const href = link.getAttribute("href");
 

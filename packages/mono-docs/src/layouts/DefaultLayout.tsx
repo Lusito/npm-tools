@@ -7,10 +7,14 @@ import classes from "./DefaultLayout.module.scss";
 import { ReloadScript } from "../utils/ReloadScript";
 import { SideBar } from "../components/SideBar/SideBar";
 import { MetaTags } from "../components/MetaTags/MetaTags";
+import { getPageTitle } from "../utils/pageUtils";
 
 export const DefaultLayout = withCss(classes, function DefaultLayout({ children }: BaseProps) {
-    const { siteUrl } = this;
-    const { siteName, title, sidebar } = this.currentPage.frontMatter;
+    const { siteUrl, currentPage } = this;
+    const { docsConfig } = currentPage;
+    const { siteName, sidebar } = docsConfig;
+    const title = getPageTitle(currentPage);
+    const finalTitle = !title || title === siteName ? siteName : `${title} - ${siteName}`;
 
     return (
         <html lang="en">
@@ -22,10 +26,10 @@ export const DefaultLayout = withCss(classes, function DefaultLayout({ children 
                 <link rel="icon" type="image/png" sizes="16x16" href={`${siteUrl}/assets/favicon-16x16.png`} />
                 <link rel="shortcut icon" href={`${siteUrl}/assets/favicon.ico`} />
                 <base href="/" />
-                <title>{title ? `${title} - ${siteName}` : siteName}</title>
-                <MetaTags />
+                <title>{finalTitle}</title>
+                <MetaTags title={title} />
                 <ReloadScript />
-                <script src={`${this.siteUrl}/assets/custom-elements.js`} defer />
+                <script src={`${siteUrl}/assets/custom-elements.js`} defer />
             </head>
             <body>
                 <Header withSideBar={sidebar.length > 0} />

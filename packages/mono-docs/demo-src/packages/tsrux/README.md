@@ -1,16 +1,3 @@
----
-title: 'tsrux'
-description: Typesafe and painless action creators and reducers for redux.
-keywords:
-  - redux
-sidebar:
-  - 'setup'
-  - 'action-creators'
-  - 'reducers'
-  - 'types'
-  - 'further-examples'
----
-
 # @react-nano/tsrux
 
 Typesafe and painless action creators and reducers for redux.

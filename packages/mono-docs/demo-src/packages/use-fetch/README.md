@@ -1,19 +1,3 @@
----
-title: 'use-fetch'
-description: Lightweight fetching hooks for react, written in TypeScript.
-keywords:
-  - react
-  - hooks
-  - fetch
-sidebar:
-  - 'setup'
-  - 'get'
-  - 'modify'
-  - 'api'
-  - 'config'
-  - 'helpers'
----
-
 # @react-nano/use-fetch
 
 Lightweight fetching hooks for react, written in TypeScript.

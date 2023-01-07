@@ -6,6 +6,7 @@ import frontMatter from "front-matter";
 export type MarkdownModule = {
     html: string;
     frontMatter: unknown;
+    meta: Record<string, unknown>;
 };
 
 export type MarkdownPostProcessData = {
@@ -18,7 +19,7 @@ export type MarkdownPostProcessData = {
 export type MarkdownCompilerOptions = {
     copyAsset(filename: string): string;
     createElement: typeof document.createElement;
-    postProcess(data: MarkdownPostProcessData): void;
+    postProcess(data: MarkdownPostProcessData): Record<string, unknown> | undefined;
     setup?(md: MarkdownIt): void;
 };
 
@@ -55,7 +56,7 @@ export function createMarkdownCompiler({ copyAsset, createElement, postProcess, 
             }
         });
 
-        postProcess({
+        const meta = postProcess({
             filename,
             dir,
             dom,
@@ -64,6 +65,7 @@ export function createMarkdownCompiler({ copyAsset, createElement, postProcess, 
 
         return {
             html: dom.innerHTML,
+            meta: meta ?? {},
             frontMatter: result.attributes,
         };
     };

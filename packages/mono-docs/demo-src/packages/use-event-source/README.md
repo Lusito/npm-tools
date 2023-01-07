@@ -1,18 +1,3 @@
----
-title: 'use-event-source'
-description: A lightweight EventSource (server-sent-events) hook for react, written in TypeScript.
-keywords:
-  - react
-  - hooks
-  - event-source
-  - server-sent-events
-  - sse
-sidebar:
-  - 'setup'
-  - 'usage'
-  - 'redux'
----
-
 # @react-nano/use-event-source
 
 A lightweight EventSource (server-sent-events) hook for react, written in TypeScript.

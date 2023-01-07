@@ -1,10 +1,11 @@
-import { basename, dirname, join, relative, resolve } from "path";
+import { basename, dirname, relative, resolve } from "path";
 import slugify from "slug";
 import { MarkdownModule } from "@lusito/require-libs";
 
 import { getAllFiles } from "./fileUtils";
-import { CombinedFrontMatter, PageInfo } from "./types";
+import { CombinedDocsConfig, PageInfo, PageMeta } from "./types";
 import { applyAdjustPaths } from "./adjustPaths";
+import { ConfigGetter } from "./configUtils";
 
 function slugFromFilename(filename: string) {
     const slug = slugify(basename(filename, ".md"));
@@ -12,19 +13,7 @@ function slugFromFilename(filename: string) {
     return slug === "readme" ? "index" : slug;
 }
 
-function getParentFrontMatter(key: string, byKey: Record<string, PageInfo>) {
-    const parts = key.split("/");
-
-    if (parts.length > 1) {
-        parts.pop();
-        const parentKey = parts.join("/");
-        return byKey[parentKey]?.frontMatter;
-    }
-
-    return undefined;
-}
-
-async function loadPage(rootPath: string, file: string): Promise<PageInfo> {
+async function loadPage(rootPath: string, file: string, getConfig: ConfigGetter): Promise<PageInfo> {
     const data: MarkdownModule = await import(relative(__dirname, file));
 
     const relativePath = relative(rootPath, file);
@@ -33,46 +22,37 @@ async function loadPage(rootPath: string, file: string): Promise<PageInfo> {
     const slug = slugFromFilename(relativePath);
 
     const key = slug === "index" ? pathPrefix : `${pathPrefix}/${slug}`;
+
+    const docsConfig = getConfig(dir);
+
     return {
         dir,
         file,
         depth: key.split("/").length,
         key,
-        frontMatter: data.frontMatter as CombinedFrontMatter,
-        path: `${pathPrefix}/${slug}.html`,
+        meta: data.meta as PageMeta,
+        docsConfig,
+        path: applyAdjustPaths(`${pathPrefix}/${slug}.html`, docsConfig.adjustPaths),
         body: data.html,
     };
 }
 
-export async function getDocsPages(rootPath: string, docsPath: string, parentFrontMatter: CombinedFrontMatter) {
-    const byKey: Record<string, PageInfo> = {};
-
+async function getDocsPages(rootPath: string, docsPath: string, getConfig: ConfigGetter) {
     const files = await getAllFiles(docsPath, /\.md$/, []);
-    const pages = await Promise.all(
-        files.map(async (file) => {
-            const pageInfo = await loadPage(rootPath, file);
-
-            byKey[pageInfo.key] = pageInfo;
-
-            return pageInfo;
-        })
-    );
+    const pages = await Promise.all(files.map((file) => loadPage(rootPath, file, getConfig)));
     pages.sort((a, b) => a.depth - b.depth);
-
-    for (const page of pages) {
-        adjustFrontMatter(rootPath, page, getParentFrontMatter(page.key, byKey) ?? parentFrontMatter);
-    }
 
     return pages;
 }
 
-export async function getProjectPages(rootPath: string, project: string, rootFrontMatter: CombinedFrontMatter) {
+async function getProjectPages(rootPath: string, project: string, getConfig: ConfigGetter) {
     const projectPath = dirname(project);
-    const indexPage = await loadPage(rootPath, project);
-    adjustFrontMatter(rootPath, indexPage, rootFrontMatter);
+    const indexPage = await loadPage(rootPath, project, getConfig);
     indexPage.projectIndex = indexPage;
 
-    const pages = await getDocsPages(rootPath, resolve(projectPath, indexPage.frontMatter.docs), indexPage.frontMatter);
+    const projectConfig = getConfig(relative(rootPath, projectPath));
+
+    const pages = await getDocsPages(rootPath, projectConfig.docs, getConfig);
 
     for (const page of pages) {
         page.projectIndex = indexPage;
@@ -81,63 +61,30 @@ export async function getProjectPages(rootPath: string, project: string, rootFro
     return [indexPage, ...pages];
 }
 
-const defaultFrontMatter: CombinedFrontMatter = {
-    siteName: "Unnamed Documentation",
-    description: "",
-    footer: [],
-    keywords: [],
-    links: [],
-    projects: [],
-    sidebar: [],
-    title: "",
-    subHeadings: [],
-    adjustPaths: [],
-    textContent: "",
-    docs: "docs",
-};
-
-function adjustFrontMatter(rootPath: string, page: PageInfo, baseFrontMatter: CombinedFrontMatter) {
-    page.path = applyAdjustPaths(page.path, baseFrontMatter.adjustPaths);
-    const { sidebar, projects } = page.frontMatter;
-    page.frontMatter = {
-        ...baseFrontMatter,
-        ...page.frontMatter,
-    };
-
-    const { dir, frontMatter } = page;
-    const basePath = resolve(rootPath, dir);
-    const docsPath = resolve(basePath, frontMatter.docs);
-    if (sidebar) {
-        for (let i = 0; i < sidebar.length; i++) {
-            sidebar[i] = join(docsPath, `${sidebar[i]}.md`);
-        }
-        sidebar.unshift(page.file);
-        frontMatter.sidebar = sidebar;
-    }
-
-    if (projects) {
-        for (let i = 0; i < projects.length; i++) {
-            projects[i] = join(rootPath, `${projects[i]}/README.md`);
-        }
-        frontMatter.projects = projects;
-    }
-}
-
-export async function getPages(rootPath: string): Promise<PageInfo[]> {
-    const rootPage = await loadPage(rootPath, resolve(rootPath, "README.md"));
-    adjustFrontMatter(rootPath, rootPage, defaultFrontMatter);
+export async function getPages(
+    rootPath: string,
+    rootConfig: CombinedDocsConfig,
+    getConfig: ConfigGetter
+): Promise<PageInfo[]> {
+    const rootPage = await loadPage(rootPath, resolve(rootPath, "README.md"), getConfig);
 
     // Monorepo setup
-    if (rootPage.frontMatter.projects.length) {
+    if (rootConfig.projects.length) {
         const subPages = await Promise.all(
-            rootPage.frontMatter.projects.map((project) => getProjectPages(rootPath, project, rootPage.frontMatter))
+            rootConfig.projects.map((project) => getProjectPages(rootPath, project, getConfig))
         );
 
         return [rootPage, ...subPages.flat()];
     }
 
     // Non-monorepo setup
-    const pages = await getDocsPages(rootPath, resolve(rootPath, rootPage.frontMatter.docs), rootPage.frontMatter);
+    const pages = await getDocsPages(rootPath, rootConfig.docs, getConfig);
 
     return [rootPage, ...pages];
 }
+
+export const getPageTitle = (currentPage: PageInfo) => {
+    const { docsConfig, projectIndex, meta } = currentPage;
+    const title = projectIndex === currentPage ? docsConfig.title || meta.title : meta.title || docsConfig.title;
+    return title || docsConfig.siteName;
+};

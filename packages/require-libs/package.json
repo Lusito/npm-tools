@@ -17,8 +17,8 @@
   ],
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
-    "test": "jest --watch",
-    "test:ci": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "front-matter": "^4.0.2",

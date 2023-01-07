@@ -1,8 +1,12 @@
 import { ComponentThis } from "tsx-dom-ssr";
 
-export function MetaTags(this: ComponentThis) {
-    const { frontMatter, path } = this.currentPage;
-    const { siteName, keywords, description, title } = frontMatter;
+type MetaTagsProps = {
+    title: string;
+};
+
+export function MetaTags(this: ComponentThis, { title }: MetaTagsProps) {
+    const { docsConfig, path } = this.currentPage;
+    const { siteName, keywords, description } = docsConfig;
 
     return (
         <>

@@ -8,7 +8,7 @@ export const SideBar = withCss(classes, function SideBar() {
             <div class={`${classes.sideBar} scatman-container`}>
                 <div class={classes.content}>
                     <div class={classes.links}>
-                        {this.currentPage.frontMatter.links.map((link) => (
+                        {this.currentPage.docsConfig.links.map((link) => (
                             <a href={link.split("|")[1].trim()}>{link.split("|")[0].trim()}</a>
                         ))}
                     </div>

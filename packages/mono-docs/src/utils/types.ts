@@ -1,10 +1,14 @@
 import { CssModule } from "@lusito/require-libs";
 
-export type FrontMatter = {
+export type PageMeta = {
+    title: string;
+    textContent: string;
+    subHeadings: Array<{ id: string; text: string }>;
+};
+
+export type DocsConfig = {
     docs?: string;
     title?: string;
-    textContent?: string;
-    subHeadings?: Array<{ id: string; text: string }>;
     description?: string;
     footer?: string[];
     keywords?: string[];
@@ -13,19 +17,20 @@ export type FrontMatter = {
     adjustPaths?: string[];
 };
 
-export type RootPageFrontMatter = FrontMatter & {
+export type RootDocsConfig = DocsConfig & {
     siteName?: string;
     projects?: string[];
 };
 
-export type CombinedFrontMatter = Required<RootPageFrontMatter>;
+export type CombinedDocsConfig = Required<RootDocsConfig>;
 
 export type PageInfo = {
     dir: string;
     file: string;
     depth: number;
     key: string;
-    frontMatter: CombinedFrontMatter;
+    docsConfig: CombinedDocsConfig;
+    meta: PageMeta;
     path: string;
     body: string;
     projectIndex?: PageInfo;

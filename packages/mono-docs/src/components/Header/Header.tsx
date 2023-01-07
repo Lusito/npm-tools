@@ -14,12 +14,12 @@ export const Header = withCss(classes, function Header({ withSideBar }: HeaderPr
     return (
         <header class={classnames({ [classes.header]: true, [classes.withSideBar]: withSideBar })}>
             <div class={classes.left}>
-                <a href={`${siteUrl}${this.pages[0].path}`}>{this.currentPage.frontMatter.siteName}</a>
+                <a href={`${siteUrl}${this.pages[0].path}`}>{this.currentPage.docsConfig.siteName}</a>
             </div>
             <div class={classes.right}>
                 <Search />
                 <div class={classes.links}>
-                    {this.currentPage.frontMatter.links.map((link) => (
+                    {this.currentPage.docsConfig.links.map((link) => (
                         <a href={link.split("|")[1].trim()}>{link.split("|")[0].trim()}</a>
                     ))}
                 </div>

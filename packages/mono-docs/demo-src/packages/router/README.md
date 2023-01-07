@@ -1,18 +1,3 @@
----
-title: router
-description: A simple, lightweight react router using hooks, written in TypeScript.
-keywords:
-  - react
-  - router
-  - hooks
-sidebar:
-  - 'setup'
-  - 'router'
-  - 'routes'
-  - 'links'
-  - 'hooks'
----
-
 # @react-nano/router
 
 A simple, lightweight react router using hooks, written in TypeScript.

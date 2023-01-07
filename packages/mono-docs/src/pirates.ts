@@ -3,7 +3,7 @@ import MarkdownIt from "markdown-it";
 import { addHook } from "pirates";
 import slugify from "slug";
 
-import { FrontMatter } from "./utils/types";
+import { PageMeta } from "./utils/types";
 import { createElement } from "./utils/fakeDocument";
 import { isTruthy } from "./utils/filterUtils";
 
@@ -30,23 +30,22 @@ export async function setupPirates(assetDir: string, siteUrl: string, devMode: b
     const markdownHandler = createMarkdownHandler({
         copyAsset,
         createElement,
-        postProcess({ frontMatter, dom }) {
-            const fm = frontMatter as FrontMatter;
-            fm.subHeadings = Array.from(dom.querySelectorAll("h2"))
-                .map((h) => {
-                    if (h.textContent) {
-                        h.id = slugify(h.textContent);
-                        return { id: h.id, text: h.textContent };
-                    }
-                    return null;
-                })
-                .filter(isTruthy);
+        postProcess({ dom }): PageMeta {
+            const heading = dom.querySelector("h1");
 
-            if (fm.title === undefined) {
-                const heading = dom.querySelector("h1");
-                fm.title = heading?.textContent ?? "Unknown";
-            }
-            fm.textContent = dom.textContent ?? "";
+            return {
+                title: heading?.textContent ?? "",
+                textContent: dom.textContent ?? "",
+                subHeadings: Array.from(dom.querySelectorAll("h2"))
+                    .map((h) => {
+                        if (h.textContent) {
+                            h.id = slugify(h.textContent);
+                            return { id: h.id, text: h.textContent };
+                        }
+                        return null;
+                    })
+                    .filter(isTruthy),
+            };
         },
         setup(md) {
             md.use(copyButtonPlugin(enhancedCopyButton));

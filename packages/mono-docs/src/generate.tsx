@@ -1,4 +1,5 @@
-import fs from "fs";
+import { copyFile, mkdir, writeFile } from "fs/promises";
+import { existsSync } from "fs";
 import { basename, dirname, resolve } from "path";
 import { ComponentChildren } from "tsx-dom-ssr";
 
@@ -6,10 +7,11 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import { getAllFiles } from "./utils/fileUtils";
 import { ListAllPage } from "./pages/ListAllPage";
 import { MarkdownPage } from "./pages/MarkdownPage";
-import { getPages } from "./utils/pageUtils";
+import { getPages, getPageTitle } from "./utils/pageUtils";
 import { renderHTML } from "./utils/renderHTML";
 import { renderSitemap, SiteMapConfig } from "./utils/renderSitemap";
-import { PageInfo, RenderContext, SearchEntry } from "./utils/types";
+import { CombinedDocsConfig, PageInfo, RenderContext, SearchEntry } from "./utils/types";
+import { loadConfigs } from "./utils/configUtils";
 
 type GenerateConfig = {
     src: string;
@@ -20,23 +22,23 @@ type GenerateConfig = {
 
 async function writeSitemap(config: SiteMapConfig, dest: string) {
     const xml = renderSitemap(config);
-    await fs.promises.writeFile(`${dest}/sitemap.xml`, xml);
+    await writeFile(`${dest}/sitemap.xml`, xml);
 }
 
 async function writeSearchData(pages: PageInfo[], dest: string, siteUrl: string) {
     const data: SearchEntry[] = pages.map((p) => ({
         url: `${siteUrl}${p.path.replace(/\/index\.html$/, "/")}`,
-        content: p.frontMatter.textContent,
-        title: p.frontMatter.title || p.frontMatter.siteName,
+        content: p.meta.textContent,
+        title: getPageTitle(p),
         projectIndex: p.projectIndex
             ? {
-                  title: p.projectIndex.frontMatter.title || p.projectIndex.frontMatter.siteName,
+                  title: getPageTitle(p.projectIndex),
                   url: `${siteUrl}${p.projectIndex.path.replace(/\/index\.html$/, "/")}`,
               }
             : undefined,
     }));
 
-    await fs.promises.writeFile(`${dest}/search-data.json`, JSON.stringify(data));
+    await writeFile(`${dest}/search-data.json`, JSON.stringify(data));
 }
 
 async function writeHTML(renderContext: RenderContext, children: ComponentChildren, dest: string) {
@@ -44,11 +46,11 @@ async function writeHTML(renderContext: RenderContext, children: ComponentChildr
 
     const fullPath = resolve(dest, renderContext.currentPage.path.substring(1));
     await createHTMLPath(dirname(fullPath));
-    await fs.promises.writeFile(fullPath, html);
+    await writeFile(fullPath, html);
 }
 
 async function createHTMLPath(fullPath: string) {
-    if (!fs.existsSync(fullPath)) await fs.promises.mkdir(fullPath, { recursive: true });
+    if (!existsSync(fullPath)) await mkdir(fullPath, { recursive: true });
 }
 
 async function copyAssets(config: GenerateConfig) {
@@ -57,21 +59,21 @@ async function copyAssets(config: GenerateConfig) {
     await Promise.all(
         files.map((file) => {
             const target = `${config.dest}/assets/${basename(file)}`;
-            return fs.promises.copyFile(file, target);
+            return copyFile(file, target);
         })
     );
 
     if (
         config.devMode &&
         !files.find((v) => basename(v) === "custom-elements.js") &&
-        fs.existsSync("./dist/assets/custom-elements.js")
+        existsSync("./dist/assets/custom-elements.js")
     ) {
         const target = `${config.dest}/assets/custom-elements.js`;
-        await fs.promises.copyFile("./dist/assets/custom-elements.js", target);
+        await copyFile("./dist/assets/custom-elements.js", target);
     }
 }
 
-function buildPageInfo(slug: string, title: string, description: string, indexPage: PageInfo): PageInfo {
+function buildPageInfo(slug: string, title: string, description: string, rootConfig: CombinedDocsConfig): PageInfo {
     return {
         dir: ".",
         file: "",
@@ -79,17 +81,22 @@ function buildPageInfo(slug: string, title: string, description: string, indexPa
         path: `/${slug}.html`,
         body: "",
         depth: 1,
-        frontMatter: {
-            ...indexPage.frontMatter,
+        docsConfig: {
+            ...rootConfig,
             title,
             description,
+        },
+        meta: {
+            title,
+            textContent: "",
+            subHeadings: [],
         },
     };
 }
 
 export async function createFiles(config: GenerateConfig) {
-    const pages = await getPages(config.src);
-    const indexPage = pages[0];
+    const { rootConfig, getConfig } = await loadConfigs(config.src);
+    const pages = await getPages(config.src, rootConfig, getConfig);
 
     const partialContext: Omit<RenderContext, "currentPage"> = {
         pages,
@@ -97,8 +104,8 @@ export async function createFiles(config: GenerateConfig) {
         siteUrl: config.siteUrl,
     };
 
-    const notFoundPage = buildPageInfo("404", "404", "File Not Found", indexPage);
-    const allPagesPage = buildPageInfo("all-pages", "All Pages", "All pages on this site.", indexPage);
+    const notFoundPage = buildPageInfo("404", "404", "File Not Found", rootConfig);
+    const allPagesPage = buildPageInfo("all-pages", "All Pages", "All pages on this site.", rootConfig);
 
     await Promise.all([
         copyAssets(config),
