@@ -1,6 +1,6 @@
 {
   "name": "@lusito/mono-docs",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "license": "MIT",
   "author": "Santo Pfingsten",
   "bin": {
@@ -22,7 +22,7 @@
     "@fastify/static": "^6.6.0",
     "@fontsource/source-code-pro": "^4.5.12",
     "@fontsource/source-sans-pro": "^4.5.11",
-    "@lusito/require-libs": "^0.10.0",
+    "@lusito/require-libs": "^0.11.0",
     "classnames": "^2.3.2",
     "cross-env": "^7.0.3",
     "dom-helmet": "^0.8.0",
