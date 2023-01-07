@@ -79,6 +79,7 @@ export async function getPages(
 
     // Non-monorepo setup
     const pages = await getDocsPages(rootPath, rootConfig.docs, getConfig);
+    rootPage.projectIndex = rootPage;
 
     return [rootPage, ...pages];
 }

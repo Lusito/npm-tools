@@ -102,7 +102,7 @@ export async function loadConfigs(rootPath: string): Promise<LoadedConfigs> {
                 return config.data as CombinedDocsConfig;
             }
 
-            throw new Error(`No config found for directory ${dir}`);
+            return rootConfig.data as CombinedDocsConfig;
         },
     };
 }
