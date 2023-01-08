@@ -45,13 +45,15 @@ async function start() {
 }
 
 async function copyStaticFiles(buildOptions: BuildOptions, fullSrc: string, fullDest: string) {
-    await Promise.all(
-        Object.entries(buildOptions.static).map(async ([key, value]) => {
-            const from = resolve(fullSrc, value);
-            const to = resolve(fullDest, key);
-            await copyDir(from, to);
-        })
-    );
+    if (buildOptions.static) {
+        await Promise.all(
+            Object.entries(buildOptions.static).map(async ([key, value]) => {
+                const from = resolve(fullSrc, value);
+                const to = resolve(fullDest, key);
+                await copyDir(from, to);
+            })
+        );
+    }
 }
 
 async function copyDir(from: string, to: string) {
@@ -66,7 +68,13 @@ async function copyDir(from: string, to: string) {
     }
 }
 
-async function runDevServer(buildOptions: BuildOptions, fullSrc: string, fullDest: string, port: number, devUrl: string) {
+async function runDevServer(
+    buildOptions: BuildOptions,
+    fullSrc: string,
+    fullDest: string,
+    port: number,
+    devUrl: string
+) {
     const app = fastify();
 
     // SSE hot reload:
@@ -78,13 +86,15 @@ async function runDevServer(buildOptions: BuildOptions, fullSrc: string, fullDes
         reply.raw.write(`data: ${startupTime}\n\n`);
     });
 
-    for (const [key, value] of Object.entries(buildOptions.static)) {
-        app.register(fastifyStatic, {
-            root: resolve(fullSrc, value),
-            prefix: `/${key}`,
-            decorateReply: false,
-            prefixAvoidTrailingSlash: true,
-        });
+    if (buildOptions.static) {
+        for (const [key, value] of Object.entries(buildOptions.static)) {
+            app.register(fastifyStatic, {
+                root: resolve(fullSrc, value),
+                prefix: `/${key}`,
+                decorateReply: false,
+                prefixAvoidTrailingSlash: true,
+            });
+        }
     }
 
     app.register(fastifyStatic, {

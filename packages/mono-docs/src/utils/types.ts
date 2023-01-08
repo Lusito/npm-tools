@@ -9,7 +9,7 @@ export type PageMeta = {
 export type BuildOptions = {
     out: string;
     siteUrl: string;
-    static: Record<string, string>;
+    static?: Record<string, string>;
 };
 
 export type DocsConfig = {
