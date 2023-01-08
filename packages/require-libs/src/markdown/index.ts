@@ -1,4 +1,4 @@
-import { dirname, join } from "path";
+import { dirname, resolve } from "path";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
 import frontMatter from "front-matter";
@@ -52,7 +52,7 @@ export function createMarkdownCompiler({ copyAsset, createElement, postProcess, 
         dom.innerHTML = md.render(result.body);
         dom.querySelectorAll("img").forEach((img) => {
             if (!protocolPattern.test(img.src)) {
-                img.src = copyAsset(join(dir, img.src));
+                img.src = copyAsset(resolve(dir, img.src));
             }
         });
 

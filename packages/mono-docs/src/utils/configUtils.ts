@@ -1,4 +1,4 @@
-import { dirname, join, relative, resolve } from "path";
+import { dirname, relative, resolve } from "path";
 import { existsSync } from "fs";
 import fs from "fs/promises";
 import yaml from "js-yaml";
@@ -13,10 +13,14 @@ type LoadedConfig = {
     data: DocsConfig;
 };
 
-async function loadConfig(rootPath: string, file: string): Promise<LoadedConfig> {
+export async function loadConfigRaw(file: string): Promise<DocsConfig> {
     const content = await fs.readFile(file, "utf-8");
-    const data = yaml.load(content) as DocsConfig;
 
+    return yaml.load(content) as DocsConfig;
+}
+
+async function loadConfig(rootPath: string, file: string): Promise<LoadedConfig> {
+    const data = await loadConfigRaw(file) as DocsConfig;
     const relativePath = relative(rootPath, file);
     const dir = dirname(relativePath);
 
@@ -49,15 +53,15 @@ function adjustConfig(rootPath: string, loadedConfig: LoadedConfig) {
     const docsPath = resolve(basePath, docs);
     data.docs = docsPath;
 
-    config.sidebar = sidebar.map((entry) => join(docsPath, `${entry}.md`));
+    config.sidebar = sidebar.map((entry) => resolve(docsPath, `${entry}.md`));
 
     if (config.sidebar.length) {
-        const readme = join(basePath, "README.md");
+        const readme = resolve(basePath, "README.md");
         if (existsSync(readme)) {
             config.sidebar.unshift(readme);
         }
     }
-    config.projects = projects.map((project) => join(rootPath, `${project}/README.md`));
+    config.projects = projects.map((project) => resolve(rootPath, `${project}/README.md`));
 }
 
 export type ConfigGetter = (dir: string) => CombinedDocsConfig;

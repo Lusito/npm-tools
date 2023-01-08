@@ -6,6 +6,12 @@ export type PageMeta = {
     subHeadings: Array<{ id: string; text: string }>;
 };
 
+export type BuildOptions = {
+    out: string;
+    siteUrl: string;
+    static: Record<string, string>;
+};
+
 export type DocsConfig = {
     docs?: string;
     title?: string;
@@ -15,6 +21,7 @@ export type DocsConfig = {
     links?: string[];
     sidebar?: string[];
     adjustPaths?: string[];
+    buildOptions?: BuildOptions;
 };
 
 export type RootDocsConfig = DocsConfig & {
@@ -22,7 +29,7 @@ export type RootDocsConfig = DocsConfig & {
     projects?: string[];
 };
 
-export type CombinedDocsConfig = Required<RootDocsConfig>;
+export type CombinedDocsConfig = Required<Omit<RootDocsConfig, "buildOptions">>;
 
 export type PageInfo = {
     dir: string;

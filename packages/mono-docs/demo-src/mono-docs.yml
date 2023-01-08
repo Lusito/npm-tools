@@ -19,3 +19,9 @@ projects:
   - packages/use-event-source
   - packages/use-fetch
   - packages/use-graphql
+buildOptions:
+  out: dist
+  siteUrl: https://lusito.github.io/react-nano
+  static:
+    images: static-images
+    example: static-example

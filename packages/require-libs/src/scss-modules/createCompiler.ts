@@ -1,5 +1,5 @@
 import sass, { OutputStyle } from "sass";
-import { dirname, join } from "path";
+import { dirname, resolve } from "path";
 import { existsSync, statSync } from "fs";
 
 import { camelCaseTokenTransformer, TokenTransformerConfig, transformTokens } from "./transformTokens";
@@ -37,7 +37,7 @@ function getNodeModules() {
 
     let path = process.cwd();
     for (;;) {
-        const abs = join(path, "node_modules");
+        const abs = resolve(path, "node_modules");
         if (existsSync(abs) && statSync(abs).isDirectory()) {
             result.push(abs);
         }
@@ -63,7 +63,7 @@ export function createScssCompiler({
 
     function getNodeModulesFile(file: string) {
         for (const path of nodeModulesPaths) {
-            const abs = join(path, file);
+            const abs = resolve(path, file);
             if (existsSync(abs)) {
                 return abs;
             }
@@ -83,7 +83,7 @@ export function createScssCompiler({
             const fileMappings: MappedFile[] = [];
 
             const getFileSource = (dir: string, file: string) => {
-                const source = file.startsWith("~") ? getNodeModulesFile(file.substring(1)) : join(dir, file);
+                const source = file.startsWith("~") ? getNodeModulesFile(file.substring(1)) : resolve(dir, file);
                 if (source && existsSync(source)) {
                     return source;
                 }

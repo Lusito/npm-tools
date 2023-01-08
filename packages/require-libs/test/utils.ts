@@ -1,4 +1,4 @@
-import path, { relative } from "path";
+import { relative, resolve, extname, basename } from "path";
 import { readFileSync } from "fs";
 import crypto from "crypto";
 
@@ -26,13 +26,13 @@ export const describeBlock = (_: string, generateScopedNames: boolean, source: s
         style: "expanded",
         mapFileUrl(fileUrl: string) {
             const hash = hashFile(fileUrl);
-            const ext = path.extname(fileUrl);
-            const newFile = `${path.basename(fileUrl, ext)}-${hash}${ext}`;
+            const ext = extname(fileUrl);
+            const newFile = `${basename(fileUrl, ext)}-${hash}${ext}`;
             return `./assets/${newFile}`;
         },
     });
 
-    const filename = path.join(__dirname, "test.module.scss");
+    const filename = resolve(__dirname, "test.module.scss");
 
     it("produces the correct css", () => {
         expect(compile(source, filename).css).toMatchSnapshot();

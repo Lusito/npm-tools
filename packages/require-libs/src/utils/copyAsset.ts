@@ -1,6 +1,6 @@
 import { copyFileSync, mkdirSync, readFileSync } from "fs";
 import { createHash } from "crypto";
-import { basename, extname, join } from "path";
+import { basename, extname, resolve } from "path";
 
 export function createCopyAsset(assetDir: string, prefix: string) {
     const assetCache: Record<string, string | undefined> = {};
@@ -20,7 +20,7 @@ export function createCopyAsset(assetDir: string, prefix: string) {
             destination = prefix + newFilename;
             assetCache[filename] = destination;
 
-            copyFileSync(filename, join(assetDir, newFilename));
+            copyFileSync(filename, resolve(assetDir, newFilename));
         }
         return destination;
     };

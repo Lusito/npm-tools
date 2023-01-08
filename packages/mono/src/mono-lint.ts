@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { join } from "path";
+import { resolve } from "path";
 
 import { die, loadPackage, run } from "./utils";
 
@@ -31,7 +31,7 @@ async function main() {
         })
         .parseAsync();
 
-    const project = await loadPackage(join(process.cwd(), "./package.json"));
+    const project = await loadPackage(resolve(process.cwd(), "./package.json"));
 
     const dependencies = Object.keys(project.dependencies ?? {}).concat(Object.keys(project.devDependencies ?? {}));
     const runs: string[] = [];
