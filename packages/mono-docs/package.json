@@ -14,12 +14,12 @@
     "build:assets": "cpy \"src/**/*.{scss,webp,png,svg}\" dist && cpy src/assets/**/* dist/assets",
     "build:custom-elements": "esbuild --platform=browser src/custom-elements/index.ts --bundle --minify --outfile=dist/assets/custom-elements.js",
     "build:demo": "npm run build:demo:base -- build",
-    "build:demo:base": "npm run build:custom-elements && rimraf demo-src/dist && node -r ./esbuild-register.js src/cli.ts demo-src/",
     "build:demo2": "npm run build:demo2:base -- build",
     "build:demo2:base": "npm run build:custom-elements && rimraf demo2-src/dist && node -r ./esbuild-register.js src/cli.ts demo2-src/",
-    "start:nodemon": "nodemon --ignore \"demo-src/dist\" --ignore \"demo2-src/dist\" --ignore node_modules --ignore dist -e ts,tsx,md,scss,png,webp,svg --exec",
+    "build:demo:base": "npm run build:custom-elements && rimraf demo-src/dist && node -r ./esbuild-register.js src/cli.ts demo-src/",
     "start:demo": "npm run start:nodemon \"npm run build:demo:base -- serve\"",
-    "start:demo2": "npm run start:nodemon \"npm run build:demo2:base -- serve\""
+    "start:demo2": "npm run start:nodemon \"npm run build:demo2:base -- serve\"",
+    "start:nodemon": "nodemon --ignore \"demo-src/dist\" --ignore \"demo2-src/dist\" --ignore node_modules --ignore dist -e ts,tsx,md,scss,png,webp,svg --exec"
   },
   "dependencies": {
     "@fastify/static": "^6.6.0",

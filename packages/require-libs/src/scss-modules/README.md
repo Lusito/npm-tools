@@ -20,9 +20,11 @@ Note that this package is not (yet) 100% compatible to CSS Modules.
 ## Quick Setup
 
 First install the package:
+
 ```
 $ npm i scss-modules
 ```
+
 Somewhere at the top of your entry-point file before any (s)css files are imported, add this line:
 
 ```ts
@@ -50,16 +52,17 @@ This is how you define them as global:
 }
 
 @-global-keyframes yolo {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 ```
 
 Output:
+
 ```css
 .foo_43z43p.bar {
   color: red;
@@ -86,6 +89,7 @@ body:not(.bar) .foo_43z43p {
 ## Configuration
 
 There are two ways to configure `scss-modules`:
+
 - By calling the setupHook function from your code before any (s)css imports happen.
 - Using a `scss-modules.conf.js` at the root of your project
 
@@ -94,6 +98,7 @@ I would recommend the first approach for a TypeScript project, as it's the easie
 ## TypeScript Configuration
 
 First, create a new file:
+
 ```ts
 // src/scss-modules.ts
 import { setupHook } from "scss-modules";
@@ -108,6 +113,7 @@ Now, instead of importing `"scss-modules/preset"`, import the above file.
 ### Using a Configuration File
 
 The preset import comes with a default configuration, which you can override by defining a configuration file in your working directory (or higher up). This is completely optional!
+
 ```js
 // scss-modules.conf.js
 
@@ -144,6 +150,7 @@ Attach the require hook to additional file extensions. This will be passed direc
 Configure how you want scoped names to be applied.
 
 Example for the same behavior as [css-modules-require-hook](https://github1s.com/css-modules/css-modules-require-hook):
+
 ```ts
 import genericNames from "generic-names";
 
@@ -196,6 +203,7 @@ Custom token transformation (i.e. to transform keys to camelCase).
   - The default transforms `kebab-case` and `snake_case` to camelCase
 
 If you need access to the built-in transformer, do it like this:
+
 ```ts
 import { camelCaseTokenTransformer } from "scss-modules";
 ```

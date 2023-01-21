@@ -20,7 +20,7 @@ export async function loadConfigRaw(file: string): Promise<DocsConfig> {
 }
 
 async function loadConfig(rootPath: string, file: string): Promise<LoadedConfig> {
-    const data = await loadConfigRaw(file) as DocsConfig;
+    const data = await loadConfigRaw(file);
     const relativePath = relative(rootPath, file);
     const dir = dirname(relativePath);
 
