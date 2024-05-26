@@ -38,7 +38,7 @@ function replaceAnimations(result: ScopedExports): ScopedExports {
 
     const css = result.css.replace(
         regex,
-        (_, preamble, name, ending) => `${preamble}${result.keyframes[name]}${ending}`
+        (_, preamble, name, ending) => `${preamble}${result.keyframes[name]}${ending}`,
     );
 
     return {

@@ -13,7 +13,7 @@ export async function getAllFiles(dirPath: string, pattern: RegExp, arrayOfFiles
             } else if (pattern.test(file)) {
                 arrayOfFiles.push(filePath);
             }
-        })
+        }),
     );
 
     return arrayOfFiles;

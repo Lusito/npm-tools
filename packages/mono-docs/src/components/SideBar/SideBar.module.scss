@@ -6,12 +6,11 @@ $transition-time: 0.5s;
 
 .side-bar-overlay {
     background: transparent;
-    transition: right 0s $transition-time linear, background-color $transition-time ease-in-out;
+    transition:
+        right 0s $transition-time linear,
+        background-color $transition-time ease-in-out;
     position: fixed;
-    top: 0;
-    right: 100vw;
-    bottom: 0;
-    left: 0;
+    inset: 0 100vw 0 0;
     z-index: 199;
 }
 
@@ -55,7 +54,9 @@ $transition-time: 0.5s;
         + .side-bar-overlay {
             background: var(--color-overlay);
             right: 0;
-            transition: right 0s linear, background-color $transition-time ease-in-out;
+            transition:
+                right 0s linear,
+                background-color $transition-time ease-in-out;
         }
     }
 
@@ -68,7 +69,9 @@ $transition-time: 0.5s;
             + .side-bar-overlay {
                 background: transparent;
                 right: 100vw;
-                transition: right 0s $transition-time linear, background-color $transition-time ease-in-out;
+                transition:
+                    right 0s $transition-time linear,
+                    background-color $transition-time ease-in-out;
             }
         }
 

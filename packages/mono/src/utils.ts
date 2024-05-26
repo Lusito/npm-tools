@@ -25,7 +25,7 @@ export async function loadPackages() {
     if (!workspaceNames) throw new Error("No workspaces found");
 
     const workspaces = await Promise.all(
-        workspaceNames.map((workspace) => loadPackage(resolve(process.cwd(), workspace, "package.json")))
+        workspaceNames.map((workspace) => loadPackage(resolve(process.cwd(), workspace, "package.json"))),
     );
 
     return {
@@ -45,7 +45,7 @@ export async function prompt<T = string>(question: Omit<prompts.PromptObject<"va
                 console.error("Aborting");
                 process.exit(-1);
             },
-        }
+        },
     );
 
     return result.value;

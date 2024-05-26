@@ -60,7 +60,7 @@ async function copyAssets(config: GenerateConfig) {
         files.map((file) => {
             const target = `${config.dest}/assets/${basename(file)}`;
             return copyFile(file, target);
-        })
+        }),
     );
 
     if (

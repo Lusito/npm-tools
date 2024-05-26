@@ -116,7 +116,7 @@ class SearchContainer extends HTMLElement {
     private onDocumentClick = ({ target }: MouseEvent) => {
         const overlayVisibleClass = this.getAttributeChecked("overlayVisible");
         // Hide if clicked on a link or if clicked outside of search-container
-        if (target instanceof Element && (target.closest("a") || !target.closest("search-container"))) {
+        if (target instanceof Element && (!!target.closest("a") || !target.closest("search-container"))) {
             this.getElementByAttribute("overlay").classList.toggle(overlayVisibleClass, false);
         }
     };

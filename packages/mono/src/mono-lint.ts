@@ -64,7 +64,7 @@ async function main() {
     lint("eslint", `"${src}/*.{js,ts,tsx}" --ext ".js,.ts,.tsx" --ignore-path .prettierignore ${fix ? "--fix" : ""}`);
     lint(
         "prettier",
-        `"${src}/*.{ts,tsx,js,json,css,scss,md}" "${pkg}/*.{ts,tsx,js,json,css,scss,md}" ${fix ? "--write" : "--check"}`
+        `"${src}/*.{ts,tsx,js,json,css,scss,md}" "${pkg}/*.{ts,tsx,js,json,css,scss,md}" ${fix ? "--write" : "--check"}`,
     );
     lint("stylelint", `--ignore-path .prettierignore "${src}/*.{css,scss}" ${fix ? "--fix" : ""}`);
     lint("sort-package-json", `package.json ${pkg === "." ? "" : `"${pkg}/package.json"`} ${fix ? "" : "--check"}`);

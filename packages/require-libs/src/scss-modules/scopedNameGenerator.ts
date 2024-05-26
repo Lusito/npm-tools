@@ -5,7 +5,7 @@ export type ScopedNameGeneratorFactory = (code: string, filepath: string) => Sco
 export function getScopedNameGenerator(
     code: string,
     filepath: string,
-    generateScopedName?: boolean | ScopedNameGeneratorFactory
+    generateScopedName?: boolean | ScopedNameGeneratorFactory,
 ) {
     if (generateScopedName === true) {
         const suffix = encode(hashStr(code));

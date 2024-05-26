@@ -97,6 +97,7 @@
             }
         }
 
+        // stylelint-disable-next-line no-descending-specificity
         &:hover,
         &:focus-within {
             code-copy-button {

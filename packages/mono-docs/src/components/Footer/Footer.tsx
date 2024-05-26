@@ -9,7 +9,7 @@ export const Footer = withCss(classes, function Footer() {
                     <a href={text.split("|")[1].trim()}>{text.split("|")[0].trim()}</a>
                 ) : (
                     <span>{text}</span>
-                )
+                ),
             )}
         </footer>
     );

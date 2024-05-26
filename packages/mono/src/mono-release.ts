@@ -105,7 +105,7 @@ function adjustVersionAfterBump(
     project: PublicPackageJson,
     name: string,
     newVersion: string,
-    dependencyType: "dependencies" | "devDependencies"
+    dependencyType: "dependencies" | "devDependencies",
 ) {
     const deps = project[dependencyType];
     if (deps) {

@@ -64,14 +64,14 @@ async function getProjectPages(rootPath: string, project: string, getConfig: Con
 export async function getPages(
     rootPath: string,
     rootConfig: CombinedDocsConfig,
-    getConfig: ConfigGetter
+    getConfig: ConfigGetter,
 ): Promise<PageInfo[]> {
     const rootPage = await loadPage(rootPath, resolve(rootPath, "README.md"), getConfig);
 
     // Monorepo setup
     if (rootConfig.projects.length) {
         const subPages = await Promise.all(
-            rootConfig.projects.map((project) => getProjectPages(rootPath, project, getConfig))
+            rootConfig.projects.map((project) => getProjectPages(rootPath, project, getConfig)),
         );
 
         return [rootPage, ...subPages.flat()];

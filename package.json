@@ -16,10 +16,13 @@
     "test": "npm test --workspaces --if-present"
   },
   "dependencies": {
-    "@lusito/eslint-config-react": "^2.3.0",
-    "@lusito/prettier-config": "^2.3.1",
-    "@lusito/stylelint-config": "^2.3.0",
-    "sort-package-json": "^2.1.0",
-    "typescript": "~4.9.4"
+    "@lusito/eslint-config-react": "^3.0.1",
+    "@lusito/prettier-config": "^3.0.0",
+    "@lusito/stylelint-config": "^3.0.0",
+    "sort-package-json": "^2.10.0",
+    "typescript": "^5.4.5"
+  },
+  "volta": {
+    "node": "20.13.1"
   }
 }

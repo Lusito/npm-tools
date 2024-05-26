@@ -51,7 +51,7 @@ async function copyStaticFiles(buildOptions: BuildOptions, fullSrc: string, full
                 const from = resolve(fullSrc, value);
                 const to = resolve(fullDest, key);
                 await copyDir(from, to);
-            })
+            }),
         );
     }
 }
@@ -73,7 +73,7 @@ async function runDevServer(
     fullSrc: string,
     fullDest: string,
     port: number,
-    devUrl: string
+    devUrl: string,
 ) {
     const app = fastify();
 

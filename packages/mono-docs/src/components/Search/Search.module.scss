@@ -41,10 +41,7 @@
 .search-overlay {
     display: none;
     position: fixed;
-    top: $header-height;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    inset: $header-height 0 0 0;
     padding: 1rem;
     background: var(--color-main);
     color: var(--color-main-contrast);
