@@ -45,8 +45,8 @@ const linters: Record<string, (context: LinterContext) => boolean> = {
 
         return false;
     },
-    stylelint({ dependencies, fix }) {
-        if (dependencies.includes("@lusito/stylelint-config")) {
+    stylelint({ project, dependencies, fix }) {
+        if (project.name === "@lusito/npm-tools" || dependencies.includes("@lusito/stylelint-config")) {
             lint("stylelint", `"./**/*.{css,scss}" --ignore-path .lintignore ${fix ? "--fix" : ""}`);
 
             return true;
