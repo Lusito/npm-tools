@@ -22,16 +22,11 @@ export async function loadPackages() {
 
     const workspaceNames = Array.isArray(project.workspaces) ? project.workspaces : project.workspaces?.packages;
 
-    if (!workspaceNames) throw new Error("No workspaces found");
+    if (!workspaceNames) return [project];
 
-    const workspaces = await Promise.all(
+    return Promise.all(
         workspaceNames.map((workspace) => loadPackage(resolve(process.cwd(), workspace, "package.json"))),
     );
-
-    return {
-        project,
-        workspaces,
-    };
 }
 
 export async function prompt<T = string>(question: Omit<prompts.PromptObject<"value">, "name">): Promise<T> {

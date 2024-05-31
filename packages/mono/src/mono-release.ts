@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 import { dirname } from "path";
 
-import { loadPackages, prompt, PublicPackageJson, run } from "./utils";
+import { die, loadPackages, prompt, PublicPackageJson, run } from "./utils";
 
 async function main() {
-    const { workspaces } = await loadPackages();
+    const workspaces = await loadPackages();
 
     const publicPackages = workspaces.filter((p) => !p.private && p.name && p.version) as PublicPackageJson[];
 
-    const project = await promptProject(publicPackages);
+    if (publicPackages.length === 0) {
+        die("No public packages found!");
+    }
+
+    const project = publicPackages.length === 1 ? publicPackages[0] : await promptProject(publicPackages);
     await bumpVersion(project, publicPackages);
     buildProject(project);
     const publishMethod = await promptPublishMethod();
@@ -72,7 +76,7 @@ async function bumpVersion(project: PublicPackageJson, allProjects: PublicPackag
         const newVersion = newVersions[bumpType as keyof typeof newVersions];
 
         if (!newVersion) {
-            throw new Error(`Unexpected change ${bumpType}`);
+            die(`Unexpected change ${bumpType}`);
         }
 
         // Edit package.json in-place
