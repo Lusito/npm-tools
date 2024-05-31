@@ -11,7 +11,7 @@
     "packages/mono-docs"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
+    "build": "npm run build --workspaces --if-present",
     "build:mono-docs-demo": "npm run build:demo -w packages/mono-docs",
     "lint": "node packages/mono/dist/mono-lint.js",
     "lint:fix": "node packages/mono/dist/mono-lint.js --fix",

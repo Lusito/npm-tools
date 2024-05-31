@@ -40,7 +40,7 @@ async function promptProject(packages: PublicPackageJson[]) {
 
 function buildProject(project: PublicPackageJson) {
     if (!project.scripts?.build) {
-        console.log("No build script found");
+        console.warn(`No build script found for ${project.name}!`);
     } else {
         console.log("Starting build");
         run(`npm run build -w ${project.name}`);
