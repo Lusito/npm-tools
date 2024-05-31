@@ -4,7 +4,10 @@ import { dirname } from "path";
 import { die, loadPackages, prompt, PublicPackageJson, run } from "./utils";
 
 async function main() {
-    const workspaces = await loadPackages();
+    const packages = await loadPackages();
+
+    const isWorkspace = Array.isArray(packages)
+    const workspaces = isWorkspace ? packages : [packages];
 
     const publicPackages = workspaces.filter((p) => !p.private && p.name && p.version) as PublicPackageJson[];
 
@@ -14,7 +17,7 @@ async function main() {
 
     const project = publicPackages.length === 1 ? publicPackages[0] : await promptProject(publicPackages);
     await bumpVersion(project, publicPackages);
-    buildProject(project);
+    buildProject(project, isWorkspace);
     const publishMethod = await promptPublishMethod();
     releaseProject(project, publishMethod === "dry-run");
 }
@@ -38,12 +41,13 @@ async function promptProject(packages: PublicPackageJson[]) {
     });
 }
 
-function buildProject(project: PublicPackageJson) {
+function buildProject(project: PublicPackageJson, isWorkspace: boolean) {
     if (!project.scripts?.build) {
         console.warn(`No build script found for ${project.name}!`);
     } else {
         console.log("Starting build");
-        run(`npm run build -w ${project.name}`);
+        const buildFlags = isWorkspace ? "-w" : "";
+        run(`npm run build ${buildFlags} ${project.name}`);
         console.log("Build done");
     }
 }

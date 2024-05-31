@@ -22,7 +22,7 @@ export async function loadPackages() {
 
     const workspaceNames = Array.isArray(project.workspaces) ? project.workspaces : project.workspaces?.packages;
 
-    if (!workspaceNames) return [project];
+    if (!workspaceNames) return project;
 
     return Promise.all(
         workspaceNames.map((workspace) => loadPackage(resolve(process.cwd(), workspace, "package.json"))),
