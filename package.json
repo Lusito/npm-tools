@@ -2,6 +2,10 @@
   "name": "@lusito/npm-tools",
   "private": true,
   "workspaces": [
+    "packages/eslint-config",
+    "packages/eslint-config-react",
+    "packages/prettier-config",
+    "packages/stylelint-config",
     "packages/require-libs",
     "packages/mono",
     "packages/mono-docs"
