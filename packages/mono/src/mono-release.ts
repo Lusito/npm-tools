@@ -6,7 +6,7 @@ import { die, loadPackages, prompt, PublicPackageJson, run } from "./utils";
 async function main() {
     const packages = await loadPackages();
 
-    const isWorkspace = Array.isArray(packages)
+    const isWorkspace = Array.isArray(packages);
     const workspaces = isWorkspace ? packages : [packages];
 
     const publicPackages = workspaces.filter((p) => !p.private && p.name && p.version) as PublicPackageJson[];
@@ -46,8 +46,11 @@ function buildProject(project: PublicPackageJson, isWorkspace: boolean) {
         console.warn(`No build script found for ${project.name}!`);
     } else {
         console.log("Starting build");
-        const buildFlags = isWorkspace ? "-w" : "";
-        run(`npm run build ${buildFlags} ${project.name}`);
+        if (isWorkspace) {
+            run(`npm run build -w ${project.name}`);
+        } else {
+            run("npm run build");
+        }
         console.log("Build done");
     }
 }
