@@ -11,6 +11,7 @@ It has been written to simplify playing sounds in games.
 It is not meant as a fully-fledged audio library.
 
 **Features:**
+
 - Playing sounds with and without position and orientation (positional-audio / spatialization)
 - A SoundSource (position + orientation) can play multiple sounds
 - You can play sounds on channels (if the specified channel already plays a sound, it will be stopped)
@@ -18,21 +19,22 @@ It is not meant as a fully-fledged audio library.
 - It does not abstract away the web audio API. It only simplifies its usage. So you can still use the full power of the web audio API.
 
 **What it doesn't do:**
+
 - Preloading sounds (that's up to you or a different asset manager)
 - Manipulating sounds
 - Fallback if web audio API is not supported
 
 If you are looking for a more complete solution, you might want to take a look at [howler](https://www.npmjs.com/package/howler).
 
-
 #### Fair Warning
+
 The compile target of this library is es2015, so if you want to support older browsers, you'll have to ensure that this module is being transpiled to an older es version during your build-process.
 
 ### Get started
 
-* [Read the documentation](https://lusito.github.io/sounts/)
-* Look at the example (`example/*.ts`).
-* Ask questions if the above doesn't clarify something good enough.
+- [Read the documentation](https://lusito.github.io/sounts/)
+- Look at the example (`example/*.ts`).
+- Ask questions if the above doesn't clarify something good enough.
 
 ## Goals of this Project
 
@@ -45,23 +47,25 @@ While looking at existing libraries, I mostly found packages, that have not been
 The only library I deemed worthy of considering was [howler](https://www.npmjs.com/package/howler). It's actively maintained, has type definitions via `@types/howler` and `0` dependencies.
 
 But two aspects remained (If those don't concern you, you should consider howler):
+
 - It's big: [9.5kB minified + gzipped](https://bundlephobia.com/package/howler).
 - And it abstracts a lot of the web audio part away.
 
 ### Working with Raw Web Audio API
+
 After that, I took a look at web audio API tutorials, most of which have been written almost a decade ago. Here are the top 3:
 
 - [Getting Started with Web Audio API](https://www.html5rocks.com/en/tutorials/webaudio/intro/)
 - [Developing Game Audio with the Web Audio API](https://www.html5rocks.com/en/tutorials/webaudio/games/)
 - [Web audio spatialization basics](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Web_audio_spatialization_basics)
 
-That's a lot to read and a lot to adjust for, as the API has changed a bit since then. Even JavaScript has changed quite a lot since then. 
+That's a lot to read and a lot to adjust for, as the API has changed a bit since then. Even JavaScript has changed quite a lot since then.
 
 Those tutorials are still worth a read, at least for the theory. You'll have to adjust the code a bit to work with the current standard.
 
 ### Deciding to Write Something New
 
-So, here I am again starting the same old thought: "*There has to be a better way...*" (... to get started with web audio).
+So, here I am again starting the same old thought: "_There has to be a better way..._" (... to get started with web audio).
 
 The goal of this library is to have a simple starting point for writing positional audio code with the web audio API without having to dig into old tutorials and convert all the legacy code examples to the new standard.
 

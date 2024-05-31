@@ -25,7 +25,7 @@ listener.setForward(forward.x, forward.y, forward.z);
 listener.setUp(up.x, up.y, up.z);
 ```
 
-If you are wondering why you'd want to use createSoundListener rather than modifying the audioContext.listener manually: Firefox is still using the legacy API and does not support the standardized API yet. SoundListener abstracts this difference away. 
+If you are wondering why you'd want to use createSoundListener rather than modifying the audioContext.listener manually: Firefox is still using the legacy API and does not support the standardized API yet. SoundListener abstracts this difference away.
 
 ## Create a SoundSource
 
@@ -58,9 +58,9 @@ import { SoundSource } from "sounts";
 
 // ...
 const source = new SoundSource(audioContext.destination, {
-    coneInnerAngle: 30,
-    coneOuterAngle: 45,
-    coneOuterGain: 0
+  coneInnerAngle: 30,
+  coneOuterAngle: 45,
+  coneOuterGain: 0,
 });
 // ...
 source.setOrientation(dir.x, dir.y, dir.z);

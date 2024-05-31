@@ -24,15 +24,15 @@ If you don't have a loader yet, you can take this one, which is written with pla
 
 ```typescript
 async function loadAudioBuffer(audioContext: AudioContext, path: string) {
-    const response = await fetch(path);
-    const data = await response.arrayBuffer();
-    return audioContext.decodeAudioData(data);
+  const response = await fetch(path);
+  const data = await response.arrayBuffer();
+  return audioContext.decodeAudioData(data);
 }
 
 // ...
 async function init() {
-    // ...
-    const audioBuffer = loadAudioBuffer(audioContext, "/assets/explosion.wav");
+  // ...
+  const audioBuffer = loadAudioBuffer(audioContext, "/assets/explosion.wav");
 }
 ```
 

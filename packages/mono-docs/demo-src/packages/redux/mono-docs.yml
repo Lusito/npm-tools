@@ -5,6 +5,6 @@ keywords:
   - redux
   - hooks
 sidebar:
-  - 'setup'
-  - 'provider'
-  - 'hooks'
+  - "setup"
+  - "provider"
+  - "hooks"

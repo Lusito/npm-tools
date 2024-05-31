@@ -10,7 +10,6 @@ If a sound is already being played on a channel, it will be stopped before playi
 
 ## Example
 
-
 ```typescript
 import { SoundPlayer } from "sounts";
 

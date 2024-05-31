@@ -4,19 +4,23 @@ You might be looking for a way to change the main volume or the volume of indivi
 This can be done using gain.
 
 ## Gain is not Volume
+
 In short: [Gain controls how loud something is before it gets processed](https://www.musicianonamission.com/gain-vs-volume/).
 
 In order to understand what that means, we need to understand how web audio processes sound:
 
 ## Connecting Nodes
+
 In web audio you connect nodes to other nodes until you finally end up at the AudioContext destination.
 
 A simple connection flow without positional audio and without volume/gain control might look like this:
+
 ```
 AudioBufferSourceNode -> AudioContext.destination
 ```
 
 Once you add positional audio, it might look like this:
+
 ```
 (AudioBufferSourceNode -> PannerNode) -> AudioContext.destination
 ```
@@ -56,6 +60,7 @@ const player = new SoundPlayer(mainVolume);
 // Set the gain value (0-1):
 mainVolume.gain.value = 0.5;
 ```
+
 ### With Positional Audio
 
 ```typescript

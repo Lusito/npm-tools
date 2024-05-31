@@ -11,7 +11,6 @@ A simple, lightweight react router using hooks, written in TypeScript.
 - Written with [hooks](https://reactjs.org/docs/hooks-intro.html) in TypeScript
 - Only has one peer dependency: React 16.12.0 or higher.
 
-
 ## Example
 
 A small example might look like this:
@@ -19,13 +18,13 @@ A small example might look like this:
 ```tsx
 import { Router } from "@react-nano/router";
 export const App = () => (
-    <Router>
-        <Switch>
-            <Route path="/news" component={News} />
-            <Route path="/fakenews" component={FakeNews} />
-            {/* use "(.*)"  instead of "*" if you use path-to-regexp */}
-            <Route path="*" component={Otherwise} />
-        </Switch>
-    </Router>
+  <Router>
+    <Switch>
+      <Route path="/news" component={News} />
+      <Route path="/fakenews" component={FakeNews} />
+      {/* use "(.*)"  instead of "*" if you use path-to-regexp */}
+      <Route path="*" component={Otherwise} />
+    </Switch>
+  </Router>
 );
 ```

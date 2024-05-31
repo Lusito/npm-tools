@@ -1,5 +1,5 @@
-siteName: 'sounts'
-title: ''
+siteName: "sounts"
+title: ""
 description: A tiny helper library for working with the web audio API written in TypeScript.
 footer:
   - Zlib/Libpng License | https://github.com/Lusito/sounts/blob/master/LICENSE
