@@ -39,9 +39,13 @@ async function promptProject(packages: PublicPackageJson[]) {
 }
 
 function buildProject(project: PublicPackageJson) {
-    console.log("Starting build");
-    run(`npm run build -w ${project.name}`);
-    console.log("Build done");
+    if (!project.scripts?.build) {
+        console.log("No build script found");
+    } else {
+        console.log("Starting build");
+        run(`npm run build -w ${project.name}`);
+        console.log("Build done");
+    }
 }
 
 function releaseProject(project: PublicPackageJson, dryRun: boolean) {
