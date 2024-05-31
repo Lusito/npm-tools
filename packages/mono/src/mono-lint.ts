@@ -1,73 +1,102 @@
 #!/usr/bin/env node
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { resolve } from "path";
+import { resolve, join } from "path";
+import { PackageJson } from "type-fest";
 
 import { die, loadPackage, run } from "./utils";
 
+const lint = (linter: "eslint" | "prettier" | "stylelint" | "sort-package-json", params: string) => {
+    console.log("");
+    console.log(`--------- Starting ${linter} ---------`);
+    const command = `${linter} ${params}`;
+    console.log(`${command}`);
+    run(`npx ${command}`);
+};
+
+type LinterContext = {
+    project: PackageJson;
+    dependencies: string[];
+    fix: boolean;
+};
+const linters: Record<string, (context: LinterContext) => boolean> = {
+    eslint({ project, dependencies, fix }) {
+        if (
+            project.name === "@lusito/npm-tools" ||
+            dependencies.includes("@lusito/eslint-config-react") ||
+            dependencies.includes("@lusito/eslint-config")
+        ) {
+            lint("eslint", `"./**/*.{ts,tsx,js}" --ext ".js,.ts,.tsx" --ignore-path .lintignore ${fix ? "--fix" : ""}`);
+
+            return true;
+        }
+
+        return false;
+    },
+    prettier({ project, dependencies, fix }) {
+        if (project.name === "@lusito/npm-tools" || dependencies.includes("@lusito/prettier-config")) {
+            lint(
+                "prettier",
+                `"./**/*.{ts,tsx,js,css,scss,json,yml,md}" --ignore-path .lintignore ${fix ? "--write" : "--check"}`,
+            );
+
+            return true;
+        }
+
+        return false;
+    },
+    stylelint({ dependencies, fix }) {
+        if (dependencies.includes("@lusito/stylelint-config")) {
+            lint("stylelint", `"./**/*.{css,scss}" --ignore-path .lintignore ${fix ? "--fix" : ""}`);
+
+            return true;
+        }
+
+        return false;
+    },
+    // eslint-disable-next-line object-shorthand
+    "sort-package-json"({ project, dependencies, fix }) {
+        if (dependencies.includes("sort-package-json")) {
+            const workspaces = Array.isArray(project.workspaces)
+                ? project.workspaces
+                : project.workspaces?.packages ?? ["."];
+
+            const files = [".", ...workspaces].map((ws) => `"${join(ws, "package.json")}"`).join(" ");
+            lint("sort-package-json", `${files} ${fix ? "" : "--check"}`);
+
+            return true;
+        }
+        return false;
+    },
+};
+
 async function main() {
-    const { fix, src, pkg, type } = await yargs(hideBin(process.argv))
-        .command("$0", "Lint monorepo")
+    const { fix } = await yargs(hideBin(process.argv))
+        .command("$0", "Run linters")
         .option("fix", {
             default: false,
             type: "boolean",
             description: "Fix",
         })
-        .option("src", {
-            default: "packages/*/src/**",
-            type: "string",
-            description: "source path pattern",
-        })
-        .option("pkg", {
-            default: "packages/*",
-            type: "string",
-            description: "package path pattern",
-        })
-        .option("type", {
-            alias: "t",
-            default: ["auto"],
-            type: "array",
-            description: "type of linter to use",
-        })
         .parseAsync();
 
-    const project = await loadPackage(resolve(process.cwd(), "./package.json"));
-
+    const project = await loadPackage(resolve(process.cwd(), "package.json"));
     const dependencies = Object.keys(project.dependencies ?? {}).concat(Object.keys(project.devDependencies ?? {}));
+    const context: LinterContext = {
+        project,
+        dependencies,
+        fix,
+    };
+
     const runs: string[] = [];
     let failed = false;
-
-    const hasType = (t: "eslint" | "prettier" | "stylelint" | "package") => type.includes(t) || type.includes("auto");
-
-    const typesEnabled = {
-        eslint:
-            hasType("eslint") &&
-            (dependencies.includes("@lusito/eslint-config-react") || dependencies.includes("@lusito/eslint-config")),
-        prettier: hasType("prettier") && dependencies.includes("@lusito/prettier-config"),
-        stylelint: hasType("stylelint") && dependencies.includes("@lusito/stylelint-config"),
-        "sort-package-json": hasType("package") && dependencies.includes("sort-package-json"),
-    };
-
-    const lint = (linter: "eslint" | "prettier" | "stylelint" | "sort-package-json", params: string) => {
-        if (typesEnabled[linter]) {
-            console.log("");
-            console.log(`--------- Starting ${linter} ---------`);
-            try {
-                run(`npx ${linter} ${params}`);
-            } catch (e) {
-                failed = true;
-            }
-            runs.push(linter);
+    for (const [key, fn] of Object.entries(linters)) {
+        try {
+            if (fn(context)) runs.push(key);
+        } catch (e) {
+            failed = true;
         }
-    };
-
-    lint("eslint", `"${src}/*.{js,ts,tsx}" --ext ".js,.ts,.tsx" --ignore-path .prettierignore ${fix ? "--fix" : ""}`);
-    lint(
-        "prettier",
-        `"${src}/*.{ts,tsx,js,json,css,scss,md}" "${pkg}/*.{ts,tsx,js,json,css,scss,md}" ${fix ? "--write" : "--check"}`,
-    );
-    lint("stylelint", `--ignore-path .prettierignore "${src}/*.{css,scss}" ${fix ? "--fix" : ""}`);
-    lint("sort-package-json", `package.json ${pkg === "." ? "" : `"${pkg}/package.json"`} ${fix ? "" : "--check"}`);
+    }
 
     if (!runs.length) die("No linter has run");
     else if (failed) die("Please fix the above issues");

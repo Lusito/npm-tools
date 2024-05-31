@@ -44,7 +44,6 @@
     "js-yaml": "^4.1.0",
     "markdown-it": "^14.1.0",
     "pirates": "^4.0.6",
-    "rimraf": "^5.0.7",
     "slug": "^9.1.0",
     "tsx-dom-ssr": "^0.8.0",
     "tsx-dom-types": "^1.0.0"
@@ -58,6 +57,7 @@
     "esbuild": "^0.21.4",
     "esbuild-register": "^3.5.0",
     "nodemon": "^3.1.1",
+    "rimraf": "^5.0.7",
     "scatman": "^0.9.0"
   }
 }
