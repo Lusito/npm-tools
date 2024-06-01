@@ -13,16 +13,16 @@ type NavItemProps = {
 };
 
 function NavItem(this: ComponentThis, { label, ariaLabel, path, nested }: NavItemProps) {
-    const { siteUrl } = this;
+    const { targetUrl } = this;
     const isCurrent = path === this.currentPage.path;
     return (
         <li class={classnames({ [classes.selected]: isCurrent, [classes.nested]: nested })}>
             {isCurrent ? (
-                <a href={`${siteUrl}${path}`} aria-label={`Current page, ${ariaLabel ?? label}`} aria-current="page">
+                <a href={`${targetUrl}${path}`} aria-label={`Current page, ${ariaLabel ?? label}`} aria-current="page">
                     {label}
                 </a>
             ) : (
-                <a href={`${siteUrl}${path}`} aria-label={ariaLabel}>
+                <a href={`${targetUrl}${path}`} aria-label={ariaLabel}>
                     {label}
                 </a>
             )}
@@ -33,7 +33,7 @@ function NavItem(this: ComponentThis, { label, ariaLabel, path, nested }: NavIte
 export const SideBarMenu = withCss(classes, function SideBarMenu() {
     const { projectIndex, docsConfig } = this.currentPage;
     const { sidebar, projects } = docsConfig;
-    const { pages, siteUrl } = this;
+    const { pages, targetUrl } = this;
 
     const findPage = (file: string) => pages.find((p) => p.file === file);
 
@@ -48,7 +48,7 @@ export const SideBarMenu = withCss(classes, function SideBarMenu() {
                                 .filter(isTruthy)
                                 .map((page) => (
                                     <option
-                                        value={`${siteUrl}${page.path}`}
+                                        value={`${targetUrl}${page.path}`}
                                         selected={page.projectIndex === projectIndex}
                                     >
                                         Project: {page.docsConfig.title}

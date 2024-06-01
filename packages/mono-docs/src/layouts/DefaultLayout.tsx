@@ -10,7 +10,7 @@ import { MetaTags } from "../components/MetaTags/MetaTags";
 import { getPageTitle } from "../utils/pageUtils";
 
 export const DefaultLayout = withCss(classes, function DefaultLayout({ children }: BaseProps) {
-    const { siteUrl, currentPage } = this;
+    const { targetUrl, currentPage } = this;
     const { docsConfig } = currentPage;
     const { siteName, sidebar } = docsConfig;
     const title = getPageTitle(currentPage);
@@ -21,15 +21,15 @@ export const DefaultLayout = withCss(classes, function DefaultLayout({ children 
             <head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="apple-touch-icon" sizes="180x180" href={`${siteUrl}/assets/apple-touch-icon.png`} />
-                <link rel="icon" type="image/png" sizes="32x32" href={`${siteUrl}/assets/favicon-32x32.png`} />
-                <link rel="icon" type="image/png" sizes="16x16" href={`${siteUrl}/assets/favicon-16x16.png`} />
-                <link rel="shortcut icon" href={`${siteUrl}/assets/favicon.ico`} />
+                <link rel="apple-touch-icon" sizes="180x180" href={`${targetUrl}/assets/apple-touch-icon.png`} />
+                <link rel="icon" type="image/png" sizes="32x32" href={`${targetUrl}/assets/favicon-32x32.png`} />
+                <link rel="icon" type="image/png" sizes="16x16" href={`${targetUrl}/assets/favicon-16x16.png`} />
+                <link rel="shortcut icon" href={`${targetUrl}/assets/favicon.ico`} />
                 <base href="/" />
                 <title>{finalTitle}</title>
                 <MetaTags title={title} />
                 <ReloadScript />
-                <script src={`${siteUrl}/assets/custom-elements.js`} defer />
+                <script src={`${targetUrl}/assets/custom-elements.js`} defer />
             </head>
             <body>
                 <Header withSideBar={sidebar.length > 0} />

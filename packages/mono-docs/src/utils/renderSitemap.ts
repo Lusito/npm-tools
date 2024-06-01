@@ -2,12 +2,12 @@ import { PageInfo } from "./types";
 
 export type SiteMapConfig = {
     pages: PageInfo[];
-    siteUrl: string;
+    targetUrl: string;
 };
 
-export function renderSitemap({ pages, siteUrl }: SiteMapConfig) {
+export function renderSitemap({ pages, targetUrl }: SiteMapConfig) {
     const paths: string[] = ["/", "/all.html", ...pages.map((p) => p.path.replace(/\/index\.html$/, "/"))];
-    const urls = paths.map((loc) => `<url><loc>${siteUrl}${loc}</loc></url>`);
+    const urls = paths.map((loc) => `<url><loc>${targetUrl}${loc}</loc></url>`);
 
     return `<?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

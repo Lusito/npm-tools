@@ -8,6 +8,8 @@
 
 A simple, lightweight react-redux alternative, written in TypeScript.
 
+[This should link to localhost in development mode](https://lusito.github.io/react-nano/example)
+
 ## Overview
 
 - All hooks are compatible to react-redux

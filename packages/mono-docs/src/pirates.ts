@@ -7,8 +7,8 @@ import { PageMeta } from "./utils/types";
 import { createElement } from "./utils/fakeDocument";
 import { isTruthy } from "./utils/filterUtils";
 
-export async function setupPirates(assetDir: string, siteUrl: string, devMode: boolean) {
-    const copyAsset = createCopyAsset(assetDir, `${siteUrl}/assets/`);
+export async function setupPirates(assetDir: string, targetUrl: string, devMode: boolean) {
+    const copyAsset = createCopyAsset(assetDir, `${targetUrl}/assets/`);
 
     // Images
     const imageHandler = createImageHandler({ copyAsset });

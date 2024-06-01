@@ -17,6 +17,7 @@ type GenerateConfig = {
     src: string;
     dest: string;
     devMode: boolean;
+    targetUrl: string;
     siteUrl: string;
 };
 
@@ -25,15 +26,15 @@ async function writeSitemap(config: SiteMapConfig, dest: string) {
     await writeFile(`${dest}/sitemap.xml`, xml);
 }
 
-async function writeSearchData(pages: PageInfo[], dest: string, siteUrl: string) {
+async function writeSearchData(pages: PageInfo[], dest: string, targetUrl: string) {
     const data: SearchEntry[] = pages.map((p) => ({
-        url: `${siteUrl}${p.path.replace(/\/index\.html$/, "/")}`,
+        url: `${targetUrl}${p.path.replace(/\/index\.html$/, "/")}`,
         content: p.meta.textContent,
         title: getPageTitle(p),
         projectIndex: p.projectIndex
             ? {
                   title: getPageTitle(p.projectIndex),
-                  url: `${siteUrl}${p.projectIndex.path.replace(/\/index\.html$/, "/")}`,
+                  url: `${targetUrl}${p.projectIndex.path.replace(/\/index\.html$/, "/")}`,
               }
             : undefined,
     }));
@@ -102,6 +103,7 @@ export async function createFiles(config: GenerateConfig) {
         pages,
         devMode: config.devMode,
         siteUrl: config.siteUrl,
+        targetUrl: config.targetUrl,
     };
 
     const notFoundPage = buildPageInfo("404", "404", "File Not Found", rootConfig);
@@ -112,8 +114,8 @@ export async function createFiles(config: GenerateConfig) {
         writeHTML({ ...partialContext, currentPage: notFoundPage }, <NotFoundPage />, config.dest),
         writeHTML({ ...partialContext, currentPage: allPagesPage }, <ListAllPage />, config.dest),
         ...pages.map((currentPage) => writeHTML({ ...partialContext, currentPage }, <MarkdownPage />, config.dest)),
-        writeSitemap({ pages, siteUrl: config.siteUrl }, config.dest),
-        writeSearchData(pages, config.dest, config.siteUrl),
+        writeSitemap({ pages, targetUrl: config.targetUrl }, config.dest),
+        writeSearchData(pages, config.dest, config.targetUrl),
     ]);
 
     console.log("Done");

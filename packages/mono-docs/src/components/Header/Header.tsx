@@ -9,12 +9,12 @@ type HeaderProps = {
 };
 
 export const Header = withCss(classes, function Header({ withSideBar }: HeaderProps) {
-    const { siteUrl } = this;
+    const { targetUrl } = this;
 
     return (
         <header class={classnames({ [classes.header]: true, [classes.withSideBar]: withSideBar })}>
             <div class={classes.left}>
-                <a href={`${siteUrl}${this.pages[0].path}`}>{this.currentPage.docsConfig.siteName}</a>
+                <a href={`${targetUrl}${this.pages[0].path}`}>{this.currentPage.docsConfig.siteName}</a>
             </div>
             <div class={classes.right}>
                 <Search />

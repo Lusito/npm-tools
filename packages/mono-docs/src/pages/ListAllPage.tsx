@@ -4,7 +4,7 @@ import { Container } from "../components/Container/Container";
 import { DefaultLayout } from "../layouts/DefaultLayout";
 
 export function ListAllPage(this: ComponentThis) {
-    const { siteUrl } = this;
+    const { targetUrl } = this;
 
     return (
         <DefaultLayout>
@@ -13,7 +13,7 @@ export function ListAllPage(this: ComponentThis) {
                     <ul>
                         {this.pages.map((page) => (
                             <li>
-                                <a href={`${siteUrl}${page.path}`}>{page.path}</a>
+                                <a href={`${targetUrl}${page.path}`}>{page.path}</a>
                             </li>
                         ))}
                     </ul>

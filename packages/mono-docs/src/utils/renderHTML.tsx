@@ -24,7 +24,7 @@ function cachedImageSize(assetPath: string) {
     return result;
 }
 
-function adjustHref(href: string, siteUrl: string, dir: string, adjustPaths: string[]) {
+function adjustHref(href: string, targetUrl: string, dir: string, adjustPaths: string[]) {
     let newHref = href.replace(/\/README\.md$/, "/").replace(/\.md$/, ".html");
 
     if (!newHref.startsWith("./")) newHref = `./${newHref}`;
@@ -32,7 +32,7 @@ function adjustHref(href: string, siteUrl: string, dir: string, adjustPaths: str
 
     newHref = applyAdjustPaths(newHref, adjustPaths);
 
-    return `${siteUrl}${newHref}`;
+    return `${targetUrl}${newHref}`;
 }
 
 export async function renderHTML(renderContext: RenderContext, children: ComponentChildren, dest: string) {
@@ -77,15 +77,21 @@ export async function renderHTML(renderContext: RenderContext, children: Compone
         head.appendChild(style);
     }
 
-    const { siteUrl, currentPage } = renderContext;
+    const { siteUrl, targetUrl, currentPage, devMode } = renderContext;
     const { dir, docsConfig } = currentPage;
     const { adjustPaths } = docsConfig;
     wrapper.querySelectorAll("a").forEach((link) => {
-        const href = link.getAttribute("href");
+        let href = link.getAttribute("href");
 
         if (href) {
+            // In dev-mode, replace siteUrls with local ones
+            if (devMode && href.startsWith(siteUrl)) {
+                href = href.replace(siteUrl, targetUrl);
+                link.setAttribute("href", href);
+            }
+
             if (protocolPattern.test(href)) {
-                if (!href.startsWith(siteUrl)) {
+                if (!href.startsWith(targetUrl)) {
                     const rel = link.getAttribute("rel");
                     if (!rel) {
                         link.setAttribute("rel", "noopener nofollow");
@@ -97,7 +103,7 @@ export async function renderHTML(renderContext: RenderContext, children: Compone
                     }
                 }
             } else if (href.endsWith(".md")) {
-                link.setAttribute("href", adjustHref(href, siteUrl, dir, adjustPaths));
+                link.setAttribute("href", adjustHref(href, targetUrl, dir, adjustPaths));
             } else if (href.endsWith(".html")) {
                 link.setAttribute("href", href.replace(/\/index\.html$/, "/"));
             }

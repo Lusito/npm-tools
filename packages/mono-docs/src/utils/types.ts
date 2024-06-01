@@ -65,6 +65,7 @@ export type RenderContext = {
     readonly devMode: boolean;
     readonly currentPage: PageInfo;
     readonly pages: PageInfo[];
+    readonly targetUrl: string;
     readonly siteUrl: string;
 };
 

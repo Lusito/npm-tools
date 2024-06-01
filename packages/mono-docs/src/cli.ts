@@ -30,12 +30,12 @@ async function start() {
     const fullDest = resolve(fullSrc, buildOptions.out);
 
     const serve = mode === "serve";
-    const siteUrl = serve ? devUrl : buildOptions.siteUrl;
+    const targetUrl = serve ? devUrl : buildOptions.siteUrl;
 
-    await setupPirates(resolve(fullDest, "assets"), siteUrl, serve);
+    await setupPirates(resolve(fullDest, "assets"), targetUrl, serve);
 
     const { createFiles } = await import("./generate");
-    await createFiles({ src: fullSrc, dest: fullDest, siteUrl, devMode: serve });
+    await createFiles({ src: fullSrc, dest: fullDest, targetUrl, siteUrl: buildOptions.siteUrl, devMode: serve });
 
     if (serve) {
         await runDevServer(buildOptions, fullSrc, fullDest, port, devUrl);
