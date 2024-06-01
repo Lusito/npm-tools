@@ -3,7 +3,7 @@ import ignore from "ignore";
 import path from "path";
 import fs from "fs";
 
-import { chalkSymbols, log, logLintStart } from "./utils";
+import { MonoLintOptions, chalkSymbols, log, logLintStart } from "./utils";
 import type { LinterContext } from "./mono-lint";
 
 const ig = ignore().add(fs.readFileSync(path.resolve(process.cwd(), ".lintignore"), "utf-8"));
@@ -35,11 +35,10 @@ function getFiles(dir: string, extension: string, result: string[] = []) {
     return result;
 }
 
-function checkFile(file: string, additionalOptions: Record<string, unknown> | undefined) {
+function checkFile(file: string, monoLintOptions: MonoLintOptions | undefined) {
     return new Promise<void>((resolve, reject) => {
         const opts = {
             ...options,
-            ...additionalOptions,
             baseUrl: `file://${path.dirname(file)}`,
         };
         markdownLinkCheck(fs.readFileSync(file, "utf-8"), opts, (err, results) => {
@@ -50,14 +49,22 @@ function checkFile(file: string, additionalOptions: Record<string, unknown> | un
                 return;
             }
             if (results.length) {
-                const failed = results.filter((result) => result.status !== "alive");
+                const failed = results.filter((result) => result.status !== "alive" && result.status !== "ignored");
                 if (failed.length) {
                     log.warn(relativeFile);
+                    const warnOnlyPatterns =
+                        monoLintOptions?.lintMarkdownLinks?.warnOnlyPatterns?.map((p) => new RegExp(p)) ?? [];
+
+                    let failHard = false;
                     for (const result of failed) {
-                        log(`${statusLabels[result.status]} ${result.link}`);
+                        const warnOnly = warnOnlyPatterns.some((p) => p.test(result.link));
+                        const statusLabel = warnOnly ? statusLabels.ignored : statusLabels[result.status];
+                        log(`${statusLabel} ${result.link}`);
+
+                        if (!warnOnly) failHard = true;
                     }
 
-                    if (!failed.every((result) => result.status === "ignored")) {
+                    if (failHard) {
                         reject();
                         return;
                     }
@@ -70,12 +77,10 @@ function checkFile(file: string, additionalOptions: Record<string, unknown> | un
 }
 
 export async function lintMarkdownLinks({ project }: LinterContext) {
-    const markdownLinkCheckOptions = project.markdownLinkCheck as Record<string, unknown> | undefined;
+    const monoLintOptions = project.monoLint;
 
     logLintStart("lint-markdown-links");
-    const results = await Promise.allSettled(
-        getFiles(".", ".md").map((file) => checkFile(file, markdownLinkCheckOptions)),
-    );
+    const results = await Promise.allSettled(getFiles(".", ".md").map((file) => checkFile(file, monoLintOptions)));
     if (results.some(({ status }) => status !== "fulfilled")) {
         throw new Error("Some markdown files have invalid links");
     }

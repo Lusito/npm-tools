@@ -36,11 +36,11 @@
   "volta": {
     "node": "20.13.1"
   },
-  "markdownLinkCheck": {
-    "ignorePatterns": [
-      {
-        "pattern": "^https:\\/\\/lusito\\.github\\.io\\/react-nano\\/"
-      }
-    ]
+  "monoLint": {
+    "lintMarkdownLinks": {
+      "warnOnlyPatterns": [
+        "^https:\\/\\/lusito\\.github\\.io\\/react-nano\\/"
+      ]
+    }
   }
 }

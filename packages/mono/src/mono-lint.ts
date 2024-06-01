@@ -2,9 +2,8 @@
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { resolve, join } from "path";
-import { PackageJson } from "type-fest";
 
-import { die, loadPackage, log, logLintStart, run } from "./utils";
+import { PackageJson, die, loadPackage, log, logLintStart, run } from "./utils";
 import { lintMarkdownLinks } from "./lint-markdown-links";
 
 const lint = (linter: "eslint" | "prettier" | "stylelint" | "sort-package-json", params: string) => {

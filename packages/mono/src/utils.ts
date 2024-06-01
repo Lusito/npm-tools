@@ -1,5 +1,5 @@
 import prompts from "prompts";
-import type { PackageJson } from "type-fest";
+import type { PackageJson as BasePackageJson } from "type-fest";
 import { readFile } from "fs/promises";
 import { execSync } from "child_process";
 import { resolve } from "path";
@@ -87,3 +87,11 @@ export const logLintStart = (
     log("");
     log(`--------- Starting ${linter} ---------`);
 };
+
+export type MonoLintOptions = {
+    lintMarkdownLinks?: {
+        warnOnlyPatterns?: string[];
+    };
+};
+
+export type PackageJson = BasePackageJson & { monoLint?: MonoLintOptions };
