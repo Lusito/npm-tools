@@ -14,6 +14,9 @@
     "build": "rimraf dist && tsc && chmod +x dist/mono-release.js"
   },
   "dependencies": {
+    "chalk": "^4.1.2",
+    "ignore": "^5.3.1",
+    "markdown-link-check": "^3.12.2",
     "prompts": "^2.4.2",
     "yargs": "^17.7.2"
   },

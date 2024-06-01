@@ -3,6 +3,34 @@ import type { PackageJson } from "type-fest";
 import { readFile } from "fs/promises";
 import { execSync } from "child_process";
 import { resolve } from "path";
+import chalk from "chalk";
+
+export const chalkSymbols = {
+    success: `[${chalk.green("success")}]`,
+    error: `[${chalk.red("error")}]`,
+    ignored: `[${chalk.gray("ignored")}]`,
+    warn: `[${chalk.yellow("warn")}]`,
+};
+
+export const log = Object.assign(
+    (message?: any, ...optionalParams: any[]) => {
+        console.log(message, ...optionalParams);
+    },
+    {
+        error(message?: any, ...optionalParams: any[]) {
+            console.error(`${chalkSymbols.error} ${message}`, ...optionalParams);
+        },
+        success(message?: any, ...optionalParams: any[]) {
+            console.log(`${chalkSymbols.success} ${message}`, ...optionalParams);
+        },
+        warn(message?: any, ...optionalParams: any[]) {
+            console.warn(`${chalkSymbols.warn} ${message}`, ...optionalParams);
+        },
+        ignored(message?: any, ...optionalParams: any[]) {
+            console.log(`${chalkSymbols.ignored} ${message}`, ...optionalParams);
+        },
+    },
+);
 
 export type PublicPackageJson = PackageJson & {
     path: string;
@@ -37,8 +65,7 @@ export async function prompt<T = string>(question: Omit<prompts.PromptObject<"va
         },
         {
             onCancel() {
-                console.error("Aborting");
-                process.exit(-1);
+                die("Aborting");
             },
         },
     );
@@ -49,7 +76,14 @@ export async function prompt<T = string>(question: Omit<prompts.PromptObject<"va
 export const run = (command: string) => execSync(command, { stdio: [0, 1, 2] });
 
 export function die(message: string) {
-    console.log("");
-    console.error(`❌ ${message}`);
-    process.exit(-1);
+    log("");
+    log.error(message);
+    process.exit(1);
 }
+
+export const logLintStart = (
+    linter: "eslint" | "prettier" | "stylelint" | "sort-package-json" | "lint-markdown-links",
+) => {
+    log("");
+    log(`--------- Starting ${linter} ---------`);
+};

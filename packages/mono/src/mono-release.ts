@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { dirname } from "path";
 
-import { die, loadPackages, prompt, PublicPackageJson, run } from "./utils";
+import { die, loadPackages, log, prompt, PublicPackageJson, run } from "./utils";
 
 async function main() {
     const packages = await loadPackages();
@@ -43,20 +43,20 @@ async function promptProject(packages: PublicPackageJson[]) {
 
 function buildProject(project: PublicPackageJson, isWorkspace: boolean) {
     if (!project.scripts?.build) {
-        console.warn(`No build script found for ${project.name}!`);
+        log.warn(`No build script found for ${project.name}!`);
     } else {
-        console.log("Starting build");
+        log("Starting build");
         if (isWorkspace) {
             run(`npm run build -w ${project.name}`);
         } else {
             run("npm run build");
         }
-        console.log("Build done");
+        log.success("Build done");
     }
 }
 
 function releaseProject(project: PublicPackageJson, dryRun: boolean) {
-    console.log("Publishing");
+    log("Publishing");
     process.chdir(dirname(project.path));
     run(`npm publish --access public ${dryRun ? "--dry-run" : ""}`);
 }
@@ -91,7 +91,7 @@ async function bumpVersion(project: PublicPackageJson, allProjects: PublicPackag
         }
 
         // Edit package.json in-place
-        console.log(`Changing version of ${project.name} to ${newVersion}`);
+        log.success(`Changing version of ${project.name} to ${newVersion}`);
         project.version = newVersion;
         run(`cat <<< $(jq '.version="${newVersion}"' ${project.path}) > ${project.path}`);
 
@@ -103,7 +103,7 @@ async function bumpVersion(project: PublicPackageJson, allProjects: PublicPackag
             }
         }
     } else {
-        console.log(`No version change performed on ${project.name}`);
+        log.ignored(`No version change performed on ${project.name}`);
     }
 }
 
@@ -112,7 +112,7 @@ function adjustDependencyVersion(oldVersion: string, newVersion: string) {
     if (/^~[0-9]+\.[0-9]+\.[0-9]+$/.test(oldVersion)) return `~${newVersion}`;
     if (/^\^[0-9]+\.[0-9]+\.[0-9]+$/.test(oldVersion)) return `^${newVersion}`;
 
-    console.warn(`❌ Unexpected dependency version format "${oldVersion}", manual adjustment needed`);
+    log.warn(`Unexpected dependency version format "${oldVersion}", manual adjustment needed`);
     return null;
 }
 
@@ -128,7 +128,7 @@ function adjustVersionAfterBump(
         const adjustedVersion = oldVersion && adjustDependencyVersion(oldVersion, newVersion);
         if (adjustedVersion) {
             // Edit package.json in-place
-            console.log(`Changing ${project.name}'s ${dependencyType} version of ${name} to ${newVersion}`);
+            log(`Changing ${project.name}'s ${dependencyType} version of ${name} to ${newVersion}`);
             deps[name] = adjustedVersion;
             run(`cat <<< $(jq '.${dependencyType}["${name}"]="${adjustedVersion}"' ${project.path}) > ${project.path}`);
         }

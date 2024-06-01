@@ -4,22 +4,23 @@ import { hideBin } from "yargs/helpers";
 import { resolve, join } from "path";
 import { PackageJson } from "type-fest";
 
-import { die, loadPackage, run } from "./utils";
+import { die, loadPackage, log, logLintStart, run } from "./utils";
+import { lintMarkdownLinks } from "./lint-markdown-links";
 
 const lint = (linter: "eslint" | "prettier" | "stylelint" | "sort-package-json", params: string) => {
-    console.log("");
-    console.log(`--------- Starting ${linter} ---------`);
+    logLintStart(linter);
     const command = `${linter} ${params}`;
-    console.log(`${command}`);
+    log(command);
     run(`npx ${command}`);
 };
 
-type LinterContext = {
+export type LinterContext = {
     project: PackageJson;
     dependencies: string[];
     fix: boolean;
 };
-const linters: Record<string, (context: LinterContext) => boolean> = {
+
+const linters: Record<string, (context: LinterContext) => Promise<boolean> | boolean> = {
     eslint({ project, dependencies, fix }) {
         if (
             project.name === "@lusito/npm-tools" ||
@@ -68,6 +69,7 @@ const linters: Record<string, (context: LinterContext) => boolean> = {
         }
         return false;
     },
+    "lint-markdown-links": lintMarkdownLinks,
 };
 
 async function main() {
@@ -92,8 +94,11 @@ async function main() {
     let failed = false;
     for (const [key, fn] of Object.entries(linters)) {
         try {
-            if (fn(context)) runs.push(key);
+            // eslint-disable-next-line no-await-in-loop
+            const result = await fn(context);
+            if (result) runs.push(key);
         } catch (e) {
+            log.error(String(e));
             failed = true;
         }
     }
@@ -101,8 +106,8 @@ async function main() {
     if (!runs.length) die("No linter has run");
     else if (failed) die("Please fix the above issues");
 
-    console.log("");
-    console.log(`✅ Successfully ran linters: ${runs.join(", ")}`);
+    log("");
+    log.success(`Successfully ran linters: ${runs.join(", ")}`);
 }
 
 main();
