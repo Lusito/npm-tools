@@ -33,14 +33,14 @@
     "stylelint-config-standard-scss": "13.1.0",
     "typescript": "^5.4.5"
   },
+  "volta": {
+    "node": "20.13.1"
+  },
   "markdownLinkCheck": {
     "ignorePatterns": [
       {
         "pattern": "^https:\\/\\/lusito\\.github\\.io\\/react-nano\\/"
       }
     ]
-  },
-  "volta": {
-    "node": "20.13.1"
   }
 }

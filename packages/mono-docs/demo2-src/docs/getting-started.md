@@ -38,7 +38,7 @@ async function init() {
 
 ## Create a SoundPlayer and Play a Sound
 
-The easiest way to play (non-positional) sounds is using the [SoundPlayer](../api/classes/SoundPlayer.md) class:
+The easiest way to play (non-positional) sounds is using the [SoundPlayer](https://lusito.github.io/sounts/api/classes/SoundPlayer.html) class:
 
 ```typescript
 import { SoundPlayer } from "sounts";
@@ -54,7 +54,7 @@ You want to add position, volume and more to your sounds? Check out the other tu
 
 ## Stop a Sound
 
-The `play()` method of [SoundPlayer](../api/classes/SoundPlayer.md) returns an `AudioBufferSourceNode`, which you can use to stop the sound:
+The `play()` method of [SoundPlayer](https://lusito.github.io/sounts/api/classes/SoundPlayer.html) returns an `AudioBufferSourceNode`, which you can use to stop the sound:
 
 ```typescript
 const sourceNode = player.play(audioBuffer);

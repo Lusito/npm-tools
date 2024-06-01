@@ -9,7 +9,7 @@ There are a lot of alternative ways to accomplish this kind of task out there, b
 
 This package uses some code from [css-modules-require-hook](https://github1s.com/css-modules/css-modules-require-hook) and [csjs](https://github.com/rtsao/csjs), but uses [sass](https://github.com/sass/dart-sass) instead of PostCSS under the hood.
 
-All released under a liberal license: [MIT](./LICENSE)
+All released under a liberal license: [MIT](../../LICENSE)
 
 ## What is an SCSS Module
 

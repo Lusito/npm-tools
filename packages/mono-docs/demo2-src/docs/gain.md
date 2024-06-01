@@ -25,7 +25,7 @@ Once you add positional audio, it might look like this:
 (AudioBufferSourceNode -> PannerNode) -> AudioContext.destination
 ```
 
-The brackets represent the nodes within the [SoundSource](../api/classes/SoundSource.md), so you have one context, but multiple PannerNodes connected to this context.
+The brackets represent the nodes within the [SoundSource](https://lusito.github.io/sounts/api/classes/SoundSource.html), so you have one context, but multiple PannerNodes connected to this context.
 
 Now, in order to control the global "volume", we need to insert a GainNode right before the AudioContext:
 
@@ -78,7 +78,7 @@ const source = new SoundSource(mainVolume, { gain: 0.75 });
 source.setGain(0.5);
 ```
 
-By passing in a gain value as option to the [SoundSource](../api/classes/SoundSource.md) constructor, a gain node will automatically be added to the source.
+By passing in a gain value as option to the [SoundSource](https://lusito.github.io/sounts/api/classes/SoundSource.html) constructor, a gain node will automatically be added to the source.
 
 **Note**, that you can't call setGain unless you passed a gain value in the options parameter.
 

@@ -26,7 +26,7 @@ export const removeTodo = actionCreator(
 );
 ```
 
-[find out more](./action-creators.md)
+[find out more](./docs/action-creators.md)
 
 ## Example: Reducers
 
@@ -41,4 +41,4 @@ export const todosReducer = mapReducers(initialState, (handle) => [
 ]);
 ```
 
-[find out more](./reducers.md)
+[find out more](./docs/reducers.md)

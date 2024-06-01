@@ -13,7 +13,7 @@ Tiny, powerful and type-safe React libraries. All released under a liberal licen
 - [@react-nano/tsrux](packages/tsrux/README.md)\
   Lightweight alternative to redux-actions, deox, etc.
 - [@react-nano/use-event-source](packages/use-event-source/README.md)\
-  Hook for using [Server-Sent-Events](https://developer.mozilla.org/en-US/packages/Web/API/Server-sent_events).
+  Hook for using [Server-Sent-Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events).
 - [@react-nano/use-fetch](packages/use-fetch/README.md)\
   Hook for using `fetch()` to GET, POST, etc. requests.
 - [@react-nano/use-graphql](packages/use-graphql/README.md)\

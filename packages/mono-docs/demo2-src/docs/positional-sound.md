@@ -7,7 +7,7 @@ With **sounts** this is easily done:
 
 This is an optional step if you want to change the position and orientation of the listener. Think of the listener as the camera of the audio world.
 
-If you don't set up a [SoundListener](../api/classes/SoundListener.md), it will be located at (0, 0, 0) with a forward vector of (0, 0, -1) and an up vector of (0, 1, 0).
+If you don't set up a [SoundListener](https://lusito.github.io/sounts/api/classes/SoundListener.html), it will be located at (0, 0, 0) with a forward vector of (0, 0, -1) and an up vector of (0, 1, 0).
 
 ```typescript
 import { createSoundListener } from "sounts";
@@ -30,7 +30,7 @@ If you are wondering why you'd want to use createSoundListener rather than modif
 ## Create a SoundSource
 
 Now that you have your listener configured, you want to play sounds in the 2D/3D world.
-A [SoundSource](../api/classes/SoundSource.md) extends the [SoundPlayer](../api/classes/SoundPlayer.md) with a position, orientation and other options related to positional audio.
+A [SoundSource](https://lusito.github.io/sounts/api/classes/SoundSource.html) extends the [SoundPlayer](https://lusito.github.io/sounts/api/classes/SoundPlayer.html) with a position, orientation and other options related to positional audio.
 
 ```typescript
 import { SoundSource } from "sounts";
@@ -44,14 +44,14 @@ const audioBuffer = ...;
 source.play(audioBuffer);
 ```
 
-As you can see, it's really simple to work with a [SoundSource](../api/classes/SoundSource.md). Check out the API documentation to see what other options you have.
+As you can see, it's really simple to work with a [SoundSource](https://lusito.github.io/sounts/api/classes/SoundSource.html). Check out the API documentation to see what other options you have.
 
 ## Orienting a SoundSource
 
 When creating a sound source, you have the option of configuring a cone.
 Check out the [documentation at MDN](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode/coneInnerAngle) to learn more about the cone.
 
-If you specify a cone for the [SoundSource](../api/classes/SoundSource.md), you can also set its orientation:
+If you specify a cone for the [SoundSource](https://lusito.github.io/sounts/api/classes/SoundSource.html), you can also set its orientation:
 
 ```typescript
 import { SoundSource } from "sounts";
