@@ -2,6 +2,7 @@
   "name": "@lusito/npm-tools",
   "private": true,
   "workspaces": [
+    "packages/tsconfig",
     "packages/eslint-config",
     "packages/eslint-config-react",
     "packages/prettier-config",

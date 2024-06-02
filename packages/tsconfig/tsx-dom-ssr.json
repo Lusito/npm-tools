@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "lib": ["ES2015", "DOM"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "tsx-dom-ssr"
+  }
+}

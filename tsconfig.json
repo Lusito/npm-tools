@@ -1,12 +1,1 @@
-{
-  "compilerOptions": {
-    "target": "es2019",
-    "lib": ["ESNext"],
-    "sourceMap": true,
-    "declaration": true,
-    "moduleResolution": "node",
-    "strict": true,
-    "noImplicitOverride": true,
-    "esModuleInterop": true
-  }
-}
+{ "extends": "./packages/tsconfig/base" }

@@ -1,7 +1,6 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": ["../tsconfig/base", "../tsconfig/commonjs", "../tsconfig/es2021"],
   "compilerOptions": {
-    "module": "CommonJS",
     "outDir": "dist"
   },
   "include": ["src"],
