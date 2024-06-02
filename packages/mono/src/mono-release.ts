@@ -1,15 +1,7 @@
 #!/usr/bin/env node
-import { dirname } from "path";
+import chalk from "chalk";
 
 import { die, loadPackages, log, PackageJson, prompt, PublicPackageJson, run } from "./utils";
-
-type ReleaseContext = {
-    project: PublicPackageJson;
-    isWorkspace: boolean;
-    allPackages: PackageJson[];
-    publicPackages: PublicPackageJson[];
-    isDryRun: boolean;
-};
 
 async function main() {
     const packages = await loadPackages();
@@ -23,35 +15,18 @@ async function main() {
         die("No public packages found!");
     }
 
+    const projects = !isWorkspace ? [publicPackages[0]] : await promptProjects(publicPackages);
     const publishMethod = await promptPublishMethod();
-    const isDryRun = publishMethod === "dry-run";
 
-    const baseContext: Omit<ReleaseContext, "project"> = {
-        isWorkspace,
-        isDryRun,
-        allPackages,
-        publicPackages,
-    };
-
-    if (!isWorkspace) {
-        return runForProject({ ...baseContext, project: publicPackages[0] });
+    for (const project of projects) {
+        // eslint-disable-next-line no-await-in-loop
+        await bumpVersion(project, allPackages);
     }
 
-    const processedProjects: PublicPackageJson[] = [];
-    while (processedProjects.length !== publicPackages.length) {
-        /* eslint-disable no-await-in-loop */
-        const project = await promptProject(publicPackages.filter((v) => !processedProjects.includes(v)));
-        if (!project) break;
-        await runForProject({ ...baseContext, project });
-        processedProjects.push(project);
-        /* eslint-enable no-await-in-loop */
+    for (const project of projects) {
+        buildProject(project, isWorkspace);
     }
-}
-
-async function runForProject(context: ReleaseContext) {
-    await bumpVersion(context);
-    buildProject(context);
-    releaseProject(context);
+    releaseProjects(projects, publishMethod);
 }
 
 async function promptPublishMethod() {
@@ -65,15 +40,18 @@ async function promptPublishMethod() {
     });
 }
 
-async function promptProject(packages: PublicPackageJson[]) {
-    return prompt<PublicPackageJson | null>({
-        type: "select",
+function promptProjects(packages: PublicPackageJson[]) {
+    return prompt<PublicPackageJson[]>({
+        type: "multiselect",
         message: "Select the project",
-        choices: [...packages.map((value) => ({ title: value.name, value })), { title: "[Exit]", value: null }],
+        hint: "- Space to select. A to select all. Return to submit",
+        instructions: false,
+        choices: packages.map((value) => ({ title: value.name, value })),
+        min: 1,
     });
 }
 
-function buildProject({ project, isWorkspace }: ReleaseContext) {
+function buildProject(project: PublicPackageJson, isWorkspace: boolean) {
     if (!project.scripts?.build) {
         log.warn(`No build script found for ${project.name}!`);
     } else {
@@ -87,13 +65,20 @@ function buildProject({ project, isWorkspace }: ReleaseContext) {
     }
 }
 
-function releaseProject({ project, isDryRun }: ReleaseContext) {
+async function releaseProjects(projects: PublicPackageJson[], publishMethod: "normal" | "dry-run") {
+    const params = projects.map((p) => `-w ${p.name}`);
+    if (publishMethod === "dry-run") {
+        params.push("--dry-run");
+    } else {
+        const otp = await prompt<string>({ type: "text", message: "Enter One Time Password" });
+        params.push(`--otp ${otp}`);
+    }
+
     log("Publishing");
-    process.chdir(dirname(project.path));
-    run(`npm publish --access public ${isDryRun ? "--dry-run" : ""}`);
+    run(`npm publish --access public ${params.join(" ")}`);
 }
 
-async function bumpVersion({ project, publicPackages }: ReleaseContext) {
+async function bumpVersion(project: PublicPackageJson, allPackages: PackageJson[]) {
     const [major, minor, patch] = project.version.split(".").map(parseFloat);
 
     const newVersions = {
@@ -104,7 +89,7 @@ async function bumpVersion({ project, publicPackages }: ReleaseContext) {
 
     const bumpType = await prompt({
         type: "select",
-        message: "What increment would you like to perform?",
+        message: `What increment would you like to perform on ${chalk.cyan(project.name)}?`,
         choices: [
             ...Object.keys(newVersions).map((value) => ({
                 title: `${value}: ${project.version} -> ${newVersions[value as keyof typeof newVersions]}`,
@@ -123,15 +108,17 @@ async function bumpVersion({ project, publicPackages }: ReleaseContext) {
         }
 
         // Edit package.json in-place
-        log.success(`Changing version of ${project.name} to ${newVersion}`);
+        log(`Changing version of ${project.name} to ${newVersion}`);
         project.version = newVersion;
         run(`cat <<< $(jq '.version="${newVersion}"' ${project.path}) > ${project.path}`);
+        log.success("Done");
 
         // Adjust dependent projects as well
-        for (const otherProject of publicPackages) {
+        for (const otherProject of allPackages) {
             if (otherProject !== project) {
                 adjustVersionAfterBump(otherProject, project.name, project.version, "dependencies");
                 adjustVersionAfterBump(otherProject, project.name, project.version, "devDependencies");
+                adjustVersionAfterBump(otherProject, project.name, project.version, "peerDependencies");
             }
         }
     } else {
@@ -149,10 +136,10 @@ function adjustDependencyVersion(oldVersion: string, newVersion: string) {
 }
 
 function adjustVersionAfterBump(
-    project: PublicPackageJson,
+    project: PackageJson,
     name: string,
     newVersion: string,
-    dependencyType: "dependencies" | "devDependencies",
+    dependencyType: "dependencies" | "devDependencies" | "peerDependencies",
 ) {
     const deps = project[dependencyType];
     if (deps) {
