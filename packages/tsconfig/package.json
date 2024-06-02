@@ -1,6 +1,6 @@
 {
   "name": "@lusito/tsconfig",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "tsconfig files to extend from for my personal projects",
   "license": "Zlib",
   "author": "Santo Pfingsten",
