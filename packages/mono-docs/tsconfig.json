@@ -1,6 +1,7 @@
 {
-  "extends": ["../tsconfig/base", "../tsconfig/commonjs", "../tsconfig/tsx-dom-ssr", "../tsconfig/es2021"],
+  "extends": ["../tsconfig/base", "../tsconfig/tsx-dom-ssr", "../tsconfig/es2021"],
   "compilerOptions": {
+    "module": "CommonJS",
     "lib": ["ES2021", "DOM"],
     "skipLibCheck": true,
     "outDir": "dist",
