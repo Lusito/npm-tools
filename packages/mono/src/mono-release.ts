@@ -1,25 +1,57 @@
 #!/usr/bin/env node
 import { dirname } from "path";
 
-import { die, loadPackages, log, prompt, PublicPackageJson, run } from "./utils";
+import { die, loadPackages, log, PackageJson, prompt, PublicPackageJson, run } from "./utils";
+
+type ReleaseContext = {
+    project: PublicPackageJson;
+    isWorkspace: boolean;
+    allPackages: PackageJson[];
+    publicPackages: PublicPackageJson[];
+    isDryRun: boolean;
+};
 
 async function main() {
     const packages = await loadPackages();
 
     const isWorkspace = Array.isArray(packages);
-    const workspaces = isWorkspace ? packages : [packages];
+    const allPackages = isWorkspace ? packages : [packages];
 
-    const publicPackages = workspaces.filter((p) => !p.private && p.name && p.version) as PublicPackageJson[];
+    const publicPackages = allPackages.filter((p) => !p.private && p.name && p.version) as PublicPackageJson[];
 
     if (publicPackages.length === 0) {
         die("No public packages found!");
     }
 
-    const project = publicPackages.length === 1 ? publicPackages[0] : await promptProject(publicPackages);
-    await bumpVersion(project, publicPackages);
-    buildProject(project, isWorkspace);
     const publishMethod = await promptPublishMethod();
-    releaseProject(project, publishMethod === "dry-run");
+    const isDryRun = publishMethod === "dry-run";
+
+    const baseContext: Omit<ReleaseContext, "project"> = {
+        isWorkspace,
+        isDryRun,
+        allPackages,
+        publicPackages,
+    };
+
+    if (!isWorkspace) {
+        return runForProject({ ...baseContext, project: publicPackages[0] });
+    }
+
+    const processedProjects: PublicPackageJson[] = [];
+    while (processedProjects.length !== publicPackages.length) {
+        /* eslint-disable no-await-in-loop */
+        const project = await promptProject(publicPackages.filter((v) => !processedProjects.includes(v)));
+        if (!project) break;
+        await runForProject({ ...baseContext, project });
+        processedProjects.push(project);
+        /* eslint-enable no-await-in-loop */
+    }
+}
+
+async function runForProject(context: ReleaseContext) {
+    await bumpVersion(context);
+    buildProject(context);
+    releaseProject(context);
 }
 
 async function promptPublishMethod() {
@@ -34,14 +66,14 @@ async function promptPublishMethod() {
 }
 
 async function promptProject(packages: PublicPackageJson[]) {
-    return prompt<PublicPackageJson>({
+    return prompt<PublicPackageJson | null>({
         type: "select",
         message: "Select the project",
-        choices: packages.map((value) => ({ title: value.name, value })),
+        choices: [...packages.map((value) => ({ title: value.name, value })), { title: "[Exit]", value: null }],
     });
 }
 
-function buildProject(project: PublicPackageJson, isWorkspace: boolean) {
+function buildProject({ project, isWorkspace }: ReleaseContext) {
     if (!project.scripts?.build) {
         log.warn(`No build script found for ${project.name}!`);
     } else {
@@ -55,13 +87,13 @@ function buildProject(project: PublicPackageJson, isWorkspace: boolean) {
     }
 }
 
-function releaseProject(project: PublicPackageJson, dryRun: boolean) {
+function releaseProject({ project, isDryRun }: ReleaseContext) {
     log("Publishing");
     process.chdir(dirname(project.path));
-    run(`npm publish --access public ${dryRun ? "--dry-run" : ""}`);
+    run(`npm publish --access public ${isDryRun ? "--dry-run" : ""}`);
 }
 
-async function bumpVersion(project: PublicPackageJson, allProjects: PublicPackageJson[]) {
+async function bumpVersion({ project, publicPackages }: ReleaseContext) {
     const [major, minor, patch] = project.version.split(".").map(parseFloat);
 
     const newVersions = {
@@ -96,7 +128,7 @@ async function bumpVersion(project: PublicPackageJson, allProjects: PublicPackag
         run(`cat <<< $(jq '.version="${newVersion}"' ${project.path}) > ${project.path}`);
 
         // Adjust dependent projects as well
-        for (const otherProject of allProjects) {
+        for (const otherProject of publicPackages) {
             if (otherProject !== project) {
                 adjustVersionAfterBump(otherProject, project.name, project.version, "dependencies");
                 adjustVersionAfterBump(otherProject, project.name, project.version, "devDependencies");

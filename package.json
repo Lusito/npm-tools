@@ -14,9 +14,9 @@
   "scripts": {
     "build": "npm run build --workspaces --if-present",
     "build:mono-docs-demo": "npm run build:demo -w packages/mono-docs",
-    "lint": "node packages/mono/dist/mono-lint.js",
-    "lint:fix": "node packages/mono/dist/mono-lint.js --fix",
-    "release": "node packages/mono/dist/mono-release.js",
+    "lint": "node -r esbuild-register  packages/mono/src/mono-lint.ts",
+    "lint:fix": "node -r esbuild-register  packages/mono/src/mono-lint.ts --fix",
+    "release": "node -r esbuild-register  packages/mono/src/mono-release.ts",
     "start": "npm run start:demo -w packages/mono-docs",
     "start:demo2": "npm run start:demo2 -w packages/mono-docs",
     "test": "npm test --workspaces --if-present"
@@ -24,6 +24,8 @@
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^7.10.0",
     "@typescript-eslint/parser": "^7.10.0",
+    "esbuild": "^0.21.4",
+    "esbuild-register": "^3.5.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.1.0",

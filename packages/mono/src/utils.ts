@@ -32,20 +32,13 @@ export const log = Object.assign(
     },
 );
 
-export type PublicPackageJson = PackageJson & {
-    path: string;
-    name: string;
-    version: string;
-    private: false;
-};
-
 export async function loadPackage(path: string) {
     const data = await readFile(path);
 
     return Object.assign(JSON.parse(data.toString()), { path }) as PackageJson;
 }
 
-export async function loadPackages() {
+export async function loadPackages(): Promise<PackageJson | PackageJson[]> {
     const project = await loadPackage(resolve(process.cwd(), "./package.json"));
 
     const workspaceNames = Array.isArray(project.workspaces) ? project.workspaces : project.workspaces?.packages;
@@ -94,4 +87,13 @@ export type MonoLintOptions = {
     };
 };
 
-export type PackageJson = BasePackageJson & { monoLint?: MonoLintOptions };
+export type PackageJson = BasePackageJson & {
+    path: string;
+    monoLint?: MonoLintOptions;
+};
+
+export type PublicPackageJson = PackageJson & {
+    name: string;
+    version: string;
+    private: false;
+};
