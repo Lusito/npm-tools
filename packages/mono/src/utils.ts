@@ -91,9 +91,3 @@ export type PackageJson = BasePackageJson & {
     path: string;
     monoLint?: MonoLintOptions;
 };
-
-export type PublicPackageJson = PackageJson & {
-    name: string;
-    version: string;
-    private: false;
-};
