@@ -84,8 +84,13 @@ export async function getPages(
     return [rootPage, ...pages];
 }
 
-export const getPageTitle = (currentPage: PageInfo) => {
+export const getPageTitle = (currentPage: PageInfo, createLongTitle: boolean) => {
     const { docsConfig, projectIndex, meta } = currentPage;
     const title = projectIndex === currentPage ? docsConfig.title || meta.title : meta.title || docsConfig.title;
-    return title || docsConfig.siteName;
+
+    if (!title) return docsConfig.title;
+    if (!createLongTitle) return title;
+    if (!docsConfig.title) return docsConfig.siteName;
+
+    return title !== docsConfig.title ? `${title} (${docsConfig.title})` : docsConfig.title;
 };

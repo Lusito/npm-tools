@@ -13,8 +13,8 @@ export const DefaultLayout = withCss(classes, function DefaultLayout({ children 
     const { targetUrl, currentPage } = this;
     const { docsConfig } = currentPage;
     const { siteName, sidebar } = docsConfig;
-    const title = getPageTitle(currentPage);
-    const finalTitle = !title || title === siteName ? siteName : `${title} - ${siteName}`;
+    const title = getPageTitle(currentPage, true);
+    const finalTitle = title === siteName ? siteName : `${title} - ${siteName}`;
 
     return (
         <html lang="en">

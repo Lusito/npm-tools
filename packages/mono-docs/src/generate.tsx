@@ -30,10 +30,10 @@ async function writeSearchData(pages: PageInfo[], dest: string, targetUrl: strin
     const data: SearchEntry[] = pages.map((p) => ({
         url: `${targetUrl}${p.path.replace(/\/index\.html$/, "/")}`,
         content: p.meta.textContent,
-        title: getPageTitle(p),
+        title: getPageTitle(p, false),
         projectIndex: p.projectIndex
             ? {
-                  title: getPageTitle(p.projectIndex),
+                  title: getPageTitle(p.projectIndex, false),
                   url: `${targetUrl}${p.projectIndex.path.replace(/\/index\.html$/, "/")}`,
               }
             : undefined,
