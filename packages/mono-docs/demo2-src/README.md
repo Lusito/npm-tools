@@ -30,17 +30,17 @@ If you are looking for a more complete solution, you might want to take a look a
 
 The compile target of this library is es2015, so if you want to support older browsers, you'll have to ensure that this module is being transpiled to an older es version during your build-process.
 
-### Get started
+### Get Started
 
 - [Read the documentation](https://lusito.github.io/sounts/)
 - Look at the example (`example/*.ts`).
 - Ask questions if the above doesn't clarify something good enough.
 
-## Goals of this Project
+## Goals of This Project
 
 I am a purist. If possible, I like to work with the tools the browser gives me. I don't need an npm package to trim text, filter arrays, etc..
 
-### Existing libraries
+### Existing Libraries
 
 While looking at existing libraries, I mostly found packages, that have not been updated in almost a decade, had no TypeScript support, weighed a ton or had a lot of dependencies.
 
@@ -71,7 +71,7 @@ The goal of this library is to have a simple starting point for writing position
 
 You can start writing code with **sounts** and as you learn more about the web audio API you can extend your code, as **sounts** does not hide the web audio API from you.
 
-### Report issues
+### Report Issues
 
 Something not working quite as expected? Do you need a feature that has not been implemented yet? Check the [issue tracker](https://github.com/Lusito/sounts/issues) and add a new one if your problem is not already listed. Please try to provide a detailed description of your problem, including the steps to reproduce it.
 

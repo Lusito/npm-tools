@@ -44,6 +44,13 @@
       "warnOnlyPatterns": [
         "^https:\\/\\/lusito\\.github\\.io\\/react-nano\\/"
       ]
+    },
+    "lintMarkdownTitles": {
+      "ignorePatterns": [
+        "@react-nano[/a-z0-9-]*",
+        "@lusito/[a-z0-9-]+",
+        "(sounts|scss-modules|react-redux)"
+      ]
     }
   }
 }

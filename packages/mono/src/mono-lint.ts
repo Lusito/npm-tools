@@ -3,8 +3,9 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { resolve, join } from "path";
 
-import { PackageJson, die, loadPackage, log, logLintStart, run } from "./utils";
+import { LinterType, PackageJson, die, loadPackage, log, logLintStart, run } from "./utils";
 import { lintMarkdownLinks } from "./lint-markdown-links";
+import { lintMarkdownTitles } from "./lint-markdown-titles";
 
 const lint = (linter: "eslint" | "prettier" | "stylelint" | "sort-package-json", params: string) => {
     logLintStart(linter);
@@ -19,7 +20,7 @@ export type LinterContext = {
     fix: boolean;
 };
 
-const linters: Record<string, (context: LinterContext) => Promise<boolean> | boolean> = {
+const linters: Record<LinterType, (context: LinterContext) => Promise<boolean> | boolean> = {
     eslint({ project, dependencies, fix }) {
         if (
             project.name === "@lusito/npm-tools" ||
@@ -69,6 +70,7 @@ const linters: Record<string, (context: LinterContext) => Promise<boolean> | boo
         return false;
     },
     "lint-markdown-links": lintMarkdownLinks,
+    "lint-markdown-titles": lintMarkdownTitles,
 };
 
 async function main() {

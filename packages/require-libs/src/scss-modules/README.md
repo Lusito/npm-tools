@@ -11,7 +11,7 @@ This package uses some code from [css-modules-require-hook](https://github1s.com
 
 All released under a liberal license: [MIT](../../LICENSE)
 
-## What is an SCSS Module
+## What Is an SCSS Module
 
 An **SCSS Module** is an SCSS file in which all class names and animation names are scoped locally by default. Learn more in the article [CSS Modules - Welcome to the Future](http://glenmaddern.com/articles/css-modules) by Glen&nbsp;Maddern.
 
@@ -178,7 +178,7 @@ In rare cases you may want to precompile styles, before they will be passed to [
 - **Type:** `(code: string, filename: string) => string`
 - **Default:** `identity`
 
-### `processCss` function
+### `processCss` Function
 
 In rare cases you may want to perform more transformations after scss-modules is done. You should use **synchronous** transformations, since `require` function is synchronous.
 

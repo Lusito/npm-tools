@@ -2,6 +2,7 @@
   "extends": ["../tsconfig/base", "../tsconfig/es2021"],
   "compilerOptions": {
     "module": "CommonJS",
+    "skipLibCheck": true,
     "outDir": "dist"
   },
   "include": ["src"],

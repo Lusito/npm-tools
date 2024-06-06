@@ -3,7 +3,7 @@
 You might be looking for a way to change the main volume or the volume of individual sound sources.
 This can be done using gain.
 
-## Gain is not Volume
+## Gain Is Not Volume
 
 In short: [Gain controls how loud something is before it gets processed](https://www.musicianonamission.com/gain-vs-volume/).
 
