@@ -1,0 +1,35 @@
+@import "../../style/colors";
+@import "../../style/fonts";
+@import "../../style/breakpoints";
+
+.banner {
+    position: relative;
+    text-align: center;
+    padding: 2rem 0;
+    background: radial-gradient(ellipse at center, $color-accent-700 0%, $color-accent-900 100%);
+    color: var(--color-highlight-contrast);
+    text-shadow: 0 0 1em var(--color-dark);
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    word-break: break-word;
+    margin-top: 0;
+
+    > * {
+        z-index: 2;
+        margin: 0;
+        padding: 0 1.5rem;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 0 0;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: top center;
+        background-attachment: fixed;
+        background-image: url("./background.svg");
+        pointer-events: none;
+    }
+}

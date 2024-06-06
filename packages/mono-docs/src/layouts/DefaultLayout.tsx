@@ -8,6 +8,7 @@ import { ReloadScript } from "../utils/ReloadScript";
 import { SideBar } from "../components/SideBar/SideBar";
 import { MetaTags } from "../components/MetaTags/MetaTags";
 import { getPageTitle } from "../utils/pageUtils";
+import { Banner } from "../components/Banner/Banner";
 
 export const DefaultLayout = withCss(classes, function DefaultLayout({ children }: BaseProps) {
     const { targetUrl, currentPage } = this;
@@ -35,7 +36,10 @@ export const DefaultLayout = withCss(classes, function DefaultLayout({ children 
                 <Header withSideBar={sidebar.length > 0} />
                 {sidebar.length > 0 && <SideBar />}
                 <div class={`${classes.mainwrapper} scatman-container scatman-scroll-area`}>
-                    <main>{children}</main>
+                    <main>
+                        <Banner />
+                        {children}
+                    </main>
                     <Footer />
                 </div>
             </body>

@@ -4,6 +4,10 @@
 .markdown-content {
     word-break: break-word;
 
+    h1 {
+        display: none;
+    }
+
     h2 {
         border-bottom: 1px solid var(--color-main-contrast);
     }
