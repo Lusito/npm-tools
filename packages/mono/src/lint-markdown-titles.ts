@@ -1,10 +1,10 @@
 import { readFile } from "fs/promises";
-import { titleCase } from "title-case";
 import MarkdownIt from "markdown-it";
 import { Window } from "happy-dom";
 
 import { getFilesToLint, log, logLintStart } from "./utils";
 import type { LinterContext } from "./mono-lint";
+import { titleCase } from "./title-case";
 
 const window = new Window();
 const createElement = window.document.createElement.bind(window.document);
