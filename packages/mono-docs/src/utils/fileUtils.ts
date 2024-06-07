@@ -9,7 +9,7 @@ export async function getAllFiles(dirPath: string, pattern: RegExp, arrayOfFiles
             const filePath = join(dirPath, file);
             const s = await stat(filePath);
             if (s.isDirectory()) {
-                await getAllFiles(filePath, pattern, arrayOfFiles);
+                if (file !== "node_modules") await getAllFiles(filePath, pattern, arrayOfFiles);
             } else if (pattern.test(file)) {
                 arrayOfFiles.push(filePath);
             }

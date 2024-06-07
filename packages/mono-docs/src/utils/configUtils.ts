@@ -82,7 +82,7 @@ export async function loadConfigs(rootPath: string): Promise<LoadedConfigs> {
 
     for (let i = 1; i < configs.length; i++) {
         const config = configs[i];
-        const possibleParentConfigs = configs.filter((c) => config.dir.startsWith(c.dir));
+        const possibleParentConfigs = configs.filter((c) => config.dir.startsWith(c.dir) && c.depth < config.depth);
         if (possibleParentConfigs.length > 1) {
             // configs are sorted by depth, the last one is the config itself and the second-last is the parent
             const parentConfig = possibleParentConfigs[possibleParentConfigs.length - 2];
