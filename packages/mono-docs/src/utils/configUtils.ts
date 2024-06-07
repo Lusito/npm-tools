@@ -84,8 +84,8 @@ export async function loadConfigs(rootPath: string): Promise<LoadedConfigs> {
         const config = configs[i];
         const possibleParentConfigs = configs.filter((c) => config.dir.startsWith(c.dir) && c.depth < config.depth);
         if (possibleParentConfigs.length > 1) {
-            // configs are sorted by depth, the last one is the config itself and the second-last is the parent
-            const parentConfig = possibleParentConfigs[possibleParentConfigs.length - 2];
+            // configs are sorted by depth, the last one is the best matching config
+            const parentConfig = possibleParentConfigs[possibleParentConfigs.length - 1];
             config.data = { ...parentConfig.data, ...config.data };
         } else {
             config.data = { ...rootConfig.data, ...config.data };
@@ -99,12 +99,13 @@ export async function loadConfigs(rootPath: string): Promise<LoadedConfigs> {
     return {
         rootConfig: rootConfig.data as CombinedDocsConfig,
         getConfig(dir: string) {
-            const possibleConfigs = configs.filter((c) => dir.startsWith(c.dir));
+            const exactConfig = configs.find((c) => c.dir === dir);
+            if (exactConfig) return exactConfig.data as CombinedDocsConfig;
+
+            const possibleConfigs = configs.filter((c) => dir.startsWith(`${c.dir}/`));
             // configs are sorted by depth, the last one is the best matching config
             const config = possibleConfigs[possibleConfigs.length - 1];
-            if (config) {
-                return config.data as CombinedDocsConfig;
-            }
+            if (config) return config.data as CombinedDocsConfig;
 
             return rootConfig.data as CombinedDocsConfig;
         },
