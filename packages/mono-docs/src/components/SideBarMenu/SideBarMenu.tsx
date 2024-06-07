@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import { ComponentThis } from "tsx-dom-ssr";
 
 import { isTruthy } from "../../utils/filterUtils";
@@ -16,7 +15,7 @@ function NavItem(this: ComponentThis, { label, ariaLabel, path, nested }: NavIte
     const { targetUrl } = this;
     const isCurrent = path === this.currentPage.path;
     return (
-        <li class={classnames({ [classes.selected]: isCurrent, [classes.nested]: nested })}>
+        <li class={{ [classes.selected]: isCurrent, [classes.nested]: nested }}>
             {isCurrent ? (
                 <a href={`${targetUrl}${path}`} aria-label={`Current page, ${ariaLabel ?? label}`} aria-current="page">
                     {label}
@@ -42,7 +41,7 @@ export const SideBarMenu = withCss(classes, function SideBarMenu() {
             <ul class={classes.sideBarMenu}>
                 {projects.length > 0 && (
                     <li class={classes.projectSelector}>
-                        <link-select tsxTag="select" autoComplete="off">
+                        <link-select tsxTag="select" autocomplete="off">
                             {projects
                                 .map(findPage)
                                 .filter(isTruthy)

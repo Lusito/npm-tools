@@ -20,7 +20,7 @@ export const DefaultLayout = withCss(classes, function DefaultLayout({ children 
     return (
         <html lang="en">
             <head>
-                <meta charSet="utf-8" />
+                <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="apple-touch-icon" sizes="180x180" href={`${targetUrl}/assets/apple-touch-icon.png`} />
                 <link rel="icon" type="image/png" sizes="32x32" href={`${targetUrl}/assets/favicon-32x32.png`} />

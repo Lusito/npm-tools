@@ -1,5 +1,3 @@
-import classnames from "classnames";
-
 import { withCss } from "../../utils/withCss";
 import { Search } from "../Search/Search";
 import classes from "./Header.module.scss";
@@ -12,7 +10,7 @@ export const Header = withCss(classes, function Header({ withSideBar }: HeaderPr
     const { targetUrl } = this;
 
     return (
-        <header class={classnames({ [classes.header]: true, [classes.withSideBar]: withSideBar })}>
+        <header class={{ [classes.header]: true, [classes.withSideBar]: withSideBar }}>
             <div class={classes.left}>
                 <a href={`${targetUrl}${this.pages[0].path}`}>{this.currentPage.docsConfig.siteName}</a>
             </div>

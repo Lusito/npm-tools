@@ -16,7 +16,7 @@ export const Search = withCss(classes, function Search() {
             <div class={classes.searchOverlay}>
                 <label class={classes.searchFieldWrapper}>
                     <span>Search: </span>
-                    <input type="search" autoFocus class={classes.searchField} />
+                    <input type="search" autofocus class={classes.searchField} />
                 </label>
                 <h2>Search results:</h2>
                 <ul class={classes.searchItems}></ul>
