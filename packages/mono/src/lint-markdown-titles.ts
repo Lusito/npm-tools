@@ -1,6 +1,7 @@
 import { readFile } from "fs/promises";
 import MarkdownIt from "markdown-it";
 import { Window } from "happy-dom";
+import frontMatter from "front-matter";
 
 import { getFilesToLint, log, logLintStart } from "./utils";
 import type { LinterContext } from "./mono-lint";
@@ -21,7 +22,9 @@ const IGNORED = "{IGNORED}";
 
 async function checkFile(file: string, ignorePatterns: Array<string | RegExp>) {
     const fileContent = await readFile(file, "utf-8");
-    const dom = markdownToDom(fileContent);
+    // just here to remove the frontmatter safely
+    const { body } = frontMatter(fileContent);
+    const dom = markdownToDom(body);
 
     let failed = false;
     const triggerError = (message: string) => {
