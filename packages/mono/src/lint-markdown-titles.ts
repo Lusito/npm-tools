@@ -59,5 +59,7 @@ export async function lintMarkdownTitles({ project }: LinterContext) {
         throw new Error("Some markdown files have invalid titles");
     }
 
+    log("All titles look good");
+
     return true;
 }

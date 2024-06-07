@@ -69,8 +69,8 @@ const linters: Record<LinterType, (context: LinterContext) => Promise<boolean> |
         }
         return false;
     },
-    "lint-markdown-links": lintMarkdownLinks,
     "lint-markdown-titles": lintMarkdownTitles,
+    "lint-markdown-links": lintMarkdownLinks,
 };
 
 async function main() {
