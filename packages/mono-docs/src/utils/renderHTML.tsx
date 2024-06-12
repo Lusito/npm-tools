@@ -13,6 +13,7 @@ import { applyAdjustPaths } from "./adjustPaths";
 import markdownClasses from "../components/MarkdownContent/MarkdownContent.module.scss";
 
 const protocolPattern = /^https?:\/\//;
+const markdownPattern = /[^#]+\.md(#.+)?$/;
 
 const imageSizes: Record<string, ISizeCalculationResult> = {};
 function cachedImageSize(assetPath: string) {
@@ -102,7 +103,7 @@ export async function renderHTML(renderContext: RenderContext, children: Compone
                         link.setAttribute("target", "_blank");
                     }
                 }
-            } else if (href.endsWith(".md")) {
+            } else if (markdownPattern.test(href)) {
                 link.setAttribute("href", adjustHref(href, targetUrl, dir, adjustPaths));
             } else if (href.endsWith(".html")) {
                 link.setAttribute("href", href.replace(/\/index\.html$/, "/"));
