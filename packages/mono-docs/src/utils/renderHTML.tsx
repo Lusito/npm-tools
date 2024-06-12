@@ -25,7 +25,7 @@ function cachedImageSize(assetPath: string) {
 }
 
 function adjustHref(href: string, targetUrl: string, dir: string, adjustPaths: string[]) {
-    let newHref = href.replace(/\/README\.md$/, "/").replace(/\.md$/, ".html");
+    let newHref = href.replace(/\/README\.md(#.+)?$/, "/$1").replace(/\.md(#.+)?$/, ".html$1");
 
     if (!newHref.startsWith("./")) newHref = `./${newHref}`;
     newHref = join("/", dir, newHref);
