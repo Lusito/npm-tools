@@ -6,6 +6,6 @@
   "author": "Santo Pfingsten",
   "main": "index.js",
   "dependencies": {
-    "prettier": "3.2.5"
+    "prettier": "3.5.1"
   }
 }

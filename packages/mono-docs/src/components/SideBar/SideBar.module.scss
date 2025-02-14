@@ -1,6 +1,6 @@
 @use "sass:math";
-@import "../../style/breakpoints";
-@import "../../style/sizes";
+@use "../../style/breakpoints";
+@use "../../style/sizes";
 
 $transition-time: 0.5s;
 
@@ -18,8 +18,8 @@ $transition-time: 0.5s;
     position: absolute;
     top: 0;
     bottom: 0;
-    left: -$menu-width;
-    width: $menu-width;
+    left: -(sizes.$menu-width);
+    width: sizes.$menu-width;
     z-index: 200;
     transition: all $transition-time ease;
     background: var(--color-main);
@@ -29,9 +29,9 @@ $transition-time: 0.5s;
     .trigger {
         position: absolute;
         top: 0;
-        right: #{-$menu-grip-width - 0.5rem};
-        width: $menu-grip-width;
-        height: $header-height;
+        right: #{-(sizes.$menu-grip-width) - 0.5rem};
+        width: sizes.$menu-grip-width;
+        height: sizes.$header-height;
         background: var(--color-dark);
         transition: all $transition-time ease;
         padding: 0.25rem;
@@ -60,8 +60,8 @@ $transition-time: 0.5s;
         }
     }
 
-    @include from("large") {
-        top: $header-height;
+    @include breakpoints.from("large") {
+        top: sizes.$header-height;
         left: 0;
 
         &:hover,
@@ -103,7 +103,7 @@ $transition-time: 0.5s;
             }
         }
 
-        @include from("large") {
+        @include breakpoints.from("large") {
             display: none;
         }
     }

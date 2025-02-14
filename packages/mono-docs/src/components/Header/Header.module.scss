@@ -1,13 +1,13 @@
-@import "../../style/breakpoints";
-@import "../../style/sizes";
-@import "../../style/fonts";
+@use "../../style/breakpoints";
+@use "../../style/sizes";
+@use "../../style/fonts";
 
 .header {
-    font-family: $font-sans-serif;
+    font-family: fonts.$font-sans-serif;
     font-weight: bold;
     background: var(--color-dark);
     padding: 0 0.5rem;
-    line-height: $header-height;
+    line-height: sizes.$header-height;
     flex-shrink: 0;
     position: relative;
     display: flex;
@@ -18,9 +18,9 @@
     justify-content: space-between;
 
     &.with-side-bar {
-        padding-left: #{$menu-grip-width + 0.5rem};
+        padding-left: #{sizes.$menu-grip-width + 0.5rem};
 
-        @include from("large") {
+        @include breakpoints.from("large") {
             padding-left: 0.5rem;
         }
     }
@@ -48,7 +48,7 @@
                 content: " - ";
             }
 
-            @include from("large") {
+            @include breakpoints.from("large") {
                 margin-right: 0.5rem;
                 display: block;
             }

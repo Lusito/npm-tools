@@ -6,7 +6,7 @@
   "author": "Santo Pfingsten",
   "main": "index.js",
   "dependencies": {
-    "stylelint": "^16.6.0",
-    "stylelint-config-standard-scss": "13.1.0"
+    "stylelint": "^16.14.1",
+    "stylelint-config-standard-scss": "14.0.0"
   }
 }

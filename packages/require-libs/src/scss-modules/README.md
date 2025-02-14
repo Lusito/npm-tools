@@ -13,7 +13,7 @@ All released under a liberal license: [MIT](../../LICENSE)
 
 ## What Is an SCSS Module
 
-An **SCSS Module** is an SCSS file in which all class names and animation names are scoped locally by default. Learn more in the article [CSS Modules - Welcome to the Future](http://glenmaddern.com/articles/css-modules) by Glen&nbsp;Maddern.
+An **SCSS Module** is an SCSS file in which all class names and animation names are scoped locally by default. Learn more in the article [What are CSS Modules and why do we need them?](https://css-tricks.com/css-modules-part-1-need/) by Robin Rendle.
 
 Note that this package is not (yet) 100% compatible to CSS Modules.
 

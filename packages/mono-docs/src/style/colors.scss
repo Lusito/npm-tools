@@ -25,11 +25,11 @@ $color-accent-100: color.adjust($color-accent-base, $lightness: 50%);
     --color-main-link-visited: #{$color-gray-400};
     --color-highlight: #{$color-accent-700};
     --color-highlight-contrast: #{$color-gray-100};
-    --color-focus: #{fade-out($color-accent-700, 0.4)};
+    --color-focus: #{rgba($color-accent-700, 0.6)};
     --color-focus-contrast: #{$color-gray-100};
     --color-disabled: #{$color-gray-400};
     --color-disabled-contrast: #{$color-gray-100};
-    --color-overlay: #{fade-out($color-gray-900, 0.5)};
+    --color-overlay: #{rgba($color-gray-900, 0.5)};
     --color-synopsis-border: #{$color-accent-700};
 }
 

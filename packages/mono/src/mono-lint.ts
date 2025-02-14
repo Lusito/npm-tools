@@ -60,7 +60,7 @@ const linters: Record<LinterType, (context: LinterContext) => Promise<boolean> |
         if (dependencies.includes("sort-package-json")) {
             const workspaces = Array.isArray(project.workspaces)
                 ? project.workspaces
-                : project.workspaces?.packages ?? ["."];
+                : (project.workspaces?.packages ?? ["."]);
 
             const files = [".", ...workspaces].map((ws) => `"${join(ws, "package.json")}"`).join(" ");
             lint("sort-package-json", `${files} ${fix ? "" : "--check"}`);

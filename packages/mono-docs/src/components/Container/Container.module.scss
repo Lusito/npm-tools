@@ -1,5 +1,5 @@
-@import "../../style/sizes";
-@import "../../style/breakpoints";
+@use "../../style/sizes";
+@use "../../style/breakpoints";
 
 .container {
     margin: 2rem auto;
@@ -10,8 +10,8 @@
         flex-grow: 1;
     }
 
-    @include from("small") {
+    @include breakpoints.from("small") {
         padding: 0 2rem;
-        max-width: $content-width;
+        max-width: sizes.$content-width;
     }
 }

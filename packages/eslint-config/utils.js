@@ -92,7 +92,6 @@ module.exports = {
                         ],
                         "@typescript-eslint/no-explicit-any": "off",
                         "@typescript-eslint/explicit-function-return-type": "off",
-                        "@typescript-eslint/type-annotation-spacing": "error",
                         "@typescript-eslint/array-type": ["error", { default: "array-simple" }],
                         "@typescript-eslint/default-param-last": "error",
                         "@typescript-eslint/explicit-module-boundary-types": "off",
