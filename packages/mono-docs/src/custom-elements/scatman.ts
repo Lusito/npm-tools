@@ -5,6 +5,7 @@ import {
     ScatBodyClassPlugin,
     ScatHeadPlugin,
     ScatPreloadPlugin,
+    ScatPreserveScrollPlugin,
     ScatProgressPlugin,
     ScatScrollPlugin,
 } from "scatman";
@@ -20,5 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
         new ScatProgressPlugin(scatman),
         new ScatPreloadPlugin(scatman),
         new ScatA11yPlugin(scatman),
+        new ScatPreserveScrollPlugin(scatman),
     );
 });
